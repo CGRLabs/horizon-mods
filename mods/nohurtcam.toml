@@ -1,0 +1,26 @@
+id = "nohurtcam"
+kind = "native-mod"
+name = "Nohurtcam"
+summary = "Removes the camera tilt and shake when you take damage."
+description = """
+NoHurtCam removes the camera tilt and shake that plays when you take damage.
+Your view stays steady while you are hit, which helps in PvP and when aiming.
+
+- Only the damage tilt is removed. View bobbing, the death tilt and camera shake from other mods stay as they are.
+- Client side only, it changes nothing for other players.
+- It is a native mod: Horizon builds it into the game from source, so the first build takes a while."""
+authors = ["Niklas"]
+owners = ["voidrixde-coder"]
+owner_ids = [332186762]
+license = "voidrixde-coder"
+source = "https://github.com/voidrixde-coder/NohurtCam-horizon-mod"
+icon = "icons/nohurtcam.png"
+categories = ["mobs", "optimization"]
+tags = ["nohurtcam", "betterhurtcam", "cam", "hurt", "hurtcam"]
+
+[[versions]]
+version = "0.3.0"
+published = "2026-11-14"
+game = "26.3"
+file = "nohurtcam-0.3.0.hnmod"
+sha256 = "6499e0f11543c79e028f005b79304536cfc326a4c0e5c54b4f4efae2e4435988"
