@@ -9,9 +9,7 @@ description = """
 - **Chestplates keep the figure**: a vanilla chestplate is drawn in the same shape, with cups that bounce with the bust.
 - **Who gets it is up to you**: `config/kotost-body.txt` picks you only (default), a list of names, slim skins, everyone or nobody.
 
-Client side only. Works alone or with Kotost First Person.
-
-Native source mod: the launcher compiles it after a warning; it runs with your account's permissions. No Minecraft code or assets are included."""
+Client side only. Works alone or with Kotost First Person. Native source mod: the launcher compiles it after a warning; it runs with your account's permissions. No Minecraft code or assets are included."""
 authors = ["Kotost Games"]
 owners = ["Leks2000"]
 owner_ids = [107043945]
@@ -21,6 +19,14 @@ icon = "icons/kotost_body.png"
 categories = ["decoration", "game-mechanics"]
 tags = ["cosmetic", "skin", "player-model", "physics", "figure"]
 screenshots = ["screenshots/kotost_body/1.png", "screenshots/kotost_body/2.png", "screenshots/kotost_body/3.png"]
+
+[[versions]]
+version = "0.4.1"
+published = "2026-11-15"
+game = "26.3"
+file = "kotost_body-0.4.1.hnmod"
+sha256 = "5c01ecde23fba2422fe028a6135b429a02954b027a634c1d588673ba6f43f4b1"
+changelog = "Builds on the newest Nightly (2026-11-13, 9f42064) as well as on 2026-11-08 (fdc87ae), from the same source: it no longer hooks Horizon's old cosmetics functions. The bust from your skin, the figure and the chestplates are unchanged; a bust cosmetic item is no longer bounced by the mod."
 
 [[versions]]
 version = "0.4.0"
