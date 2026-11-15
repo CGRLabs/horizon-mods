@@ -1,0 +1,23 @@
+id = "transparent_video_settings_menu"
+kind = "native-mod"
+name = "Transparent video settings menu for Horizon"
+summary = "You can now see shader changes in real time directly from the settings menu."
+description = """
+The in-game video settings screen obscures your view: the background darkens and a blur effect is applied, which means you have to close and reopen the menu every time you want to check the impact of a change. This mod disables these visual elements once the game world has loaded.
+"""
+authors = ["PureEvilValera"]
+owners = ["PureEvilValera"]
+owner_ids = [130057984]
+license = "MIT"
+source = "https://github.com/PureEvilValera/transparent-video-settings-menu.git"
+icon = "icons/transparent_video_settings_menu.png"
+categories = ["decoration", "utility", "optimization"]
+tags = ["menu"]
+screenshots = ["screenshots/transparent_video_settings_menu/1.jpg"]
+
+[[versions]]
+version = "0.1.0"
+published = "2026-11-15"
+game = "26.3"
+file = "transparent_video_settings_menu-0.1.0.hnmod"
+sha256 = "5844589b7c75bf87e98995a1204471aa51347f307c2e46ee2811c46b94ce55b7"
