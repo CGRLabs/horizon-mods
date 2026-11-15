@@ -1,0 +1,26 @@
+id = "occultism"
+kind = "mod"
+name = "Occultism for Horizon: Content"
+summary = "The blocks, items, recipes and textures of the Occultism port. Needs Occultism for Horizon: Native Code to do anything."
+description = """
+The content half of an unofficial, alpha port of [Occultism](https://github.com/klikli-dev/occultism) by klikli-dev, made with klikli's permission. Please report problems [to this port](https://github.com/Dawnforger/occultism-horizon/issues), not to the Occultism team.
+
+This file holds Occultism's blocks, items, recipes, loot, textures and spirit types. The rituals, the altar, storage, the spirits' behaviour and looks and everything else that acts are in the native half, **Occultism for Horizon: Native Code** (`occultism_native`). Install both, or the **Occultism for Horizon** modpack, which installs both.
+
+The port ships as two files because current launchers build a one-file native mod without its content ([horizon-rust/horizon#15933](https://github.com/horizon-rust/horizon/issues/15933)). Occultism's code is MIT and some of its art is CC BY 3.0, credited in the source's NOTICE. It contains no Minecraft code or assets."""
+authors = ["Dawnforger", "klikli-dev (Occultism)"]
+owners = ["Dawnforger"]
+owner_ids = [73370299]
+license = "MIT AND CC-BY-3.0"
+source = "https://github.com/Dawnforger/occultism-horizon"
+icon = "icons/occultism.png"
+categories = ["magic", "storage"]
+tags = ["occultism", "rituals", "spirits", "chalk", "storage", "port", "alpha"]
+
+[[versions]]
+version = "0.6.0-alpha.1"
+published = "2026-11-15"
+game = "26.3"
+file = "occultism-0.6.0-alpha.1.hmod"
+sha256 = "f52e2f5507b6dd0fe5a1f2d7af88d3cfe3245fbeb53175b03d6b4e5d5a71a3f2"
+changelog = "First registry submission: the content of Occultism for Horizon 0.6.0-alpha.1. Pairs with occultism_native 0.6.0-alpha.1. Source: https://github.com/Dawnforger/occultism-horizon/tree/v0.6.0-alpha.1"
