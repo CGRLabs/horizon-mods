@@ -1,0 +1,48 @@
+id = "betterappleskin"
+kind = "native-mod"
+name = "Better AppleSkin"
+summary = "AppleSkin's food HUD and tooltips, 1:1, plus a saturation glow, the best food highlighted, food effects in tooltips, a hunger warning and your mount's health."
+description = """
+Our own, much richer take on [AppleSkin](https://github.com/squeek502/AppleSkin) by squeek502 for Horizon, as a native mod. **Everything AppleSkin does, one to one**, and more on top.
+
+AppleSkin's own, as on Java:
+- **Saturation overlay**: golden outlines around the drumsticks your saturation covers.
+- **Exhaustion underlay**: a grey bar behind the food bar shows how close you are to losing the next point.
+- **Held food preview**: hold food and the hunger, saturation and health it would restore flash on the bars (main hand or off hand; rotten food shows the green drumsticks).
+- **Food values in tooltips**: drumsticks and saturation icons under every food's name, always or with SHIFT.
+- The icons shake with Minecraft's own; the F3 food line (`hunger: 17, sat: 4.5, exh: 1.23/4`).
+- **Server sync** on AppleSkin's own channels: vanilla never sends your exhaustion and rarely your saturation. Works in single player, on LAN, on Horizon servers with the mod, on Java servers with AppleSkin, and Java players with AppleSkin get their values from a Horizon server.
+- AppleSkin's config (`config/betterappleskin-client.toml`, NeoForge's format) and NeoForge's config screen: Options > Mods or our **Mod Menu**'s Configure. English and Russian.
+
+Better AppleSkin's additions (each can be turned off):
+- **Animated saturation glow**: the outlines breathe softly and a shimmer runs along them.
+- **Best food**: the food in your inventory that fills your hunger best, without waste or bad effects, gets a green frame on the hotbar and a soft light in the inventory.
+- **Food effects in tooltips**: a golden apple's Regeneration and Absorption, a suspicious stew's hidden effect, rotten flesh's 80% Hunger, chorus fruit's teleport, honey's cure.
+- **Hunger warning**: the food bar pulses red when you can no longer sprint (or at a level you choose).
+- **Mount's health**: riding, its health as a number, and your own hunger, which its hearts hide.
+- **HUD styles**: saturation as outlines or a thin bar, exhaustion as the underlay or a line; optional simple numbers (health, hunger, and what your food adds) and a hunger timer.
+- **Content mods' foods** (Farmer's Delight and others) are read from each item's own data.
+
+### Better than the AppleSkin ports in the catalog
+The catalog's `appleskin` and `appleskin_horizon` draw only part of AppleSkin's HUD: neither has the food values in tooltips, the server sync, F3, AppleSkin's options or its config screen, and `appleskin_horizon` has no exhaustion or health preview. Both are built for older Nightlies. Better AppleSkin has all of AppleSkin, uses the game's own sprites (resource packs apply), works with Java AppleSkin servers and clients, and adds everything above.
+
+Built for Horizon Nightly 2026-11-13 (`9f42064`). Native mods are compiled into the game and are not sandboxed: build only code you trust.
+
+**Credits.** AppleSkin, its textures and icon are by squeek502, released into the public domain (Unlicense); so is this port. Not affiliated with squeek502, Mojang or Microsoft. Source, releases and bug reports: [MCRE-Mods](https://github.com/DeportedToHell/MCRE-Mods/tree/main/betterappleskin)."""
+authors = ["DeportedToHell"]
+owners = ["DeportedToHell"]
+owner_ids = [344119465]
+license = "Unlicense"
+source = "https://github.com/DeportedToHell/MCRE-Mods/tree/a84d6f5f37498250345a46ae3bfbbb5c5822e6e9/betterappleskin"
+icon = "icons/betterappleskin.png"
+categories = ["utility", "food"]
+tags = ["hud", "hunger", "saturation", "food", "tooltip", "appleskin", "port"]
+screenshots = ["screenshots/betterappleskin/1.jpg", "screenshots/betterappleskin/2.jpg", "screenshots/betterappleskin/3.jpg", "screenshots/betterappleskin/4.jpg"]
+
+[[versions]]
+version = "1.0.0"
+published = "2026-11-15"
+game = "26.3"
+file = "betterappleskin-1.0.0.hnmod"
+sha256 = "bcef803c3c2f1d60ddef25ce4aad7153694c1c80fdbc5bd021b47af2a7763dea"
+changelog = "First release: AppleSkin 3.0.10 (Minecraft 26.3) ported to Horizon Nightly 2026-11-13 (`9f42064`), with Better AppleSkin's additions."
