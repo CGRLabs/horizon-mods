@@ -1,0 +1,39 @@
+id = "emi"
+kind = "native-mod"
+name = "EMI"
+summary = "EMI for Horizon: EMI's index, craftables, favorites, history, search syntax, recipe screen and config screen, in EMI's own look."
+description = """
+A port of [EMI](https://github.com/emilyploszaj/emi) by Emi (1.1.24) to Horizon, as a native mod. It draws EMI's own interface, with EMI's textures, texts and layout, round the game's container screens.
+
+- **Sidebars** as in EMI: the index on the right with **Craftables** as its second page, favorites on the left, optional top and bottom sidebars; page arrows, the type button, page count and bar, the mouse wheel.
+- **EMI's search** under the screen, coloured as you type: words, `@mod`, `#tag`, `$tooltip`, `-exclusion`, `a | b`, `"quoted"`, `/regex/`. Double-click for highlight mode, right-click to clear, Up/Down for earlier searches, Ctrl+F to focus.
+- **Recipes and uses**: left click or R, right click or U, on any sidebar, recipe slot or slot of the screen; Ctrl+Y for every recipe.
+- **The recipe screen** as EMI's: category tabs, pages, workstations, Backspace back. Crafting (tags, "Accepts:" lists, repair), smelting, blasting, smoking, campfire, stonecutting, smithing, anvil repairing, grinding, brewing, world interaction, fuel, composting and tags.
+- **Fill button** and **one-click crafting** from Craftables, favorites and crafting history (Shift: as many as possible), by ordinary slot clicks, so it works on any server; missing ingredients shown in red.
+- **Favorites** (A over a stack, with its recipe over a recipe's output; drag to place), lookup and crafting history, saved in `emi.json` as EMI does.
+- **Cheat binds** (Creative Only by default) and deleting the held stack on the index.
+- **EMI's config screen** (the EMI button, Mod Menu, Options > Mods > EMI): every option of EMI 1.1.24 with its comment, folding groups, jump buttons, options search, binds with modifiers and mouse buttons, Config Presets and Revert; saved as `config/emi.css`, the same file EMI writes.
+- Ctrl+O hides EMI. English and Russian (EMI's own texts).
+
+Not ported yet: the recipe tree and recipe defaults, recipe screenshots, chess, Effect Location. EMI steps aside while Just Enough Items or Roughly Enough Items is built in and on.
+
+Built for Horizon Nightly 2026-11-13 (`9f42064`). Native mods are compiled into the game and are not sandboxed: build only code you trust.
+
+**Credits.** EMI is Copyright (c) 2022 Emi, MIT License; the textures, texts and icon are EMI's own. This port rewrites EMI in Rust under the same licence and is not affiliated with Emi, Mojang or Microsoft."""
+authors = ["DeportedToHell"]
+owners = ["DeportedToHell"]
+owner_ids = [344119465]
+license = "MIT"
+source = "https://github.com/DeportedToHell/MCRE-Mods/tree/85999f0ad32b881339f1e358d8d561bea20338ed/emi"
+icon = "icons/emi.png"
+categories = ["utility"]
+tags = ["emi", "recipes", "item-list", "recipe-viewer", "search", "favorites", "craftables", "port"]
+screenshots = ["screenshots/emi/1.png", "screenshots/emi/2.png", "screenshots/emi/3.png", "screenshots/emi/4.png"]
+
+[[versions]]
+version = "1.0.0"
+published = "2026-11-15"
+game = "26.3"
+file = "emi-1.0.0.hnmod"
+sha256 = "6d860a1c70c1490d95f8fd222e1054faeb127eede73fb6b91bc08ed6c0351132"
+changelog = "First release: a port of EMI 1.1.24 for Horizon Nightly 2026-11-13 (9f42064)."
