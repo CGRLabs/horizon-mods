@@ -1,0 +1,38 @@
+id = "parkour"
+kind = "native-mod"
+name = "Parkour"
+summary = "Parkour al estilo Mirror's Edge: roll, vault, mantle, slide, wall-run, colgarse de repisas y plancha."
+description = """
+# Parkour
+
+Movimiento fluido para Horizon, sin cinemáticas pesadas y **sin teclas propias**: todo depende del contexto con avanzar, salto, sprint y agacharse.
+
+- **Roll:** agáchate al caer (hasta 8 bloques sin daño); da igual si pulsas un poco antes o justo al tocar suelo.
+- **Vault y mantle:** salta obstáculos bajos sin perder la carrera y sube repisas a pulso, o quédate colgado y muévete de lado.
+- **Slide:** agáchate corriendo; slide-jump.
+- **Wall-run** lateral y vertical, wall jump encadenado, tic-tac y plancha.
+- Coyote time, buffer de salto y momento al encadenar movimientos.
+- Cámara y manos animadas, sonido según el material, polvo. Ajustes: cinemática 0–150 %, partículas, HUD de depuración.
+
+## Multijugador
+El servidor decide el daño de caída: **todos los jugadores y el servidor necesitan la misma versión**. Sin el mod en el servidor, el parkour queda apagado. Ajustes en `config/parkour-server.txt`.
+
+## Aviso
+Mod nativo: se compila y ejecuta sin sandbox."""
+authors = ["stwby"]
+owners = ["stwbzy"]
+owner_ids = [77763929]
+license = "MIT"
+source = "https://github.com/stwbzy/horizon-parkour"
+icon = "icons/parkour.png"
+categories = ["game-mechanics"]
+tags = ["parkour", "movement", "wall-run", "multiplayer"]
+screenshots = ["screenshots/parkour/1.jpg", "screenshots/parkour/2.jpg", "screenshots/parkour/3.jpg", "screenshots/parkour/4.jpg"]
+
+[[versions]]
+version = "0.2.1"
+published = "2026-11-15"
+game = "26.3"
+file = "parkour-0.2.1.hnmod"
+sha256 = "7e8d1f958e8a9b2b95e342692bbe06f75f5e89efa8e68288de5e70bf363181d4"
+changelog = "Primera versión en el registro. Incluye el arreglo del roll: pulsar agacharse en el mismo tick del aterrizaje cuenta. La plancha sólo sale en los 4 primeros ticks del salto."
