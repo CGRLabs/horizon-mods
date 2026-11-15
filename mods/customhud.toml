@@ -7,9 +7,11 @@ Beautiful Day Counter for Horizon, a native mod.
 
 Shows the current survival day, an in-game clock and a color-shifting bar that follows the day/night cycle, without changing gameplay. It is a port of the author's own Fabric/NeoForge mod [CustomHUD](https://github.com/sonoFrangu/CustomHUD), with the same HUD and the same settings screen.
 
-- Day counter with the game mode icon; a golden apple or totem, a rainbow counter and a sound on milestone days (50, 100, 365, every 100).
+- Day counter with the game mode icon; a golden apple or totem, a rainbow counter and a sound on milestone days: the classic ones (50, 365, every 100) or one every 10, 25, 50... 1000 days, your choice.
 - 12-hour or 24-hour clock; the clock icon turns into a bed when you can sleep.
 - Day/night bar with four color themes (Classic, Pastel, Colorblind, Mono), night marks, countdown to night or day, moon phase.
+- Weather: a small cloud after the clock while it rains, with drops, snowflakes or a lightning bolt depending on where you are.
+- Phantom warning: after 3 days without sleep, a phantom membrane with the days since you last slept.
 - Top or bottom placement, size, opacity, offsets, optional background; vanilla boss bars move below the HUD when it is at the top.
 - Settings screen opened with H (or from Options > Mods): Elements, Look and Behavior, with tooltips.
 - English, Italian, German, Spanish, French and Portuguese.
@@ -21,8 +23,22 @@ license = "MIT"
 source = "https://github.com/sonoFrangu/CustomHUD-Horizon"
 icon = "icons/customhud.png"
 categories = ["utility"]
-tags = ["day-counter", "clock", "hud", "day-night", "moon-phase", "port"]
-screenshots = ["screenshots/customhud/1.png", "screenshots/customhud/2.png", "screenshots/customhud/3.png", "screenshots/customhud/4.png", "screenshots/customhud/5.png"]
+tags = ["day-counter", "clock", "hud", "day-night", "moon-phase", "weather", "phantom", "port"]
+screenshots = ["screenshots/customhud/1.png", "screenshots/customhud/2.png", "screenshots/customhud/3.png", "screenshots/customhud/4.png", "screenshots/customhud/5.png", "screenshots/customhud/6.png", "screenshots/customhud/7.png", "screenshots/customhud/8.png"]
+
+[[versions]]
+version = "1.8.0"
+published = "2026-11-15"
+game = "26.3"
+file = "customhud-1.8.0.hnmod"
+sha256 = "8e642b9064dbe455394bc219ac585124f57b6551f1b86f1b69e14dddec433688"
+changelog = """
+1.8.0
+- **Weather**: a small pixel cloud after the clock while it rains, with drops, snowflakes or a lightning bolt depending on the weather and the biome where you are (off by default).
+- **Phantom warning**: after 3 days without sleep, a phantom membrane with the days since you last slept (the `time_since_rest` statistic, asked to the server every 10 seconds; on by default).
+- **Milestone every**: Classic (50, 365, every 100) or a milestone every 10, 25, 50, 100, 250, 365, 500 or 1000 days.
+- Simple mode now starts above the hotbar (50% / 77%), like the Java version.
+- Built on Horizon nightly 2026-11-13 (9f42064), with the status bar height fix from thetechginger's PR; the logic is split into four modules."""
 
 [[versions]]
 version = "1.7.0"
