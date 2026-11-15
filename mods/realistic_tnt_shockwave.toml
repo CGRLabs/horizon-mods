@@ -1,0 +1,21 @@
+id = "realistic_tnt_shockwave"
+kind = "shader"
+name = "Realistic TNT: explosions"
+summary = "The fireball, mushroom cloud, dust, flash and shockwave of the Realistic TNT native mod. Without the mod it leaves the picture as vanilla."
+description = """The picture half of the **Realistic TNT** native mod: a white-hot fireball that cools as it rises into a mushroom cloud, a ring of dust along the ground, a flash, and a sphere of bent air racing out. It only draws what the mod hands it, so install the mod too. Over the game's vanilla look; one full-screen pass. The "Explosion flash" option at 0 removes the flash."""
+authors = ["stealer0002"]
+owners = ["stealer0002"]
+owner_ids = [248463312]
+license = "MIT"
+source = "https://github.com/stealer0002/horizon-realistic-tnt"
+icon = "icons/realistic_tnt_shockwave.png"
+categories = ["bloom", "realistic", "atmosphere"]
+tags = ["shaders", "effect", "debris"]
+
+[[versions]]
+version = "0.3.0"
+published = "2026-11-15"
+game = "26.3"
+file = "realistic_tnt_shockwave-0.3.0.hshader"
+sha256 = "5921ea20b30b7b2b8ab5e3b51c392b4bcfecef280bd468a85932cd32fbce6db3"
+changelog = "First release on the registry"
