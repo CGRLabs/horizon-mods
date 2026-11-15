@@ -1,0 +1,21 @@
+id = "togglesprint"
+kind = "native-mod"
+name = "ToggleSprint"
+summary = "A minimal sprint indicator and optional toggle crouch."
+description = """
+ToggleSprint shows a small Sprint indicator when sprint is toggled on.
+ToggleCrouch is off by default. Enable it in Mod Settings to toggle crouching with C, or click the keybind button to choose another key."""
+authors = ["oblivion37"]
+owners = ["oblivion37"]
+owner_ids = [237868339]
+license = "MIT"
+source = "https://github.com/oblivion37/ToggleSprint"
+icon = "icons/togglesprint.png"
+categories = ["utility"]
+
+[[versions]]
+version = "1.0.1"
+published = "2026-11-15"
+game = "26.3"
+file = "togglesprint-1.0.1.hnmod"
+sha256 = "1ceb8e31b737fe832d2ae0cbccaa63ac4a95080f41da361232c28f0533f5e28c"
