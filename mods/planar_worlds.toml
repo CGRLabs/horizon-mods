@@ -1,0 +1,40 @@
+id = "planar_worlds"
+kind = "native-mod"
+name = "Planar Worlds"
+summary = "Play Minecraft as a 2D side-scrolling survival game with caves, mining, and background walls."
+description = """
+Planar Worlds turns the single-player Overworld in Horizon into a 2D side-scrolling survival game. Explore the surface, dig into caves, mine ores, and build with foreground blocks and walk-through background walls. Light fades into the terrain, keeping unlit ores hidden.
+
+## Getting started
+
+Build the native mod in the Horizon Launcher, then enable **Planar Mode** on the Create World screen.
+
+- **A/D** moves left or right. **Space** jumps.
+- Aim with the mouse. The outline marks the first block hit within reach.
+- Hold **left-click** to mine. Use **right-click** to interact or place blocks. Hold right-click with a block in hand to build into reachable empty foreground cells.
+- Hold **Ctrl** to target the background layer. Left-click breaks walls, and right-click places them.
+
+Requires Horizon for Minecraft Java Edition **26.3** with native mod support. Planar Mode is available in the single-player Overworld. The tree generation fix applies to newly generated chunks."""
+authors = ["PlanarMods"]
+owners = ["PlanarMods"]
+owner_ids = [356897893]
+license = "MIT"
+source = "https://github.com/PlanarMods/Planar-Worlds"
+icon = "icons/planar_worlds.png"
+categories = ["worldgen", "game-mechanics", "adventure"]
+tags = ["2d"]
+screenshots = ["screenshots/planar_worlds/1.png", "screenshots/planar_worlds/2.png", "screenshots/planar_worlds/3.png"]
+key = "RWQdhOB6/ghLv7vRQVstRqABa89hrLOnxlzyR8WnxiSNyHHRw61rrPyb"
+
+[[versions]]
+version = "0.3.6"
+published = "2026-11-15"
+game = "26.3"
+file = "planar_worlds-0.3.6.hnmod"
+sha256 = "24404c3167d04cc222b153cfe57bab2aaabeccfea82000ed9e8f5d955c2f7fa5"
+signature = """
+untrusted comment: signature from minisign secret key
+RUQdhOB6/ghLv6/KLbZHXOXUKPGl6YtJ2fuF3bjfd9WHRKoWwCey0aEd3tVS1PgXp/igOxo1Bo/spo5EERdJHQRGjdab/2slOw0=
+trusted comment: Planar Worlds 0.3.6 for Horizon / Minecraft 26.3
+oKT4AjLDqYVK4nnh4WJW54Uw5kpt3kv3h6/kLjyXRDp6vf1Eq1r61lewTGjgnLFHISxeRy5p42EdTG8+Exb8Ag=="""
+changelog = "Fixed tree generation so new Planar chunks grow complete 2D trees with upright trunks and symmetric canopies. Added direct placement in reachable empty foreground cells while holding right-click, with checks for intervening blocks and the player's occupied cells."
