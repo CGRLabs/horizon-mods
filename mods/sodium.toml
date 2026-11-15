@@ -1,0 +1,63 @@
+id = "sodium"
+kind = "native-mod"
+name = "Sodium for Horizon"
+summary = "Build-stage greedy quad meshing, live render statistics, and Sodium-style settings ported to Rust for Horizon Client"
+description = """
+# Sodium for Horizon
+
+A Rust-native performance mod for **Horizon Client** inspired by [CaffeineMC's Sodium](https://github.com/CaffeineMC/sodium). 
+
+While Horizon already implements modern GPU-driven rendering (vertex arenas, multi-draw submission, occlusion graph culling, and compact 24-byte `TerrainVertex` layouts), near-terrain sections still emit individual `1×1` quads for every visible block face. **Sodium for Horizon** adds a build-stage greedy quad-merging pass alongside Sodium-style debug HUD metrics and live configuration.
+
+> **Note:** This is an unofficial Rust port built specifically for **Horizon Client** using `horizon-mixins` (`.hnmod`) and is not affiliated with CaffeineMC.
+
+---
+
+## Key Features
+
+* **Build-Stage Greedy Quad Merging:** Combines adjacent, coplanar unit block faces on each 16×16 section plane into single larger rectangles during chunk streaming, reducing vertex transform and fragment shading overhead.
+* **Visually Exact Rendering:**
+  * Preserves per-corner ambient occlusion, biome tinting, cardinal shading, and smooth sky/block lighting without smearing gradients across merged faces.
+  * Re-encodes section UVs to per-block `1/32` steps with whole-period sprite wrapping so repeated textures stay pixel-identical.
+  * Leaves translucent geometry (water, stained glass) unmerged to preserve accurate back-to-front depth sorting.
+* **Zero-Allocation Hot Loop:** Runs in a self-contained Rust core (`horizon_sodium`) using reusable thread-local scratch buffers with zero per-section heap allocations.
+* **Sodium-Style Settings & Telemetry:**
+  * Toggle **Quad Merging** and **Debug HUD Statistics** live via **Options → Mods → Sodium** or the `/sodium` command.
+  * View real-time quad reduction ratios and reset merge statistics on the fly.
+
+---
+
+## Configuration & Commands
+
+* **In-Game Menu:** Open **Options → Mods → Sodium** to toggle quad merging, toggle debug HUD stats, or reset merge counters.
+* **Chat Command:** Run `/sodium` in-game to inspect live merge statistics and toggle settings.
+
+---
+
+## Compatibility
+
+* **Client:** Horizon Client (built and tested against revision `d009ebd140476b5bdc958c00f56a75e82abec691`)
+* **Format:** `.hnmod` (Horizon Native Mixin Mod)
+* **Environment:** Client-side only
+
+---
+
+## Installation
+
+1. Ensure you have a compatible build of **Horizon Client** with native mixin support (`horizon-mixins`).
+2. Place `sodium.hnmod` into your Horizon `mods` directory.
+3. Launch the game and verify **Sodium 0.1.0** appears under **Options → Mods**."""
+authors = ["MATRIX"]
+owners = ["masterxkiller"]
+owner_ids = [143279264]
+license = "no"
+source = "https://github.com/horizon-rust/horizon-mixins"
+icon = "icons/sodium.png"
+categories = ["optimization", "utility", "worldgen"]
+
+[[versions]]
+version = "0.2.0"
+published = "2026-11-15"
+game = "26.3"
+file = "sodium-0.2.0.hnmod"
+sha256 = "2f4bcc792167196654a76134ead67afefde40977be5fe2bebf059e1cfd2ed29a"
