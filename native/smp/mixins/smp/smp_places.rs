@@ -135,6 +135,16 @@ pub struct Rtp {
     told: bool,
 }
 
+/// A player placed on terrain the generator promised before its chunk was loaded: the loaded chunk is checked
+/// once, and a spot that trees, lava or cacti spoiled is replaced by a regular start.
+#[derive(Clone, Debug, PartialEq)]
+struct Settle {
+    uuid: u128,
+    spot: Place,
+    /// When to give up waiting for the chunk (ms).
+    until: i64,
+}
+
 /// A loaded chunk's columns, as the game read them: each column's `x`,
 /// `z`, height (the first block above its ground) and its ground, feet and
 /// head blocks, as indexes into `palette`.
@@ -148,6 +158,8 @@ pub struct Ground {
 /// top block, the water surface over it if any, and the biome.
 #[derive(Clone, Debug, PartialEq)]
 pub struct Terrain {
+    /// One above the highest solid block (`native_terrain_surface`'s `height`).
+    pub height: i32,
     pub block: String,
     pub water: Option<i32>,
     pub biome: String,
@@ -251,6 +263,8 @@ pub struct Places {
     changed: bool,
     /// Players placed at the world spawn who are to start at a random spot, once they are on.
     welcome_queue: Vec<u128>,
+    /// Players placed at their random start by the game's spawn hooks, whose chunk is not checked yet.
+    settling: Vec<Settle>,
     /// Time played changed: written once a minute.
     played_at: Option<i64>,
     pub pending: Vec<Pending>,
@@ -384,6 +398,7 @@ impl Places {
             data,
             changed: false,
             welcome_queue: Vec::new(),
+            settling: Vec::new(),
             played_at: None,
             pending: Vec::new(),
             requests: Vec::new(),
@@ -577,24 +592,132 @@ impl Places {
         Vec::new()
     }
 
-    /// A player joined: a newcomer (never played here, no spawn point) is to start at a random spot.
-    pub fn arrived(&mut self, uuid: u128) {
+    /// Whether a joining or respawning player starts at a random spot: a newcomer (never played here, no spawn
+    /// point) at the join; at a respawn, anyone unless they set a spawn point since the SMP began to watch for
+    /// them (a bed set before that is not known, so it is overridden).
+    fn wants_start(&mut self, uuid: u128, join: bool) -> bool {
         let key = smp_store::uuid_string(uuid);
+        if !join {
+            return !self.data.spawn_set.contains(&key);
+        }
         let new = !self.data.played.contains_key(&key)
             && !self.data.spawn_set.contains(&key)
             && !self.data.wild_start.contains(&key);
         if new && self.data.wild_start.insert(key) {
             self.changed = true;
+            return true;
+        }
+        false
+    }
+
+    /// A player joined: a newcomer is to start at a random spot (unless the spawn hook placed them there).
+    pub fn arrived(&mut self, uuid: u128) {
+        if self.wants_start(uuid, true) {
             self.welcome_queue.push(uuid);
         }
     }
 
-    /// A player respawned: at a random spot unless they set a spawn point since the SMP began to watch for them (a
-    /// bed set before that is not known, so it is overridden).
+    /// A player respawned: at a random spot unless they set a spawn point (see `wants_start`), or the respawn
+    /// hook already placed them there.
     pub fn respawned(&mut self, uuid: u128) {
-        let key = smp_store::uuid_string(uuid);
-        if !self.data.spawn_set.contains(&key) {
+        if self.settling.iter().any(|s| s.uuid == uuid) {
+            return;
+        }
+        if self.wants_start(uuid, false) {
             self.welcome_queue.push(uuid);
+        }
+    }
+
+    /// A dead player is about to respawn where they died: `/back` goes there, though the respawn may come
+    /// before the tick that sees the death.
+    pub fn died(&mut self, uuid: u128, at: Place) {
+        if self.dead.insert(uuid) {
+            self.back.insert(uuid, (at, true));
+        }
+    }
+
+    /// A player is about to be placed at a join or a respawn (the game's spawn hooks): if they start at a random
+    /// spot, one is drawn on the ring and `terrain` is asked about the columns, and the first dry one is where
+    /// they appear (no teleport, nothing of the world spawn seen). None when they start where the game puts
+    /// them. Terrain the generator cannot tell leaves the start to the teleport that follows the join or respawn.
+    /// The chunk is checked once it is loaded (`settle_look`).
+    pub fn start_spot<F>(
+        &mut self,
+        uuid: u128,
+        join: bool,
+        now: i64,
+        terrain: &mut F,
+    ) -> Option<Place>
+    where
+        F: FnMut(&[(i32, i32)]) -> Option<Vec<Option<Terrain>>>,
+    {
+        if !self.wants_start(uuid, join) {
+            return None;
+        }
+        let centre = match &self.data.spawn {
+            Some(s) if s.dimension == OVERWORLD => (s.x, s.z),
+            _ => (0.0, 0.0),
+        };
+        let columns = self.rtp_columns(centre, self.border);
+        let seen = terrain(&columns);
+        let spot = seen.and_then(|seen| {
+            columns.iter().zip(seen).find_map(|(&(x, z), t)| {
+                let t = t.filter(terrain_ok)?;
+                Some(Place {
+                    dimension: OVERWORLD.into(),
+                    x: f64::from(x) + 0.5,
+                    y: f64::from(t.height),
+                    z: f64::from(z) + 0.5,
+                })
+            })
+        });
+        match &spot {
+            Some(s) => self.settling.push(Settle {
+                uuid,
+                spot: s.clone(),
+                until: now + self.config.rtp_search_seconds.max(0) * 1000,
+            }),
+            // A newcomer's start is only asked for once: the teleport after the join does it.
+            None if join => self.welcome_queue.push(uuid),
+            None => {}
+        }
+        spot
+    }
+
+    /// Reads the chunk of each player the spawn hooks placed: where trees, lava or a cactus spoiled the spot, a
+    /// regular random start follows (a teleport that touches neither `/back` nor the cooldowns). None of this
+    /// happens while the chunk is not loaded, and not for ever.
+    pub fn settle_look(
+        &mut self,
+        now: i64,
+        look: &mut dyn FnMut(u128, (i32, i32)) -> Option<Ground>,
+    ) {
+        for s in std::mem::take(&mut self.settling) {
+            let (x, z) = (s.spot.x.floor() as i32, s.spot.z.floor() as i32);
+            let Some(ground) = look(s.uuid, (x >> 4, z >> 4)) else {
+                if now > s.until {
+                    self.welcome_queue.push(s.uuid);
+                } else {
+                    self.settling.push(s);
+                }
+                continue;
+            };
+            let sound = ground.columns.iter().any(|&(cx, cz, y, [g, f, h])| {
+                let ok = |i: u16, room: bool| {
+                    ground
+                        .palette
+                        .get(usize::from(i))
+                        .is_some_and(|n| if room { room_ok(n) } else { ground_ok(n) })
+                };
+                (cx, cz) == (x, z)
+                    && f64::from(y) == s.spot.y
+                    && ok(g, false)
+                    && ok(f, true)
+                    && ok(h, true)
+            });
+            if !sound {
+                self.welcome_queue.push(s.uuid);
+            }
         }
     }
 
@@ -699,7 +822,8 @@ impl Places {
     /// Whether an `/rtp` waits for land: the game reads it then
     /// (`rtp_look`).
     pub fn rtp_searching(&self) -> bool {
-        self.pending
+        !self.settling.is_empty()
+            || self.pending
             .iter()
             .any(|p| matches!(&p.to, To::Random(r) if r.spot.is_none() && (!r.chunks.is_empty() || !r.candidates.is_empty())))
     }
@@ -732,6 +856,9 @@ impl Places {
     pub fn rtp_wanted(&mut self, now: i64) -> BTreeSet<(i32, i32)> {
         self.release.retain(|&(_, until)| until > now);
         let mut wanted: BTreeSet<(i32, i32)> = self.release.iter().map(|&(c, _)| c).collect();
+        for s in &self.settling {
+            wanted.insert((s.spot.x.floor() as i32 >> 4, s.spot.z.floor() as i32 >> 4));
+        }
         for p in &self.pending {
             if let To::Random(r) = &p.to
                 && let Some(&c) = r.chunks.first()
@@ -1133,9 +1260,12 @@ impl Places {
                         let mut done = format!("Teleported to {what}.");
                         let mut undo_rtp = None;
                         if let Some((chunk, d)) = rtp {
-                            undo_rtp =
-                                Some(self.data.rtp.insert(smp_store::uuid_string(p.uuid), now));
-                            self.changed = true;
+                            // A random start costs no `/rtp` cooldown.
+                            if !p.welcome {
+                                undo_rtp =
+                                    Some(self.data.rtp.insert(smp_store::uuid_string(p.uuid), now));
+                                self.changed = true;
+                            }
                             // Held a little longer: the player's own view takes it over.
                             self.release.push((chunk, now + 10_000));
                             done = format!(
@@ -1145,10 +1275,20 @@ impl Places {
                                 to.z.floor()
                             );
                         }
-                        let undo = Undo {
-                            last: self.last.insert(p.uuid, now),
-                            back: self.back.insert(p.uuid, (p.from.clone(), false)),
-                            rtp: undo_rtp,
+                        // A random start (a join, a respawn) is not the player's teleport: it keeps `/back` where
+                        // they died and starts no teleport cooldown.
+                        let undo = if p.welcome {
+                            Undo {
+                                last: self.last.get(&p.uuid).copied(),
+                                back: self.back.get(&p.uuid).cloned(),
+                                rtp: None,
+                            }
+                        } else {
+                            Undo {
+                                last: self.last.insert(p.uuid, now),
+                                back: self.back.insert(p.uuid, (p.from.clone(), false)),
+                                rtp: undo_rtp,
+                            }
                         };
                         go.push(Teleport {
                             uuid: p.uuid,
@@ -1691,6 +1831,103 @@ mod tests {
     }
 
     #[test]
+    fn a_random_start_after_a_death_keeps_back_at_the_death_and_starts_no_cooldown() {
+        let d = dir();
+        let mut p = Places::open(&d, Config::default()).unwrap();
+        p.rng = 7;
+        let died = Body {
+            health: 0.0,
+            ..body(A, 100.0)
+        };
+        p.tick(&[died], 0);
+        // Respawned at the world spawn, then sent to a random spot.
+        let spawn = body(A, 0.0);
+        p.respawned(A);
+        p.tick(&[spawn.clone()], 1_000);
+        p.rtp_screen(&mut |_| None);
+        for _ in 0..8 {
+            p.rtp_look(&mut |_, c| grass(c));
+        }
+        let (_, go) = p.tick(&[spawn.clone()], 1_050);
+        assert_eq!(go.len(), 1, "sent to a random spot");
+        // /back still goes where they died, at once and not to the world spawn.
+        let there = [body(A, go[0].to.x)];
+        let out = p.command(&player(A, 0), &there, 1_100, "back").unwrap();
+        assert!(
+            !matches!(&out[0], Out::Error(_)),
+            "no cooldown after it: {out:?}"
+        );
+        let (_, back) = p.tick(&there, 20_000);
+        assert_eq!(back[0].to, place(100.0));
+        assert_eq!(back[0].done, "Teleported to where you died.");
+        let _ = std::fs::remove_dir_all(d);
+    }
+
+    #[test]
+    fn the_spawn_hook_places_a_respawning_player_on_dry_land_with_no_teleport() {
+        let d = dir();
+        let mut p = Places::open(&d, Config::default()).unwrap();
+        p.rng = 9;
+        p.died(A, place(100.0));
+        let spot = p
+            .start_spot(A, false, 0, &mut terrain_by_chunk)
+            .expect("placed");
+        assert_eq!(spot.y, 70.0);
+        assert!((spot.x.hypot(spot.z)) >= 500.0, "in the ring: {spot:?}");
+        assert!((spot.x.floor() as i32 >> 4) % 2 == 0, "on land: {spot:?}");
+        // The respawn that follows queues no teleport.
+        p.respawned(A);
+        p.tick(&[body(A, spot.x)], 1_000);
+        assert!(p.pending.is_empty());
+        // A player with a spawn point of their own is left to the game.
+        p.spawn_point(B, "bed");
+        assert_eq!(p.start_spot(B, false, 0, &mut terrain_by_chunk), None);
+        // /back goes to the death.
+        let at = [body(A, spot.x)];
+        let out = p.command(&player(A, 0), &at, 1_100, "back").unwrap();
+        assert!(!matches!(&out[0], Out::Error(_)), "{out:?}");
+        let (_, go) = p.tick(&at, 20_000);
+        assert_eq!(go[0].to, place(100.0));
+        let _ = std::fs::remove_dir_all(d);
+    }
+
+    #[test]
+    fn a_spot_the_loaded_chunk_spoils_is_replaced_and_a_sound_one_is_kept() {
+        let d = dir();
+        let mut p = Places::open(&d, Config::default()).unwrap();
+        p.rng = 9;
+        p.start_spot(A, true, 0, &mut terrain_by_chunk)
+            .expect("placed");
+        // Not loaded: it waits.
+        p.settle_look(1_000, &mut |_, _| None);
+        assert!(p.welcome_queue.is_empty() && !p.settling.is_empty());
+        // Loaded with the player's feet at the terrain height (70) on grass: kept.
+        let sound = |c: (i32, i32)| {
+            let mut g = chunk(c, "minecraft:grass_block", "minecraft:air", "minecraft:air");
+            g.columns.iter_mut().for_each(|col| col.2 = 70);
+            Some(g)
+        };
+        p.settle_look(2_000, &mut |_, c| sound(c));
+        assert!(p.welcome_queue.is_empty() && p.settling.is_empty());
+        // A cactus where they stand: a regular random start follows.
+        let spot = p
+            .start_spot(B, true, 0, &mut terrain_by_chunk)
+            .expect("placed");
+        p.settle_look(2_000, &mut |_, c| {
+            let mut g = chunk(
+                c,
+                "minecraft:grass_block",
+                "minecraft:cactus",
+                "minecraft:air",
+            );
+            g.columns.iter_mut().for_each(|col| col.2 = 70);
+            Some(g)
+        });
+        assert_eq!(p.welcome_queue, vec![B], "{spot:?}");
+        let _ = std::fs::remove_dir_all(d);
+    }
+
+    #[test]
     fn rtp_without_a_spot_or_called_off_costs_no_cooldown() {
         let d = dir();
         let mut p = Places::open(&d, Config::default()).unwrap();
@@ -1808,6 +2045,7 @@ mod tests {
                 .map(|&(x, _)| {
                     let land = (x >> 4) % 2 == 0;
                     Some(Terrain {
+                        height: 70,
                         block: if land {
                             "minecraft:grass_block"
                         } else {
@@ -1922,6 +2160,7 @@ mod tests {
                     .iter()
                     .map(|_| {
                         Some(Terrain {
+                            height: 70,
                             block: "minecraft:sand".into(),
                             water: Some(63),
                             biome: "minecraft:ocean".into(),

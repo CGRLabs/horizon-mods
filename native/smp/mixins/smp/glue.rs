@@ -712,16 +712,7 @@ pub(in crate::game) fn level_ticked(game: &mut Game<'_>, dimension: &str) {
     let game = &*game;
     // The columns an `/rtp` drew are asked about first, from the generator: no chunk is loaded for them, and
     // only the dry land's chunks are held.
-    places.rtp_screen(&mut |columns| {
-        let seen = game.native_terrain_surface(smp_places::OVERWORLD, columns).ok()?;
-        Some(
-            seen.into_iter()
-                .map(|c| {
-                    c.map(|c| smp_places::Terrain { block: c.block, water: c.water, biome: c.biome })
-                })
-                .collect(),
-        )
-    });
+    places.rtp_screen(&mut |columns| terrain_of(game, columns));
     let mut cost = RTP_COST.lock().unwrap_or_else(|e| e.into_inner());
     places.rtp_look(&mut |uuid, (cx, cz)| {
         let started = std::time::Instant::now();
@@ -733,7 +724,61 @@ pub(in crate::game) fn level_ticked(game: &mut Game<'_>, dimension: &str) {
         }
         ground
     });
+    let now = chrono::Utc::now().timestamp_millis();
+    places.settle_look(now, &mut |uuid, chunk| read_chunk(game, claims, uuid, chunk));
     RTP.store(places.rtp_searching(), Relaxed);
+}
+
+/// What the generator makes at `columns` of the Overworld, None when the game cannot say.
+fn terrain_of(game: &Game<'_>, columns: &[(i32, i32)]) -> Option<Vec<Option<smp_places::Terrain>>> {
+    let seen = game.native_terrain_surface(smp_places::OVERWORLD, columns).ok()?;
+    Some(
+        seen.into_iter()
+            .map(|c| {
+                c.map(|c| smp_places::Terrain { height: c.height, block: c.block, water: c.water, biome: c.biome })
+            })
+            .collect(),
+    )
+}
+
+/// A joining (`join`) or respawning player is about to be placed: if they start at a random spot, the spawn hooks
+/// put them there, so they never appear at the world spawn. A death is noted for `/back` first (the respawn can
+/// come before the tick that sees it). Nothing changes when the terrain cannot be asked: the teleport after the
+/// join or respawn does it (`spawn_news`).
+pub(in crate::game) fn place_start(
+    game: &mut Game<'_>,
+    uuid: u128,
+    join: bool,
+    dimension: &mut String,
+    pos: &mut [f64; 3],
+) {
+    if !game.native_on(ID) {
+        return;
+    }
+    let Some(dir) = game.native_world_dir() else {
+        return;
+    };
+    let died = (!join)
+        .then(|| game.native_server_players().into_iter().find(|p| p.uuid == uuid && p.health <= 0.0))
+        .flatten();
+    let mut guard = state(dir.join(smp_store::DIR));
+    let Some(smp) = guard.as_mut() else {
+        return;
+    };
+    let Ok(places) = &mut smp.places else {
+        return;
+    };
+    if let Some(p) = died {
+        places.died(uuid, bodies(&[p]).remove(0).at);
+    }
+    let now = chrono::Utc::now().timestamp_millis();
+    let game = &*game;
+    if let Some(spot) = places.start_spot(uuid, join, now, &mut |columns| terrain_of(game, columns)) {
+        *dimension = spot.dimension;
+        *pos = [spot.x, spot.y, spot.z];
+    }
+    RTP.store(places.rtp_searching(), Relaxed);
+    BUSY.store(true, std::sync::atomic::Ordering::Relaxed);
 }
 
 /// Chunk `(cx, cz)` of the Overworld as `/rtp` reads it, None while it isn't

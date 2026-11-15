@@ -526,6 +526,30 @@ bindings = [
 ]
 
 [[injection]]
+id = "player_respawn_position"
+kind = "HEAD"
+target = "horizon_client::game::native_hooks::Game<'_>::native_player_respawn_position"
+helper = "player_respawn_position.rs"
+bindings = [
+  { name = "game", ty = "&mut crate::game::Game<'_>", value = "&mut *self" },
+  { name = "player", ty = "u128", value = "player" },
+  { name = "dimension", ty = "&mut String", value = "&mut *dimension" },
+  { name = "pos", ty = "&mut [f64; 3]", value = "&mut *pos" },
+]
+
+[[injection]]
+id = "player_spawn_location"
+kind = "HEAD"
+target = "horizon_client::game::native_hooks::Game<'_>::native_player_spawn_location"
+helper = "player_spawn_location.rs"
+bindings = [
+  { name = "game", ty = "&mut crate::game::Game<'_>", value = "&mut *self" },
+  { name = "player", ty = "u128", value = "player" },
+  { name = "dimension", ty = "&mut String", value = "&mut *dimension" },
+  { name = "position", ty = "&mut [f64; 3]", value = "&mut *position" },
+]
+
+[[injection]]
 id = "player_logged_in"
 kind = "HEAD"
 target = "horizon_client::game::native_hooks::Game<'_>::native_player_logged_in"
