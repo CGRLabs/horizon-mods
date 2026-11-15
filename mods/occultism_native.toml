@@ -1,0 +1,40 @@
+id = "occultism_native"
+kind = "native-mod"
+name = "Occultism for Horizon: Native Code"
+summary = "The native code of the Occultism port: rituals, spirits, the Demonic Altar, dimensional storage and the mineshaft. Needs Occultism for Horizon: Content."
+description = """
+An unofficial, alpha port of [Occultism](https://github.com/klikli-dev/occultism) by klikli-dev, rewritten for Horizon in Rust with klikli's permission. It isn't made or supported by the Occultism team, so please report problems [to this port](https://github.com/Dawnforger/occultism-horizon/issues), not to them. Occultism's code is MIT and some of its art is CC BY 3.0. Both are credited in the file's NOTICE.
+
+This is the code half: install it with **Occultism for Horizon: Content** (`occultism`), or the **Occultism for Horizon** modpack, which installs both. The port ships as two files because current launchers build a one-file native mod without its content ([horizon-rust/horizon#15933](https://github.com/horizon-rust/horizon/issues/15933)).
+
+**What's in this alpha**
+
+- **Ritual circles.** Draw chalk glyphs that wear down as you use them. Set out sacrificial bowls and a golden bowl, and the Foliot, Djinni, Afrit and Marid rituals bind spirits into cores. Rituals can ask for a sacrifice or an item used nearby, as Occultism's do.
+- **Spirit names.** Bound books of binding carry their spirit's name, and the dimensional matrix and Storage Accessor pass it on.
+- **Unbound spirits.** Summon a hostile Afrit or Marid, drawn from Occultism's own models and animations, with its stats, immunities and helpers. Their essences make stabilizer plates 3 and 4, the Afrit and Marid miners, and red and blue chalk.
+- **The Demonic Altar.** A bound crusher spirit grinds ores into dusts at its rank's speed.
+- **Repairs and sacrifices.** The repair rituals and thirteen sacrifice rituals.
+- **Spirit fire and Demon's Dream.** Datura seeds drop from grass. Light dropped fruit with flint and steel, and the fire turns items into otherstone, books of binding, inks and more.
+- **The Third Eye and otherworld goggles.** With either, you find raw iesnium in silver ore and otherworld logs among the oaks you chop.
+- **Dimensional storage.** The Storage Actuator holds a store that moves with its Core, with stabilizer plates, a searchable terminal and recall, stable wormholes, the Storage Accessor, and hoppers that pull from it. Every plate and miner has a survival recipe.
+- **The dimensional mineshaft.** Miner spirits dig ores into it.
+
+**Not in yet:** possessed mobs, wild hordes, familiars and working spirits, and Occultism's guide book. Some ingredients use simpler stand-ins, listed in the project's CHANGELOG.
+
+This is a native mod: the launcher builds it into the game after asking you to trust its code, and it runs with your account's permissions. It is pinned to one Horizon Nightly and Horizon Mixins revision, named in each version's changelog. It contains no Minecraft code or assets."""
+authors = ["Dawnforger", "klikli-dev (Occultism)"]
+owners = ["Dawnforger"]
+owner_ids = [73370299]
+license = "MIT AND CC-BY-3.0"
+source = "https://github.com/Dawnforger/occultism-horizon"
+icon = "icons/occultism_native.png"
+categories = ["magic", "storage"]
+tags = ["occultism", "rituals", "spirits", "chalk", "storage", "port", "alpha", "native"]
+
+[[versions]]
+version = "0.6.0-alpha.1"
+published = "2026-11-15"
+game = "26.3"
+file = "occultism_native-0.6.0-alpha.1.hnmod"
+sha256 = "f729b7a76cb0b85d4b8e0bf25e7ca6faa13e4183af8333fb521991fab03528be"
+changelog = "First registry submission. An alpha port of Occultism by klikli-dev, with their permission: ritual circles with the crusher, storage, repair, sacrifice and summoning rituals, spirit names, the unbound Afrit and Marid with Occultism's models, the Demonic Altar, spirit fire and Demon's Dream, iesnium and otherworld wood through the Third Eye, dimensional storage with wormholes, the Accessor and hopper pulls, and the dimensional mineshaft. Pinned to Horizon Nightly 2026-11-13 (`9f42064`) and Horizon Mixins `5a64af9`; built from the release file and tested in game with launcher 0.2.63, beside occultism 0.6.0-alpha.1. Source: https://github.com/Dawnforger/occultism-horizon/tree/v0.6.0-alpha.1"
