@@ -1,0 +1,58 @@
+id = "basso"
+kind = "native-mod"
+name = "basso"
+summary = "Google Maps for Horizon: tell it where to go, what to mine or who to follow, and it plays the game to get there."
+description = """
+basso is Google Maps, but for Horizon. Tell it where to go, what to mine or who to follow, and it plays the game to get there.
+
+It behaves just like [Baritone](https://github.com/cabaletta/baritone), but in Rust, running inside Horizon. It started as a fork of [Azalea](https://github.com/azalea-rs/azalea), a Rust library for Minecraft bots. It is also very useful for agents that need to play the game, for example to test things in Horizon: they give basso an order and it does the walking, digging and following for them.
+
+## What it does
+
+- **Goto**: walks, sprints, jumps, parkours, swims, climbs ladders and vines, falls safely (MLG water bucket), pillars up, bridges and digs through what is in the way.
+- **Mine**: finds every known block of the kinds you ask for, highlights them, digs to them with the best tool and picks up the drops; explores when none is known.
+- **Follow**: players, any living entity, or given kinds or names.
+- **Click mode**: point at a block and click to go there.
+- **Free camera**: watch basso from outside while it plays.
+- **Rendering**: the path, the goal and the blocks it is after are drawn in the world, through walls.
+
+## Commands
+
+```
+/basso goto 100 64 -200      walk there
+/basso mine 16 iron_ore      mine 16 iron ore
+/basso follow player Steve   follow a player
+/basso cancel                stop
+```
+
+Also `pause` / `resume`, `click`, `set` / `toggle` for settings (allowBreak, allowPlace, allowParkour, autoTool, mlgWaterBucket, freecam, verbose...) and `help`. Every command tab-completes.
+
+## Status
+
+basso is young (0.1). Goto, mine and follow work and are tested in game, but it is rougher than Baritone, and Baritone's other processes (build, farm, schematics...) are not there yet.
+
+- **Single player.** basso is a single-player and testing tool. It has no anticheat bypass of any kind.
+- **Pinned to a Horizon commit.** It is tested on the Horizon commit in its `horizon-mixin.toml`.
+
+Bugs and ideas: [issues](https://github.com/luniiya/basso/issues). Contributions are welcome.
+
+## Credits
+
+basso's goal, behaviour, commands and settings follow [Baritone](https://github.com/cabaletta/baritone) (by cabaletta and its contributors); basso contains no Baritone code. It started as a fork of [Azalea](https://github.com/azalea-rs/azalea) by mat and its contributors (MIT); Azalea's copyright notice is kept in LICENSE.md."""
+authors = ["Luniiya"]
+owners = ["luniiya"]
+owner_ids = [86487331]
+license = "MIT"
+source = "https://github.com/luniiya/basso"
+icon = "icons/basso.png"
+categories = ["utility", "transportation"]
+tags = ["pathfinding", "baritone", "automation", "mining", "bot"]
+screenshots = ["screenshots/basso/1.jpg", "screenshots/basso/2.jpg", "screenshots/basso/3.jpg"]
+
+[[versions]]
+version = "0.1.1"
+published = "2026-11-15"
+game = "26.3"
+file = "basso-0.1.1.hnmod"
+sha256 = "6c33ddf078563ea456e2a88e9b07d7e4ca5010f20535a6f37dd83875d0b0d00f"
+changelog = "First release: goto, mine, follow, click mode, free camera and in-world path rendering. 0.1.1 also applies on the newest Horizon Nightly (the chat tab-completion hook moved to `with_native_commands`)."
