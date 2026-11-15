@@ -5,18 +5,24 @@ summary = "Two buttons beside a chest's sort button: everything into the chest, 
 description = """
 Two buttons beside a chest's sort button: **arrow up** moves your whole main inventory into the chest (the hotbar stays), **arrow down** moves everything out of the chest into your inventory.
 
-Each button is a run of ordinary Shift-clicks, so it works on any server, vanilla included, and nothing is needed on the server. Needs Horizon's sort buttons on (`sort:true` in `horizon-extras.txt`).
-
-Native source mod: the launcher compiles it after a warning; it runs with your account's permissions. No Minecraft code or assets are included."""
+Each button is a run of ordinary Shift-clicks, so it works on any server, vanilla included, and nothing is needed on the server. Needs Horizon's sort buttons on (`sort:true` in `horizon-extras.txt`). Native source mod: the launcher compiles it after a warning; it runs with your account's permissions. No Minecraft code or assets are included."""
 authors = ["Kotost Games"]
 owners = ["Leks2000"]
 owner_ids = [107043945]
 license = "MIT"
 source = "https://github.com/Leks2000/kotost-chest"
 icon = "icons/kotost_chest.png"
-categories = ["utility", "storage"]
+categories = ["utility"]
 tags = ["chest", "inventory", "quality-of-life"]
 screenshots = ["screenshots/kotost_chest/1.png"]
+
+[[versions]]
+version = "0.1.1"
+published = "2026-11-15"
+game = "26.3"
+file = "kotost_chest-0.1.1.hnmod"
+sha256 = "d930c130d41d01e6eb6caba0c0c739e628ac4653bc6209745fe57e1a500689fa"
+changelog = "Builds on the newest Nightly (2026-11-13, 9f42064) as well as on 2026-11-08 (fdc87ae), from the same source: the buttons are drawn and pressed through Horizon's named hook points (screen_render_post, mouse_button_pre), so the mod no longer depends on where Horizon keeps its sort buttons' code."
 
 [[versions]]
 version = "0.1.0"
