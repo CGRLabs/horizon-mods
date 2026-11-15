@@ -1,0 +1,37 @@
+id = "gravestone_core"
+kind = "native-mod"
+name = "Gravestone"
+summary = "Spawns a gravestone upon death to safely store your inventory and gives you a readable obituary book. Requires Gravestone (assets)."
+description = """
+A native Rust implementation of **Gravestone** for the Horizon engine and mod loader. When a player dies, a gravestone spawns at their death coordinates to safely store their entire inventory, armor, offhand, and hotbar.
+
+> **Requirement:** This is the native logic module (`gravestone_core.hnmod`). You **must also install** the companion **`gravestone`** content mod (`.hmod`) for the block, items, 3D models, and localizations to appear and function correctly in-game.
+
+### Features
+- **Safe Loot Storage:** Automatically places a gravestone on death to protect dropped items from despawning, fire, or explosions.
+- **Slot-Accurate Restoration:** Break the gravestone or interact with it (`Shift + Right-Click`) to return all items and equipment directly into their original slots.
+- **Interactive Obituary Book:** Grants an obituary item on spawn that opens a custom book screen displaying exact death coordinates, dimension, timestamp, and lost items.
+- **Bilingual Support:** Full native support for English (`en_us`) and Russian (`ru_ru`).
+
+### Credits & License
+- **wareal-nah** — Rust code, custom GUI, and Horizon port (MIT License)
+- **PneumonoIsNotAvailable** — Gravestone 3D model and textures used in the companion asset module [Gravestone (assets)](https://github.com/PneumonoIsNotAvailable/Gravestones) (MIT License)"""
+authors = ["wareal-nah"]
+owners = ["wareal-nah"]
+owner_ids = [327950154]
+license = "MIT"
+source = "https://github.com/wareal-nah/gravestone-horizon"
+icon = "icons/gravestone_core.png"
+categories = ["utility", "storage", "game-mechanics"]
+tags = ["gravestone", "grave", "death", "inventory", "obituary", "qol", "rust", "native"]
+screenshots = ["screenshots/gravestone_core/1.png", "screenshots/gravestone_core/2.png"]
+
+[[versions]]
+version = "1.0.0"
+published = "2026-11-15"
+game = "26.3"
+file = "gravestone_core-1.0.0.hnmod"
+sha256 = "1a3c14a9025016cd545fdea2977f26eaafd0aecfa1e9ba893303a7997d4988ce"
+changelog = """
+Initial release (v1.0.0).
+- Native Rust death handling, slot-accurate inventory/armor restoration, and custom readable obituary book GUI. Requires the `gravestone` asset pack."""
