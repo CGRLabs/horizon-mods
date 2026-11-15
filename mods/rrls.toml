@@ -1,0 +1,40 @@
+id = "rrls"
+kind = "native-mod"
+name = "Remove Reloading Screen"
+summary = "A port of Remove Reloading Screen: resource packs load in the background while you keep playing, with a small progress bar instead of the red Mojang screen."
+description = """
+A port of [Remove Reloading Screen](https://github.com/dima-dencep/rrls) (RRLS) by dima_dencep to Horizon, as a native mod. On Horizon every resource reload (F3+T, changing resource packs, a server's pack) covers the whole window with the red Mojang screen and takes your input. **With this mod the game keeps drawing and you keep playing**: walk, look around, chat, open menus, while the packs load. The new packs take over when they are ready.
+
+- **A small overlay instead**: the reload screen's progress bar where it always is, a text of your own, the text on a dark box, or nothing. **Colourful** (rainbow) if you like.
+- **Eased fade-out** when the reload is done: 34 easings (sine, cubic, quint, back, elastic, bounce, step...), an easing argument and a speed.
+- **Which overlays to hide**: all, only reloads, only the start's (a world opened before the game finished loading), or none.
+- **After a failed reload**: drop the selected packs and reload (as Minecraft does), keep them, or reload without dropping them; forced reload or not.
+- **Early sending of a server's resource pack status**, for servers that wait until you have loaded their pack.
+- A reload asked for while one is under way waits for it, as in Minecraft.
+- **The original's config screen**, the same `config/rrls.toml` file and keys as on Java: Global, Splash overlay, Interpolation, Other, Platform-specific, with a **live preview of the overlay** on every change. Configure in Mod Menu, or Options > Mods > Remove Reloading Screen > Configure... In the original's 10 languages, English and Russian among them.
+
+### Better than the other version
+The only other Horizon port of RRLS (in review) only adds a row to the mod list: its own README says the background load is left to Horizon, so the reload screen still covers the game. This one really removes it, with every option of the original, built and tested on the current Nightly.
+
+Some options have nothing to change on Horizon and are kept so the file matches Java's (trimming the default overlay, blocking overlay use, reinitialising the screen, the (Neo)Forge overlay); Horizon's own reload screen has no fade, so when you keep it, it appears and goes at once.
+
+Built for Horizon Nightly 2026-11-13 (`9f42064`). Native mods are compiled into the game and are not sandboxed: build only code you trust.
+
+**Credits.** Remove Reloading Screen, its icon and its translations are by dima_dencep and its contributors, under the Open Software License 3.0; this port keeps that licence, publishes its full source, and is not affiliated with dima_dencep, Mojang or Microsoft. Source, releases and bug reports: [MCRE-Mods](https://github.com/DeportedToHell/MCRE-Mods/tree/main/rrls)."""
+authors = ["DeportedToHell"]
+owners = ["DeportedToHell"]
+owner_ids = [344119465]
+license = "OSL-3.0"
+source = "https://github.com/DeportedToHell/MCRE-Mods/tree/5bbfe6c755563bc637a4d0d379de749f0e351ff8/rrls"
+icon = "icons/rrls.png"
+categories = ["utility"]
+tags = ["resource-packs", "loading", "reload", "performance", "port"]
+screenshots = ["screenshots/rrls/1.jpg", "screenshots/rrls/2.jpg", "screenshots/rrls/3.jpg", "screenshots/rrls/4.jpg"]
+
+[[versions]]
+version = "1.0.0"
+published = "2026-11-15"
+game = "26.3"
+file = "rrls-1.0.0.hnmod"
+sha256 = "5476cf61b6020734dd27df1bef9a4725682019609589caa367574d96466baa6e"
+changelog = "First release: Remove Reloading Screen 5.2.8 ported to Horizon Nightly 2026-11-13 (`9f42064`)."
