@@ -1,0 +1,36 @@
+id = "sit"
+kind = "native-mod"
+name = "Sit"
+summary = "A port of Sit: right-click slabs and stairs to sit down, sneak to stand up. Only the host needs it: everyone sees you sit."
+description = """
+A port of [Sit](https://github.com/bl4ckscor3/Sit) by bl4ckscor3 to Horizon, as a native mod. **Take a seat on any slab or stairs**: right-click with an empty hand and sit down, with friends around a campfire, on a porch, in a train station.
+
+- Right-click the top of a **bottom slab, bottom stairs or half a bed** with an empty main hand to sit down; **sneak to stand up**, right back where you were.
+- One player per seat. Break the block and whoever sits on it gets up.
+- **Block Reach Distance** (0 to 1000, default 4): how close you must be; 0 means you stand on top of the block. A server setting of each world (`serverconfig/sit-server.toml`), in the original's config screen: Options > Mods > Sit > Configure..., or Mod Menu's Configure. English and Russian.
+
+### Better than the original
+- **Only the host needs it.** The seat is an invisible vanilla entity, so friends on LAN and players on a Horizon server, even ones without the mod, see you sitting and can sit too. On Java everyone needs Sit.
+- Leave the game or close the world while sitting and you are never stuck inside the block: you stand up first. Seats left in old saves are cleaned up.
+- You also get up when the seat's block is blown up, pushed by a piston or replaced, not only when a player breaks it.
+
+Built for Horizon Nightly 2026-11-13 (`9f42064`). Native mods are compiled into the game and are not sandboxed: build only code you trust.
+
+**Credits.** Sit and its icon are by bl4ckscor3 (MIT). This port keeps the MIT licence and is not affiliated with bl4ckscor3, Mojang or Microsoft. Source, releases and bug reports: [MCRE-Mods](https://github.com/DeportedToHell/MCRE-Mods/tree/main/sit)."""
+authors = ["DeportedToHell"]
+owners = ["DeportedToHell"]
+owner_ids = [344119465]
+license = "MIT"
+source = "https://github.com/DeportedToHell/MCRE-Mods/tree/7c5c8535b175dbb45efb1dc5c43eed3a4343469a/sit"
+icon = "icons/sit.png"
+categories = ["game-mechanics", "social"]
+tags = ["sit", "chair", "slab", "stairs", "multiplayer", "port"]
+screenshots = ["screenshots/sit/1.png", "screenshots/sit/2.png", "screenshots/sit/3.png"]
+
+[[versions]]
+version = "1.0.0"
+published = "2026-11-15"
+game = "26.3"
+file = "sit-1.0.0.hnmod"
+sha256 = "0dd8cb1be8079ffd3456d997bba161f28de0e06323bcae3e60e3eb83e4bb4cb4"
+changelog = "First release: Sit 1.5.3 (Minecraft 26.3) ported to Horizon Nightly 2026-11-13 (`9f42064`)."
