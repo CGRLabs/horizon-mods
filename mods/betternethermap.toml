@@ -1,0 +1,39 @@
+id = "betternethermap"
+kind = "native-mod"
+name = "Better Nether Map"
+summary = "Maps finally work in the Nether: a real map of caves, lava and paths instead of grey stripes. Server side: every player benefits, even without the mod."
+description = """
+A port of [Better Nether Map](https://github.com/Jummit/better-nether-map) by Jummit to Horizon, as a native mod, following its latest version for Minecraft 26.3 (4.3.0+26.1). **Vanilla maps are useless in the Nether**: they only show grey and brown stripes, at half the radius. With this mod a Nether map shows a real slice of the world at Y 40, just above the lava sea: netherrack, soul sand, lava lakes, fortresses and your tunnels, at the full radius of an Overworld map.
+
+- **Nether maps** show the world at a fixed height (default Y 40).
+- **Any cave dimension** can instead show the height the map was made at: use an empty map at Y 70 and it maps the caves at Y 70. The height is saved on the map item (`nethermap:map_height`), as in the original.
+- **Lists** that override the defaults for any dimension: a fixed height per dimension, or the creation height.
+- The Overworld and the End keep their normal maps.
+- `config/nethermap.toml`, the original's file, and the original's Cloth Config screen: Options > Mods > Better Nether Map > Configure..., or Mod Menu's Configure. English and Russian.
+- **Server side:** only the world's host needs the mod. In single player, on a LAN world and on a dedicated Horizon server every player's maps are drawn this way, whether their game has the mod or not (tested with a client without it, on LAN and on a dedicated server).
+
+### Better than the original
+- **No Polymer needed:** Horizon never sends the map height to a client, so vanilla and other clients always work. (The option stays in the screen and says so.)
+- `config/nethermap.toml` is read again when it changes: no server restart after editing it.
+- The only Nether-map mod in the catalog: the map mods here are minimaps and world maps on screen; this one fixes the map item itself, for everyone on the server.
+
+Built for Horizon Nightly 2026-11-13 (`9f42064`). Native mods are compiled into the game and are not sandboxed: build only code you trust.
+
+**Credits.** Better Nether Map and its icon are by Jummit, with Patbox (MIT). The config screen's Cloth Config parts (by shedaniel) are LGPL-3.0; the rest of the port is MIT. Not affiliated with Jummit, Mojang or Microsoft. Source, releases and bug reports: [MCRE-Mods](https://github.com/DeportedToHell/MCRE-Mods/tree/main/betternethermap)."""
+authors = ["DeportedToHell"]
+owners = ["DeportedToHell"]
+owner_ids = [344119465]
+license = "MIT AND LGPL-3.0-only"
+source = "https://github.com/DeportedToHell/MCRE-Mods/tree/4daf36d9239bcb7f65b0507b30fb0e769ae77569/betternethermap"
+icon = "icons/betternethermap.png"
+categories = ["utility", "game-mechanics"]
+tags = ["maps", "nether", "cartography", "server-side", "exploration", "port"]
+screenshots = ["screenshots/betternethermap/1.jpg", "screenshots/betternethermap/2.jpg", "screenshots/betternethermap/3.jpg"]
+
+[[versions]]
+version = "1.0.0"
+published = "2026-11-15"
+game = "26.3"
+file = "betternethermap-1.0.0.hnmod"
+sha256 = "6e5d1480e69e44a4ee465d203759594ff36f30de6889e4b16c5c2a245d09cb92"
+changelog = "First release: Better Nether Map 4.3.0+26.1 (Minecraft 26.1 to 26.3) ported to Horizon Nightly 2026-11-13 (`9f42064`)."
