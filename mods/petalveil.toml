@@ -1,0 +1,20 @@
+id = "petalveil"
+kind = "shader"
+name = "Petalveil"
+summary = "lightweight shader pack that keeps vanilla's own light as its base"
+description = "Petalveil is a lightweight shader pack for Horizon that keeps vanilla's own light as its base — albedo × tint × lightmap, exactly as without a pack — so caves, torchlight and night stay untouched. On top of that it adds sun, moon and cloud shadows, sun and moon rays, volumetric light shafts, a pastel sky with a rainbow after rain, water with waves, reflections, caustics and glitter, and plants in the wind. Every effect has its own switch or slider."
+authors = ["BarmaleyVIP"]
+owners = ["Givemegitpls"]
+owner_ids = [70638175]
+license = "MIT"
+source = "https://github.com/Givemegitpls/Petalveil"
+icon = "icons/petalveil.png"
+categories = ["vanilla-like", "atmosphere", "low"]
+screenshots = ["screenshots/petalveil/1.jpg", "screenshots/petalveil/2.jpg", "screenshots/petalveil/3.jpg", "screenshots/petalveil/4.jpg", "screenshots/petalveil/5.jpg", "screenshots/petalveil/6.jpg", "screenshots/petalveil/7.jpg"]
+
+[[versions]]
+version = "1.27.0"
+published = "2026-11-15"
+game = "26.3"
+file = "petalveil-1.27.0.hshader"
+sha256 = "562981234ad6b42e18756514869926753527895e057b4f1d20735698950fc89a"
