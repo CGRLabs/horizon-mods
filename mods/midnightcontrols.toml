@@ -1,0 +1,45 @@
+id = "midnightcontrols"
+kind = "native-mod"
+name = "MidnightControls"
+summary = "A port of MidnightControls: play with a controller the MidnightControls way, with button combos, a ring of every key, button hints, touch mode and more."
+description = """
+A port of [MidnightControls](https://github.com/TeamMidnightDust/MidnightControls) 1.12.1 by Motschen and LambdAurora to Horizon, as a native mod. Horizon already plays with a controller; set MidnightControls to **Controller** (automatic when one is connected) and it plays the game the MidnightControls way. Menus keep Horizon's navigation; in Keyboard/Mouse mode nothing changes.
+
+- **Button combinations**: D-pad Up + A takes a screenshot, D-pad Up + B opens the debug screen, D-pad Up + Y switches the camera, and you can bind any action to a combination of your own.
+- **The ring** (Guide): every key with no button, other mods' keys included, eight a page. Point with a stick, let go to run it.
+- **Button hints** in play and over containers, in the original's style, with the glyphs of 10 controller types (Xbox, PlayStation, Switch, Steam Deck…), picked from your controller.
+- **Building**: front block placing and vertical reacharound (Bedrock-style building over an edge), fast block placing while flying, flying without drifting. All off by default, as in the original.
+- **Camera**: Flat or Adaptive, separate X and Y speeds, dead zones and max values per stick axis, a trigger dead zone and trigger fix, look keys on the keypad.
+- **Virtual mouse** skins in containers and the original's **virtual keyboard** (English, German and Russian layouts).
+- **Touchscreen mode**: on-screen movement pad, jump, fly, sneak, drop, inventory, chat and pause buttons; drag to look, tap to place or hit, hold to break.
+- A **second controller** (Joy-Con pairs) and a binding profile per controller; analog movement off on anticheat servers (Hypixel by default).
+- The original's config screen (MidnightLib's): Options > Mods > MidnightControls > Configure..., or Mod Menu's Configure. Seven tabs; on the Buttons tab, press a binding and then the controller's buttons. English, Russian and 14 more languages. Settings in `config/midnightcontrols.json`, the original's own file.
+
+### Better than Horizon's own controller support
+Horizon has no button combinations, no ring of unbound keys (its radial menu holds a fixed list), no reacharound or fast placing, one camera sensitivity, and no touch mode. With MidnightControls you get all of these on top of Horizon's menu navigation.
+
+### Better than the original
+- The gameplay extras (reacharound, fast placing, fly drifting) are built in; on Java they need the separate midnightcontrols-extra add-on.
+- A controller whose name says nothing still gets the right glyphs (by its maker).
+- The Russian translation is complete, with a Russian keyboard layout.
+
+Built for Horizon Nightly 2026-11-13 (`9f42064`). Native mods are compiled into the game and are not sandboxed: build only code you trust.
+
+**Credits.** MidnightControls, its icon and textures are by Motschen, LambdAurora and contributors (TeamMidnightDust); the config screen is MidnightLib's (MidnightDust). Both MIT; this port keeps the MIT licence and is not affiliated with them, Mojang or Microsoft. Source, releases and bug reports: [MCRE-Mods](https://github.com/DeportedToHell/MCRE-Mods/tree/main/midnightcontrols)."""
+authors = ["DeportedToHell"]
+owners = ["DeportedToHell"]
+owner_ids = [344119465]
+license = "MIT"
+source = "https://github.com/DeportedToHell/MCRE-Mods/tree/af0a576f43e7395f911e9831b6104b6d0ede2bb6/midnightcontrols"
+icon = "icons/midnightcontrols.png"
+categories = ["utility"]
+tags = ["controller", "gamepad", "joystick", "touchscreen", "controls", "accessibility", "hints", "port"]
+screenshots = ["screenshots/midnightcontrols/1.jpg", "screenshots/midnightcontrols/2.jpg", "screenshots/midnightcontrols/3.jpg", "screenshots/midnightcontrols/4.jpg"]
+
+[[versions]]
+version = "1.0.0"
+published = "2026-11-15"
+game = "26.3"
+file = "midnightcontrols-1.0.0.hnmod"
+sha256 = "5357d09996f8069afaeb58dfdb2f8b74570207009b344dad8853b0a76cd8584d"
+changelog = "First release: MidnightControls 1.12.1 (its 26.2 port, adapted to 26.3) ported to Horizon Nightly 2026-11-13 (`9f42064`)."
