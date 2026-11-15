@@ -1,0 +1,38 @@
+id = "quark_native"
+kind = "native-mod"
+name = "Quark (native)"
+summary = "The behaviour, config and recipes of Quark's blocks and tweaks. Requires the mod Quark."
+description = """
+Native part of the independent port of [Quark](https://github.com/VazkiiMods/Quark) by Vazkii and the Quark team to Horizon. Not affiliated with or endorsed by them.
+
+**Both projects are required:** this native mod and the content mod **Quark** (its blocks, items and textures).
+
+What it does:
+- **Blocks:** placement and neighbour updates of vertical slabs, posts, hedges, stools and the rest; rope pulling up and down (and from a dispenser); sitting on stools; filling and emptying the new flower pots; copper vertical slabs ageing and waxing; leaf colours on hedges and leaf carpets; climbing inside hollow logs; how fire takes each block.
+- **Tweaks:** double doors open together, right-click harvesting, hoe harvesting, ladders drop down, note blocks chime on amethyst, map washing, renewable spore blossoms, scaffolding replacing, petting dogs, pig litters, safer rabbits and slimes, slimes to magma cubes, concrete powder stays on magma, glass shards, two slabs back into a block, utility recipes, automatic recipe unlock.
+- **Config:** the original's `config/quark-common.toml`, with the same module switches and options; turning a module off removes its recipes and behaviour.
+
+Native mods are compiled into the game and are not sandboxed. Licensed under CC BY-NC-SA 3.0, same as the original: not for commercial use."""
+authors = ["DispatchedToHeaven"]
+owners = ["DispatchedToHeaven"]
+owner_ids = [211231405]
+license = "CC-BY-NC-SA-3.0"
+source = "https://github.com/DeportedToHell/MCRE-Mods/tree/quark-0.1.0/quark"
+icon = "icons/quark_native.png"
+categories = ["decoration", "game-mechanics"]
+tags = ["building", "blocks", "decoration", "tweaks", "vanilla-plus"]
+screenshots = ["screenshots/quark_native/1.png"]
+key = "RWRKE9PraqtKIBNLiCXXKIdqfZ6tUGUVxdzMWkSmPfMz3PcTDxnyAEbv"
+
+[[versions]]
+version = "0.1.0"
+published = "2026-11-15"
+game = "26.3"
+file = "quark_native-0.1.0.hnmod"
+sha256 = "2df119c087ad48c41af9679ea836e324a2b5b9947428753690a786deff0490d7"
+signature = """
+untrusted comment: signature from minisign secret key\r
+RURKE9PraqtKICwiAk7GwUdYJqRnGCicbI+748ny99uZaIGwrM5XYBEoMKi34+dMuUH7fGGGoB3tRZxxtLm5CdGrQs7X/MJIpAg=\r
+trusted comment: timestamp:1794751675\tfile:quark_native-0.1.0.hnmod\thashed\r
+IZet8/GIwpsl1DToEhYV75BZm9rhE1wTJRTyMc8RZWkxGMdr9aA/ohkXpmYoL5n/JUHZnFrvJMDgMKGzFdPlBQ=="""
+changelog = "First release: the building group, 17 tweaks, the original's config."
