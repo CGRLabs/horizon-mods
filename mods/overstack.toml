@@ -1,0 +1,27 @@
+id = "overstack"
+kind = "native-mod"
+name = "Overstack for Horizon"
+summary = "Raises stackable items to 999 per slot while preserving normally unstackable items."
+description = """
+Overstack raises the maximum stack size of stackable items to 999. Items that normally stack to one remain unstackable.
+
+Install the native mod with Horizon Launcher. Requires Horizon Rust Edition at commit `9f42064c11efe7ef3e5ed2baad7ddc2a3b36eea0` and Minecraft version 26.3."""
+authors = ["Sujalx77"]
+owners = ["Sujalx77"]
+owner_ids = [345153715]
+license = "MIT"
+source = "https://github.com/Sujalx77/overstack-horizon"
+icon = "icons/overstack.png"
+categories = ["game-mechanics", "storage"]
+tags = ["stack-size", "inventory"]
+screenshots = ["screenshots/overstack/1.png", "screenshots/overstack/2.png", "screenshots/overstack/3.png"]
+
+[[versions]]
+version = "1.0.0"
+published = "2026-11-15"
+game = "26.3"
+file = "overstack-1.0.0.hnmod"
+sha256 = "334b48f4cd5eabd8e9a40ef210cdd6fd5415875e204f277d4fc832a757fe7baa"
+changelog = """
+- Sets stackable items to a maximum stack size of 999.
+- Preserves items that are normally unstackable."""
