@@ -47,6 +47,27 @@ tags = ["schematics", "litematica", "building", "printer", "material-list", "por
 key = "RWS+BRoCJslNCFapck3cbG2VFQcjlr1MUH5m3+CWA8zhJecoBoja7X94"
 
 [[versions]]
+version = "0.3.3"
+published = "2026-11-15"
+game = "26.3"
+file = "horizonmatica-0.3.3.hnmod"
+sha256 = "b689878c7cddbb021e914d5094233e49352ba4f0676cf30cca3c45873074fbdc"
+signature = """
+untrusted comment: signature from minisign secret key\r
+RUS+BRoCJslNCCdhq2kf1mKbtk2DD6GIiIuxZ2RF+MV+vAb4uJPffbRMdjVodDiZuXLdNo0khUfivssj08FDX1vPCiIy7vnFjQI=\r
+trusted comment: timestamp:1794767646\tfile:horizonmatica-0.3.3.hnmod\thashed\r
+bii9skDcfSjnVmxJYVEfEZrAWXlxvs/6T9Lk0u5v65pJKx59NtNmadc6TV4kIADcozmr76PA5tuIlVgdcPXnDw=="""
+changelog = """
+### Changed
+- Pinned to Horizon Nightly 2026-11-13 (9f42064). 0.3.2 no longer built there: Horizon removed `Game::options_to_game`, which the menu library set when opening the mod's page.
+- When Horizonmatica's own menu can't open and the menu key falls back to the page in Options > Mods, Esc there now goes back to the pause menu, as on Horizon's own pages.
+
+Thanks to fosoaq for the fix.
+
+Built for Horizon Nightly 2026-11-13 (9f42064).
+"""
+
+[[versions]]
 version = "0.3.2"
 published = "2026-11-08"
 game = "26.3"
