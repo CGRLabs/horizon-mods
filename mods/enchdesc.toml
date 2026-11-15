@@ -1,0 +1,34 @@
+id = "enchdesc"
+kind = "native-mod"
+name = "Enchantment Descriptions"
+summary = "Adds a short description under every enchantment in item tooltips. A 1:1 port of Darkhax's mod: its own texts in 25 languages, its config and Shift mode."
+description = """
+**A native Horizon mod**: the launcher builds it into the game (install it on the launcher's Mods page, then press Build there). Native mods are not sandboxed and run with your account's rights, so read the source before you build it. Built for Horizon Nightly 2026-11-13 (`9f42064`).
+
+A 1:1 port of [Enchantment Descriptions](https://github.com/Darkhax-Minecraft/Enchantment-Descriptions) by Darkhax (26.3.0.0), under its licence, LGPL-2.1. Every enchantment in an item's tooltip gets a line under it that says what it does: enchanted books and enchanted gear, curses too, in inventories, containers, the creative inventory, the recipe book and chat's item hovers.
+
+- **The original's own texts** for all 43 enchantments of 26.3, in all **25 languages** it ships (English, Russian, German, French, Spanish, Chinese, Japanese, Korean, Ukrainian, Polish...), and its texts for other mods' enchantments.
+- **Every option of the original**, kept in the same `config/enchdesc.json` (Prickle's layout, a Java file works as is): enabled, only on enchanted books, only in the enchanting table, only while **Shift** is held (with the "Hold shift…" line, which can be hidden), prefix, suffix and the full text style (colour incl. hex, bold, italic, font…).
+- **Settings in game** too: Options > Mods > Enchantment Descriptions switches each option, cycles the colour, reloads the file and resets to defaults (the original has only the file).
+- Long descriptions **wrap** when the tooltip would not fit on the screen, as on NeoForge.
+- **Resource packs** can change or add descriptions with the original's keys (`enchantment.<namespace>.<name>.desc`).
+- Mod Menu shows the original's icon and details.
+
+Port by DeportedToHell. Source, issues and all our other mods: [MCRE-Mods](https://github.com/DeportedToHell/MCRE-Mods)."""
+authors = ["Darkhax", "DeportedToHell"]
+owners = ["DeportedToHell"]
+owner_ids = [344119465]
+license = "LGPL-2.1-only"
+source = "https://github.com/DeportedToHell/MCRE-Mods/tree/59bff00e6b543ddaa629e55d33e4ba2a2e5e2fbd/enchdesc"
+icon = "icons/enchdesc.png"
+categories = ["utility", "magic"]
+tags = ["enchantments", "tooltip", "descriptions", "port", "client"]
+screenshots = ["screenshots/enchdesc/1.jpg", "screenshots/enchdesc/2.jpg", "screenshots/enchdesc/3.jpg", "screenshots/enchdesc/4.jpg"]
+
+[[versions]]
+version = "1.0.0"
+published = "2026-11-15"
+game = "26.3"
+file = "enchdesc-1.0.0.hnmod"
+sha256 = "21eccb8b7fbd908decbb2a8b66d9013bb5c88366b8f26f17ea9dd8010bb64e33"
+changelog = "First release: a 1:1 port of Enchantment Descriptions 26.3.0.0 for Horizon Nightly 2026-11-13."
