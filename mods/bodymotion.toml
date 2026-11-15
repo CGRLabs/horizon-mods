@@ -1,0 +1,35 @@
+id = "bodymotion"
+kind = "native-mod"
+name = "Body Motion"
+summary = "Third-person character animations: holding items, eating, using ladders, crawling, boats, horses"
+description = """
+Full-body player animations for Horizon, all in third person.
+
+What it does
+- Held maps render in the world, in one or both hands.
+- Animations: ladders (with snap-to-ladder), crawling, eating and drinking, boat rowing, horse riding, item swapping, petting wolves and cats, freezing, burning, elytra tweaks, bed items, hug, Naruto running, and a fall animation past 4 blocks.
+- Rotation locking: the body follows the head, with None / Fixed / Smooth modes.
+- Animation smoothing: arms and legs, with an amount slider.
+- Hold Up Items: players hold up what they inspect, with camera and offset sliders.
+- Lanterns swing while held.
+- A loaded crossbow in the off hand hides the main hand's item and turns the crossbow aside (the offhand_hiding setting).
+- A settings screen with search and tooltips, translated into 14 languages: English, Russian, Ukrainian, German, French, Polish, Portuguese, Swedish, Turkish, Chinese.
+
+Body Motion is an independently developed native mod for Horizon, inspired by Not Enough Animations; its code, settings screen and translations were written for Body Motion."""
+authors = ["Romaeboj"]
+owners = ["Dbdbdndbbsbs"]
+owner_ids = [97656496]
+license = "MIT"
+source = "https://github.com/Dbdbdndbbsbs/BodyMotion"
+icon = "icons/bodymotion.png"
+categories = ["decoration", "adventure"]
+tags = ["animations", "third-person", "maps", "movement", "horses", "boats", "eating", "crossbow", "petting", "lanterns"]
+screenshots = ["screenshots/bodymotion/1.png", "screenshots/bodymotion/2.png", "screenshots/bodymotion/3.png", "screenshots/bodymotion/4.png", "screenshots/bodymotion/5.png", "screenshots/bodymotion/6.png", "screenshots/bodymotion/7.png"]
+
+[[versions]]
+version = "0.2.81"
+published = "2026-11-15"
+game = "26.3"
+file = "bodymotion-0.2.81.hnmod"
+sha256 = "f4b0921464a94263088c7a45b2329ec89d2a178c0e5e7d945c2e584b8dd7aeeb"
+changelog = "Nothing"
