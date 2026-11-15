@@ -1,0 +1,35 @@
+id = "realistic_tnt"
+kind = "native-mod"
+name = "Realistic TNT"
+summary = "Explosions with a fireball, mushroom cloud, real craters and a shockwave that flattens what it sweeps over. TNT adds up with no limit."
+description = """
+Explosions that look, sound and hit like the real thing. Every explosion (TNT, creepers, beds, end crystals) gets:
+
+- **A shockwave** that races out, hurts and throws mobs and players, and knocks down what it sweeps over: glass and plants first, then trees and wooden houses, then turf, then brick and stone. Natural rock, ores and blocks holding items (chests, signs, beds) stay.
+- **A real crater**, dug ring by ring as the front passes, with a charred floor and scorched land round it.
+- **Flying debris**, sparks, smoke, falling ash, camera shake, and a **delayed boom** heard when the shockwave reaches you.
+- **A fireball and mushroom cloud** drawn by the companion shader pack *Realistic TNT: explosions* (optional: everything else works without it).
+
+**TNT adds up.** TNT touching a blast goes off with it, blasts close together are one, and everything grows with the cube root of the TNT, like real explosions, with no ceiling. A lit mass gets a longer fuse and a countdown over the hotbar, and it goes off on time however far you fly.
+
+**What the code does** (it is a native trait mod, unsandboxed, so here it is plainly): it reads and changes the world's blocks round an explosion (crater, torn-up land, scorched ground), spawns falling blocks, particles and sounds, hurts and pushes entities in the shockwave's reach, sets the fuse of lit TNT in a mass, holds the chunks round a burning mass loaded until it has gone off (in memory, not saved), and hands the shader pack the blasts' positions. It reads and writes no files, opens no network connections, starts no programs and has no `unsafe` code.
+
+**Limits:** a huge mass freezes the game for a moment as it goes off; Horizon keeps at most 1024 falling blocks at once; the fireball, cloud, camera shake, delayed boom and countdown work in single player and for a LAN host, not for guests or on a dedicated server (craters, debris, damage and knockback work everywhere). Explosions flash: the shader pack's "Explosion flash" option at 0 removes it. Back up your world before trying big masses.
+
+Video, numbers and tuning: https://github.com/stealer0002/horizon-realistic-tnt"""
+authors = ["stealer0002"]
+owners = ["stealer0002"]
+owner_ids = [248463312]
+license = "MIT"
+source = "https://github.com/stealer0002/horizon-realistic-tnt"
+icon = "icons/realistic_tnt.png"
+categories = ["game-mechanics"]
+tags = ["tnt", "explosions", "realistic"]
+
+[[versions]]
+version = "0.5.2"
+published = "2026-11-15"
+game = "26.3"
+file = "realistic_tnt-0.5.2.hnmod"
+sha256 = "74cce025b39dc2f9b3da2dff8054aba20fdf6010bda78c185946d3279a063bc8"
+changelog = "First release on the registry"
