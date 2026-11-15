@@ -1,0 +1,84 @@
+id = "hcef"
+kind = "native-mod"
+name = "HCEF"
+summary = "A Chromium browser (CEF) for Horizon mods. A library: other mods use it to show web pages."
+description = """
+**HCEF** gives Horizon mods a real web browser (Chromium, through CEF), as MCEF does for
+Minecraft mods. It is a library: by itself it adds nothing to the game. Mods that show web
+pages, such as WebDisplays, need it.
+
+## The browser is downloaded separately
+
+A native mod holds source code only, and Chromium is far too large for that. So the browser
+is a separate program, `hcef-host`, that the mod downloads **only when you ask for it**:
+
+1. Install HCEF and build.
+2. In the game, open **Options > Mods > HCEF** and click the button.
+3. The browser (188 MB) is downloaded from this mod's GitHub releases, checked against a
+   size and a SHA-256 compiled into the mod, and unpacked into the mod's data folder.
+   Any other file is refused.
+
+Nothing is downloaded before that click.
+
+## What the mod does, and what it does not
+
+It does:
+
+- **Download one file**, when you click the button: the browser archive, over HTTPS, from
+  `github.com/J8-Diablo/HCEF/releases`. Its SHA-256 is pinned in the source
+  (`host_release.rs`).
+- **Start one program**, `hcef-host.exe`, from its own data folder, when a mod first needs a
+  browser, and stop it with the game.
+- **Talk to that program** on this computer only: a socket on 127.0.0.1 with a random token,
+  and shared memory for the pictures.
+- **Write files** only in its data folder (`horizon-mods/.horizon-mod-data/hcef`).
+
+It does not:
+
+- download, update or run anything by itself, before or after that click;
+- open any page on its own: the browser loads only the addresses other mods give it, which
+  is network access, as in any browser;
+- read your game account, your files or your other browsers' data: the browser keeps its own
+  profile (cookies, cache) in the mod's data folder.
+
+The source of `hcef-host` is in the same repository (`host/`); the archive also holds the
+licences of CEF and Chromium.
+
+## Good to know
+
+- Windows x64 only for now.
+- H.264 and AAC play, so YouTube and Twitch live streams work.
+
+## For mod authors
+
+In your `horizon-mixin.toml`:
+
+    [dependencies]
+    hcef = "^0.1"
+
+The launcher then gives your crate `hcef`: starting the browser process, creating browsers,
+reading their pictures from shared memory and placing their sound. See the repository's
+README.
+"""
+authors = ["J-Diablo"]
+owners = ["J8-Diablo"]
+owner_ids = [125930057]
+license = "MIT"
+source = "https://github.com/J8-Diablo/HCEF"
+icon = "icons/hcef.png"
+categories = ["library"]
+tags = ["browser", "chromium", "cef", "web", "library"]
+key = "RWT+RdlVVja6RRLkjF97dRvi8+FwzE1STLMSFnNkGBJxKcugEkXZkN7U"
+
+[[versions]]
+version = "0.1.0"
+published = "2026-11-15"
+game = "26.3"
+file = "hcef-0.1.0.hnmod"
+sha256 = "bbf677eb2e3a99526a4cc2c1ddb92d09c6117aeaf7f149c1fb7dfb4252b098fa"
+signature = """
+untrusted comment: signature from minisign secret key\r
+RUT+RdlVVja6RXAd3N4J4xLWx50McruYdqtGnzM9oxKX2rLGLNxjcVKJd2Mlv2NoZsCkSjUUCclHJvsy5cWLWtNA29+1SIGKVQk=\r
+trusted comment: timestamp:1794771264\tfile:hcef-0.1.0.hnmod\thashed\r
+TYJtPyGl8jt1rhAT8QdX4JdEOuB0jajNJ7i8OTXEErS2qfwZpTaBKyBrygiP1VNNbGo6ksPSPTnZEGUC1vgqDw=="""
+changelog = "First relaese."
