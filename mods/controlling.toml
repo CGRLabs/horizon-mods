@@ -1,0 +1,38 @@
+id = "controlling"
+kind = "native-mod"
+name = "Controlling"
+summary = "Controlling for Horizon: search key binds by name, key or category, show conflicts and unbound keys, sort, free keys, reset all."
+description = """
+A port of [Controlling](https://github.com/jaredlll08/Controlling) by Jaredlll08 to Horizon, as a native mod. Options > Controls > Key Binds gets Controlling's screen.
+
+- **Search** your key binds by name, by key (`key:space`) or by category (`category:movement`); several words at once, values with spaces in quotes. Ctrl+F focuses the search box.
+- **Suggestions** under the search box: `category:`, `key:` and their values; arrows, Tab, Enter or a click take one.
+- **Show Conflicts**: only the keys that share a key, marked `[ key ]` in yellow, the tooltip lists what else uses it. **Show Unbound**: only the keys with no key.
+- **Sort**: A->Z, Z->A, by key A->Z / Z->A.
+- **Toggle Free**: every keyboard key and mouse button nothing uses yet.
+- **Reset Keys** asks "Confirm?" before putting every key back.
+- **Every native mod's keys on the same page**, under the mod's name, with conflicts across mods (Better Dynamic Lights, Mod Menu...), as Java's Controlling shows every mod's keys.
+- Controlling's texts in all 25 of its languages, English and Russian included.
+
+Better than Horizon's own Key Binds page, which only searches by name: everything above is new there. Turning the mod off brings Horizon's page back at once.
+
+Built for Horizon Nightly 2026-11-13 (`9f42064`). Native mods are compiled into the game and are not sandboxed: build only code you trust.
+
+**Credits.** Controlling is Copyright (c) 2021 Jared (Jaredlll08), MIT License; the icon and texts are Controlling's own. This port rewrites its screen in Rust under the same licence and is not affiliated with Jaredlll08, Mojang or Microsoft."""
+authors = ["Jaredlll08", "DeportedToHell"]
+owners = ["DeportedToHell"]
+owner_ids = [344119465]
+license = "MIT"
+source = "https://github.com/DeportedToHell/MCRE-Mods/tree/e8908dbc8ad0b61e95f964140f7d10ba8550772f/controlling"
+icon = "icons/controlling.png"
+categories = ["utility"]
+tags = ["controls", "keybinds", "search", "conflicts", "ui", "port"]
+screenshots = ["screenshots/controlling/1.png", "screenshots/controlling/2.png", "screenshots/controlling/3.png", "screenshots/controlling/4.png"]
+
+[[versions]]
+version = "1.0.0"
+published = "2026-11-15"
+game = "26.3"
+file = "controlling-1.0.0.hnmod"
+sha256 = "d6c57790caa349ed278d9c0437c3c99dbfe3251a0a866e9ff97bb189f6d9a9e4"
+changelog = "First release: a port of Controlling 26.3 for Horizon Nightly 2026-11-13 (9f42064)."
