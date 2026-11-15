@@ -1,0 +1,39 @@
+id = "blurplus"
+kind = "native-mod"
+name = "Blur+"
+summary = "A port of Blur+: menu blur that fades in and out, gradient backgrounds in any colour or rainbow, and blur on chests, inventories, books and signs."
+description = """
+A port of [Blur+](https://github.com/Motschen/Blur) by tterrag and Motschen to Horizon, as a native mod. **Menus stop popping in**: the blur behind them fades in when a screen opens and fades out after it closes, and the flat dark background becomes a **gradient in the colours you pick**.
+
+- **Smooth fades**: fade in and fade out times (1 to 2000 ms) and a curve for each: Flat, Sine, Quad, Cubic, Quart, Quint, Expo, Circ, Back or Elastic.
+- **Gradient as Background**: two colours, each with its own alpha, turned by any angle. **Rainbow Mode** slowly turns it through every colour.
+- **Blur where vanilla leaves it sharp**: chests, furnaces, the inventory and creative, books, signs and command blocks; the death screen and the title screen if you want; Darken Title Screen Background; Reduce Blur on In-Game Screens.
+- **Radius up to 20** (vanilla stops at 10), in Blur+'s settings and in Options > Accessibility.
+- Show Screen ID and lists of screens where the blur is always on or always off.
+- The original's config screen (MidnightLib's): Options > Mods > Blur+ > Configure..., or Mod Menu's Configure. Three tabs, a reset button per option, changes visible at once behind the screen. English and Russian. Settings in `config/blur.json`, the original's own file.
+
+### Better than the original
+- **An in-game colour chooser** (hue, saturation, brightness) instead of a separate system window.
+- Back and Elastic curves can't break the gradient (on Java their overshoot breaks the colours).
+- The Russian translation is complete.
+
+Built for Horizon Nightly 2026-11-13 (`9f42064`). Native mods are compiled into the game and are not sandboxed: build only code you trust.
+
+**Credits.** Blur+ and its icon are by tterrag, Motschen and contributors; the config screen is MidnightLib's (MidnightDust). Both MIT; this port keeps the MIT licence and is not affiliated with them, Mojang or Microsoft. Source, releases and bug reports: [MCRE-Mods](https://github.com/DeportedToHell/MCRE-Mods/tree/main/blurplus)."""
+authors = ["DeportedToHell"]
+owners = ["DeportedToHell"]
+owner_ids = [344119465]
+license = "MIT"
+source = "https://github.com/DeportedToHell/MCRE-Mods/tree/55952bd96b4b6822f8e60efe324393fce2aa37f7/blurplus"
+icon = "icons/blurplus.png"
+categories = ["decoration", "utility"]
+tags = ["blur", "menu", "gradient", "background", "animation", "gui", "port"]
+screenshots = ["screenshots/blurplus/1.jpg", "screenshots/blurplus/2.jpg", "screenshots/blurplus/3.jpg", "screenshots/blurplus/4.jpg"]
+
+[[versions]]
+version = "1.0.0"
+published = "2026-11-15"
+game = "26.3"
+file = "blurplus-1.0.0.hnmod"
+sha256 = "12fd64a9b6b63aace5208e7e2c90a0860fd3b8e6ef0ba29ad3c9c5e8a5564f3f"
+changelog = "First release: Blur+ 6.3.1 (Minecraft 26.3) ported to Horizon Nightly 2026-11-13 (`9f42064`)."
