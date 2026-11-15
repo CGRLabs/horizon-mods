@@ -1,0 +1,66 @@
+id = "fastipping"
+kind = "native-mod"
+name = "Fast IP Ping"
+summary = "A port of Fast IP Ping: the server list stops waiting for lookups that can only fail. A mistyped server name fails in 0.6 s instead of 22 s."
+description = """
+# Fast IP Ping for Horizon
+
+A port of [Fast IP Ping](https://github.com/Fallen-Breath/fast-ip-ping) by Fallen_Breath to [Horizon](https://github.com/horizon-rust/horizon), the Rust rewrite of Minecraft: Java Edition 26.3, as a native mod (`.hnmod`). The server list and joining a server stop waiting for name lookups that can only fail.
+
+Built for Horizon Nightly 2026-11-13 (`9f42064`), Fast IP Ping 1.0.12 for Minecraft 26.3.
+
+## Features
+
+- As the original: a server whose address is a plain IP (`192.168.2.10:25565`) is pinged and joined with that IP as its name. Nothing is looked up for it: no SRV question, no system lookup, no reverse lookup of a name for the IP. (On Java that reverse lookup takes 1–20 seconds per server; Horizon already skipped it, the mod keeps it that way.)
+- A server name that does not exist (a typo, a server that is gone): Horizon showed "Pinging..." for **22 seconds** before "Can't connect to server" on Windows. With the mod: **under a second**. The game's name servers are asked for the name beside the system's own lookup; when all of them say the name does not exist, the mod stops waiting for Windows' slow fallbacks (LLMNR, NetBIOS, mDNS). Joining such a server fails at once too.
+- An offline server (nothing answers): "Can't connect to server" after **5 seconds** instead of 10. Horizon tried the old pre-1.7 ping on a server it could not even reach, waiting for the connection a second time; vanilla asks that question only of a server it reached, and so does the mod.
+- A closed port: **2 seconds** instead of 4, for the same reason.
+- Servers that answer are pinged exactly as before. Names without a dot (a computer on your LAN) and `.local` names are left to the system alone. Nothing to set up: no settings, client only.
+
+## Install
+
+From the launcher: Mods, find **Fast IP Ping**, Install, then Native build > Build.
+
+By hand: put `fastipping-<version>.hnmod` in `<game folder>/horizon-native-mods/`, then Native build > Build in the launcher.
+
+Native mods are compiled into the game and are not sandboxed: build only code you trust.
+
+## Differences
+
+- The original only touches literal IP addresses. The two other fixes are this port's, for delays Horizon has and Java does not (Java never asks an unreachable server the legacy question) or has too (the slow lookup of a name that does not exist).
+- The original's mixins for Minecraft before 1.17 have nothing to do in 26.3.
+
+## Measured
+
+Horizon Nightly 2026-11-13 on Windows 11: time from opening the server list until each server shows its result, and from Join until the error:
+
+| Server | Without the mod | With the mod |
+|---|---|---|
+| Local server by IP | 0.1 s | 0.1 s |
+| Name that does not exist | 22.5 s | 0.6 s |
+| Offline server (no answer) | 10.1 s | 5.1 s |
+| Closed port | 4.3 s | 2.1 s |
+| Joining a name that does not exist | 11.5 s | 0.7 s |
+
+For comparison, Java's reverse lookup of an IP without a name on the same PC: 11–20 s (Java 25), 0 ms with the original mod.
+
+## Licence and credits
+
+LGPL-3.0-only, as the original is LGPL-3.0 ([source, LICENSE and NOTICE](https://github.com/DeportedToHell/MCRE-Mods/tree/main/fastipping)). Fast IP Ping and its icon are by Fallen_Breath. Not affiliated with Fallen_Breath, Mojang or Microsoft."""
+authors = ["DeportedToHell"]
+owners = ["DeportedToHell"]
+owner_ids = [344119465]
+license = "LGPL-3.0-only"
+source = "https://github.com/DeportedToHell/MCRE-Mods/tree/ef05dd7765120c143974b30360f7a0a7777cb315/fastipping"
+icon = "icons/fastipping.png"
+categories = ["optimization", "utility"]
+tags = ["ping", "dns", "server-list", "multiplayer", "network", "port"]
+screenshots = ["screenshots/fastipping/1.jpg", "screenshots/fastipping/2.jpg", "screenshots/fastipping/3.jpg"]
+
+[[versions]]
+version = "1.0.0"
+published = "2026-11-15"
+game = "26.3"
+file = "fastipping-1.0.0.hnmod"
+sha256 = "9c56c32e7eea8242eabe8b02af6946c27a0076b0eae4a8265101e247c0b5229d"
+changelog = "First release: a port of Fast IP Ping 1.0.12 (26.3) by Fallen_Breath. Plain-IP servers skip every lookup; a mistyped server name fails in 0.6 s instead of 22 s; offline servers and closed ports fail twice as fast."
