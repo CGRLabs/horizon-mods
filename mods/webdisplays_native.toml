@@ -1,0 +1,82 @@
+id = "webdisplays_native"
+kind = "native-mod"
+name = "WebDisplays"
+summary = "Web browsers on screens in your world: videos, live streams, any site. Needs the HCEF mod."
+description = """
+**WebDisplays** puts working web browsers on screens in your world: build a wall of screen
+blocks, click it, type an address. Videos, live streams, any site.
+
+**One file.** Its blocks, items, recipes, textures, sounds and translations (English and
+French) come inside it: there is no separate content mod to install.
+
+## It needs HCEF
+
+The browser itself is another mod, **HCEF** (`hcef`). Install both and build: without HCEF
+the launcher stops with "webdisplays_native requires missing mod hcef". Then, in the game,
+open **Options > Mods > HCEF** and click the button once to download the browser (188 MB).
+
+## What is in it
+
+- Screens made of blocks, and screens traced with the stylus, flat or with rounded corners.
+- Keyboard, remote control, redstone controller, linking tool, configurator, laser pointer,
+  MinePad.
+- One page over several screens, or one browser shown on several screens.
+- Sound that follows the place: echo in a room, muffled behind a wall. Three speakers
+  (tweeter, bass, full range).
+- Light from the screens on what is around them.
+- YouTube and Twitch addresses open as full-frame players, live streams included.
+
+## What the mod does, and what it does not
+
+It does:
+
+- draw the pages on the screens, and send your clicks and typing to them;
+- ask HCEF for browsers and give them the addresses players type: **those pages are loaded
+  from the internet by the browser**, as in any browser, on each player's own computer;
+- write two small files in the world's folder (`webdisplays/screens.bin` and
+  `webdisplays/browsers.bin`: the list of screens and of shared browsers), and its content
+  mod once into the instance's `.horizon-cache`;
+- read and write the clipboard, only for Ctrl+C / Ctrl+V in its own windows.
+
+It does not:
+
+- open any network connection itself, download anything or start any program: that is
+  HCEF's part, described on its page;
+- read your game account or files outside the world's and the instance's folders;
+- synchronize videos between players: each one plays the page for themself.
+
+## Good to know
+
+- Windows x64 only for now, and an early version.
+- A world opened without the mod loses its WebDisplays blocks.
+
+## Credits
+
+A rewrite in Rust, for Horizon, of **WebDisplays**: the original mod by
+[montoyo](https://github.com/montoyo/webdisplays) (released into the public domain) and its
+continuation by the [CinemaMod Group](https://github.com/CinemaMod/webdisplays) (MIT). The
+textures, models, sounds and translations come from it; its copyright and licence notices
+are kept in the repository's `LICENSE`.
+"""
+authors = ["montoyo", "CinemaMod Group", "J-Diablo"]
+owners = ["J8-Diablo"]
+owner_ids = [125930057]
+license = "MIT"
+source = "https://github.com/J8-Diablo/WebDisplaysHorizon"
+icon = "icons/webdisplays_native.png"
+categories = ["technology", "decoration"]
+tags = ["browser", "screen", "video", "web", "streaming"]
+key = "RWT+RdlVVja6RRLkjF97dRvi8+FwzE1STLMSFnNkGBJxKcugEkXZkN7U"
+
+[[versions]]
+version = "0.1.0"
+published = "2026-11-15"
+game = "26.3"
+file = "webdisplays_native-0.1.0.hnmod"
+sha256 = "03e8c7786e313d9b26395f6525c1ffe72d409ae4a83f5d9200b3295e5d630b08"
+signature = """
+untrusted comment: signature from minisign secret key\r
+RUT+RdlVVja6RY1Sr1KFclgGRe7pzRbIPqoURQ+eLbshXHHuI3+0iKhD1r57u7HjjK0yuKvFrit3nNjE0xoxjh+V0GhtEj6g8AU=\r
+trusted comment: timestamp:1794771270\tfile:webdisplays_native-0.1.0.hnmod\thashed\r
+HVHsIvC/BJXDSu2X7Kzx1nBdSC/upa6Ubdy6rSc1vo0OOXUjPyOH5YRcQ8FDzL5ZI9yCiizw4xEVNt8OPKJNCg=="""
+changelog = "First release."
