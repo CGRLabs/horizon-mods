@@ -1,0 +1,43 @@
+id = "cameraoverhaul"
+kind = "native-mod"
+name = "CameraOverhaul"
+summary = "CameraOverhaul for Horizon: the camera rolls, tilts and sways with your movement, explosions and lightning shake it. Every setting as in Java."
+description = """
+A port of [CameraOverhaul](https://github.com/Mirsario/Minecraft-CameraOverhaul) by Mirsario & Contributors to Horizon, as a native mod: the real CameraOverhaul 2.1.2, with its own formulas, settings and settings screen.
+
+The camera moves with you:
+
+- **Strafing roll**: moving sideways rolls the camera into the movement.
+- **Forward and vertical pitch**: running tips the camera, jumping and falling lift and dip it.
+- **Mouselook roll**: fast turns lean the camera, then it settles back.
+- **Camera smoothing**: the picture follows your aim with a soft lag while sprinting, swimming, flying and riding; your aim itself never changes.
+- **Idle sway**: stand still and the camera starts to drift gently, fading out as soon as you move.
+- **Screen shakes** from nearby explosions (TNT, creepers, beds, anchors, wind charges), lightning strikes with their thunder, and your own hand swings, fading with distance and time.
+- **Six profiles**: Walking, Sprinting, Swimming, Flying (elytra), Mounts (horses, camels, pigs, striders...) and Vehicles (boats, minecarts), each with its own strengths, blending smoothly into each other.
+- Works in first and third person (the camera turns about your eyes), or only in first person.
+- **CameraOverhaul's settings screen** as in Java (Cloth Config): Options > Mods > CameraOverhaul > Configure..., or Configure in Mod Menu. Seven tabs, every setting with its description, Reset, search.
+- The original's **config/cameraoverhaul.toml** file, written as CameraOverhaul writes it: a file from the Java mod works as it is. Set a factor to 0 to turn its effect off, or negative to invert it.
+- English and Russian.
+
+Client side only: it changes only what your camera shows, so it works in single player and on any server, and never touches where you aim.
+
+Built for Horizon Nightly 2026-11-13 (`9f42064`). Native mods are compiled into the game and are not sandboxed: build only code you trust.
+
+**Credits.** CameraOverhaul is Copyright 2020-2026 Mirsario & Contributors, GNU GPL-3.0-or-later; its icon and texts are its own. The settings screen follows Cloth Config by shedaniel (LGPL-3.0). This port rewrites CameraOverhaul in Rust under the same licence and is not affiliated with Mirsario, Mojang or Microsoft."""
+authors = ["DeportedToHell"]
+owners = ["DeportedToHell"]
+owner_ids = [344119465]
+license = "GPL-3.0-or-later AND LGPL-3.0-only"
+source = "https://github.com/DeportedToHell/MCRE-Mods/tree/1412ddf3eee6e74ec5f125157966f473e8ebbb6a/cameraoverhaul"
+icon = "icons/cameraoverhaul.png"
+categories = ["decoration", "utility"]
+tags = ["camera", "immersion", "screen-shake", "client-side", "port"]
+screenshots = ["screenshots/cameraoverhaul/1.jpg", "screenshots/cameraoverhaul/2.jpg", "screenshots/cameraoverhaul/3.jpg", "screenshots/cameraoverhaul/4.jpg"]
+
+[[versions]]
+version = "1.0.0"
+published = "2026-11-15"
+game = "26.3"
+file = "cameraoverhaul-1.0.0.hnmod"
+sha256 = "8ec52c996d0ef1e21cb9237e5546bcd53ec493e8b8b1ce9be007128b2551b1fe"
+changelog = "First release: a port of CameraOverhaul 2.1.2 for Horizon Nightly 2026-11-13 (9f42064)."
