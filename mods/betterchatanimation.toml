@@ -1,0 +1,40 @@
+id = "betterchatanimation"
+kind = "native-mod"
+name = "Better Chat Animation"
+summary = "Chat Animation, but much more: 28 chat animations, 11 presets, glowing mentions with a sound, ×3 stacking, a soft caret, your own chat look and a live preview."
+description = """
+Our own much richer version of [Chat Animation](https://github.com/Ezzenix/ChatAnimation) by Ezzenix for Horizon, as a native mod. **Every message comes alive**: it slides, bounces, types itself out letter by letter, glitches, ripples in like a wave or sweeps in with a rainbow, and you see it all in a live preview while you pick.
+
+- **The original, 1:1**: the Classic animation is Chat Animation as it is (the chat rises one line, the message fades in, the indicator line can go, the input field slides up), with its six settings and their defaults.
+- **28 animations**: Classic, Slide from Left / Right / Bottom, Drop from Top, Fade, Pop, Zoom, Bounce, Elastic, Typewriter, Glitch, Wave, Unfold, Shake, Decode, Falling Letters, Rainbow Sweep, Letter Flip, Scatter, Shine, Heat, Neon, Motion Blur, Stretch, Letter Pop, Converge, Bubbles.
+- **Duration, speed, 11 easing curves and a cascade** between lines; **a different animation per kind of message**: player chat, system, whispers, your own.
+- **Disappearing**: lines fade, slide or shrink away when the chat closes or they time out, and come back in reverse when you open it. **Smooth scrolling.**
+- **Mentions**: messages with your name (or words you choose) glow or pulse in your colour, with a sound.
+- **Stack duplicates**: the same message again becomes "×2", "×3" with a little bump.
+- **The input line**: four opening animations, a close animation, a soft pulsing caret that glides as you type.
+- **Your own look**: the game's background, your own colour and opacity, or none; text shadow; space between lines and between messages; raise the chat; how many lines show closed and open; how long lines stay. Clicks and hovers still hit the right line.
+- **11 presets** (Classic, Smooth, Bouncy, Typewriter, Cyber Glitch, Wave, Party, Rainbow, Neon Night, Minimal, Everything Off) and a **settings screen with six tabs and a live preview**: Options > Mods > Better Chat Animation > Configure..., or Configure in Mod Menu. Every feature can be switched off. English and Russian.
+
+### Better than the catalog's Chat Animation
+The catalog's `chat_animation` recreates the original's three effects only, for an older Nightly (fdc87ae), in English. Better Chat Animation is built for Nightly 2026-11-13, keeps the original's exact Classic motion and settings, and adds 27 more animations, presets, mentions, stacking, a soft caret, the chat's look and a live preview, in English and Russian. Keep only one of them on.
+
+Built for Horizon Nightly 2026-11-13 (`9f42064`). Native mods are compiled into the game and are not sandboxed: build only code you trust.
+
+**Credits.** Based on Chat Animation by Ezzenix (MIT); this version keeps that licence and its notice, adds its own code and icon, and is not affiliated with Ezzenix, Mojang or Microsoft. Source, releases and bug reports: [MCRE-Mods](https://github.com/DeportedToHell/MCRE-Mods/tree/main/betterchatanimation)."""
+authors = ["DeportedToHell"]
+owners = ["DeportedToHell"]
+owner_ids = [344119465]
+license = "MIT"
+source = "https://github.com/DeportedToHell/MCRE-Mods/tree/9857589dc76b0c315f5eb7d27d37fac2bbaf1dd2/betterchatanimation"
+icon = "icons/betterchatanimation.png"
+categories = ["social", "decoration"]
+tags = ["chat", "animation", "ui", "presets", "mentions", "customization", "smooth", "port"]
+screenshots = ["screenshots/betterchatanimation/1.jpg", "screenshots/betterchatanimation/2.jpg", "screenshots/betterchatanimation/3.jpg", "screenshots/betterchatanimation/4.jpg"]
+
+[[versions]]
+version = "1.0.0"
+published = "2026-11-15"
+game = "26.3"
+file = "betterchatanimation-1.0.0.hnmod"
+sha256 = "f229477342f0a5eb0d80d56ec2a07f394fab3b751cbc4e1e0f34ed77364920c9"
+changelog = "First release: Chat Animation 1.3.5 by Ezzenix as the Classic animation, plus 27 more animations, presets, mentions, stacking, a soft caret, the chat's look and a live preview, for Horizon Nightly 2026-11-13 (`9f42064`)."
