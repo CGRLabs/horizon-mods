@@ -3,25 +3,40 @@ kind = "native-mod"
 name = "Create for Horizon"
 summary = "Build rotating machines and small factories in Horizon with gears, belts, presses and fans."
 description = """
-An unofficial, experimental Rust port of [Create](https://github.com/Creators-of-Create/Create), made by Delete228. It is not made or endorsed by the Create team; their original code is MIT and is credited in the mod's NOTICE.
+An unofficial, experimental Rust port of [Create](https://github.com/Creators-of-Create/Create), maintained by Delete228. The original Create code is MIT and credited in the mod’s NOTICE.
 
-- Drive machines with water wheels, hand cranks or a Creative Motor.
-- Route power through shafts, gears, gearboxes, clutches and encased chain drives.
-- Move items on basic belts and depots. Press sheets, mill ingredients, mix in a Basin or process items with a fan.
+Build factories with water wheels, shafts, belts and presses. Run a Precision Mechanism line with Deployers, pump fluids into multiblock tanks, or attach a saw and a chest to a rotating tree farm.
 
-Install it as a native mod in Horizon Launcher and build the instance. It uses simple built-in models and standard Minecraft textures out of the box.
+Install it as a native mod in Horizon Launcher and build the instance. Version 0.9.0 targets Horizon Nightly `9f42064` for Minecraft 26.3 and includes its own models and pixel textures.
 
-**The original models and textures require the original Create 6.0.10 JAR for Minecraft 1.21.1 (NeoForge).** Place one copy in the instance's `horizon-mods/create-resources/` folder and restart Horizon. The JAR is optional and resources are imported locally. [Supported JAR](https://modrinth.com/mod/create/version/UjX6dr61)
+**The original models and textures require the original Create 6.0.10 JAR for Minecraft 1.21.1 (NeoForge).** Place a copy in the instance’s `horizon-mods/create-resources/` folder and restart Horizon. The JAR is optional and its resources are imported locally. [Supported JAR](https://modrinth.com/mod/create/version/UjX6dr61)
 
-Moving contraptions, trains and Ponder are planned. [Setup and compatibility](https://github.com/Delete228/create-horizon)"""
+[Setup and compatibility](https://github.com/Delete228/create-horizon)"""
 authors = ["Delete228"]
 owners = ["Delete228"]
 owner_ids = [31237303]
 license = "MIT"
-source = "https://github.com/Delete228/create-horizon/commit/236c87a889cd76f7e663d1d182c28dc1145f7b14"
+source = "https://github.com/Delete228/create-horizon/commit/b99cab50ffdccdcc827e54d547b39c81a53efe11"
 icon = "icons/create.png"
 categories = ["technology"]
 tags = ["machines", "automation", "rotation", "gears", "belts", "factory", "port"]
+
+[[versions]]
+version = "0.9.0"
+published = "2026-11-15"
+game = "26.3"
+file = "create-0.9.0.hnmod"
+sha256 = "e6ab6779da8766a8ca964444af835943a56eac5592295d7adf4a7b347aeb166d"
+changelog = """
+### 0.9.0
+
+- Build for the official Horizon Nightly `9f42064` (Minecraft 26.3).
+- Build fluid networks with multiblock tanks, pumps, valves and open pipe ends.
+- Move cargo with bearings, pistons, gantries and rope pulleys. Portable Storage Interfaces now animate as they dock.
+- Improve machine processing and preserve drive settings across restarts.
+- Include independent models and textures, with corrected scale for block items on the ground and in either hand. The optional local Create 6.0.10 JAR supplies the original art.
+
+The native client was built on the pinned official Nightly. Checked startup with and without the original JAR, drive settings after restart, portable storage animation, and item scale on the ground and in hand. The archive matches commit `b99cab50ffdccdcc827e54d547b39c81a53efe11`."""
 
 [[versions]]
 version = "0.7.0-alpha.2"
