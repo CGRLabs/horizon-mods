@@ -1,0 +1,41 @@
+id = "zume"
+kind = "native-mod"
+name = "Zume"
+summary = "A port of Zume: hold Z for a smooth, deep zoom (down to 1°), scroll or press = and - to zoom further, and in third person pull the camera out to 15 blocks."
+description = """
+A port of [Zume](https://github.com/Nolij/Zume) by Nolij to Horizon, as a native mod. **Hold Z and the view glides in**, eased on Zume's own curve, then the mouse wheel or the = and - keys take you much further: a villager 120 blocks away fills the screen.
+
+- **Smooth zoom**: 150 ms on a quartic curve by default (Zoom Smoothness, Animation Easing Exponent), starting at half zoom (Default Zoom).
+- **Deep zoom**: down to a 1° field of view (about 70x), or 0.1° and 0.01° with Minimum FOV. Horizon's own zoom hook stops at 1° and 10x; Zume goes past it.
+- **Scroll or keys**: the wheel zooms while zooming (the hotbar stays put), or hold = / - (Zoom In / Zoom Out), at Zoom Speed.
+- **Steady aim**: the cinematic camera while zooming, and slower turning the closer you zoom, never below Mouse Sensitivity Floor.
+- **Third-person zoom**: in either third-person view the same key moves the camera from 0.5 to 15 blocks away, and the wheel moves it in and out.
+- **Hold or toggle**, set separately for first person (hold) and third person (toggle).
+- **The config screen** as Zume builds it in Embeddium's options (General and Advanced pages, sliders, tick boxes, tooltips, Undo / Apply / Done): Options > Mods > Zume > Configure..., or Configure in Mod Menu. Plus **zume.json5**, written as Zume writes it and reread a moment after you save it in a text editor. English and Russian.
+
+### Better than the other zoom mods
+Horizon's Zoom, Classic Zoom and OptiZoom stop at 10x and have no third-person zoom; only Horizon's Zoom eases, and none lets you shape the curve. Zume goes about 70x deep (more with Minimum FOV), eases in and out, zooms with the wheel and with keys, and has a full settings screen. On Java Zume shows that screen only with Embeddium installed; here it is always there.
+
+### Zume or Zoomify?
+Both are zoom mods with a different feel. Zume is the light one: one key, a smooth deep zoom, the third-person zoom, a few options. [Zoomify](https://github.com/DeportedToHell/MCRE-Mods/tree/main/zoomify) has many more options (transition curves, a secondary zoom, spyglass rules, presets). Keep only one on: both take the mouse wheel while zooming. Zume's Z is also the key of Horizon's own Zoom mod: rebind one of them in Options > Mods.
+
+Built for Horizon Nightly 2026-11-13 (`9f42064`). Native mods are compiled into the game and are not sandboxed: build only code you trust. Some servers forbid zoom mods: check their rules.
+
+**Credits.** Zume and its icon are by Nolij and contributors, under the Open Software License 3.0; this port keeps that licence, publishes its full source, and is not affiliated with Nolij, Mojang or Microsoft. Source, releases and bug reports: [MCRE-Mods](https://github.com/DeportedToHell/MCRE-Mods/tree/main/zume)."""
+authors = ["DeportedToHell"]
+owners = ["DeportedToHell"]
+owner_ids = [344119465]
+license = "OSL-3.0"
+source = "https://github.com/DeportedToHell/MCRE-Mods/tree/4293e6277eb88eeacd7d4264b0332e4aaf265717/zume"
+icon = "icons/zume.png"
+categories = ["utility"]
+tags = ["zoom", "camera", "third-person", "cinematic", "port"]
+screenshots = ["screenshots/zume/1.jpg", "screenshots/zume/2.jpg", "screenshots/zume/3.jpg", "screenshots/zume/4.jpg"]
+
+[[versions]]
+version = "1.0.0"
+published = "2026-11-15"
+game = "26.3"
+file = "zume-1.0.0.hnmod"
+sha256 = "391a327df6a826192cbaed19a46f6988284fc9923873df98abfe55a9627ab267"
+changelog = "First release: Zume 1.2.2 ported to Horizon Nightly 2026-11-13 (`9f42064`)."
