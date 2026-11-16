@@ -1,0 +1,34 @@
+id = "ironfurnaces"
+kind = "mod"
+name = "Iron Furnaces"
+summary = "Upgraded furnaces, electric factories, generators and wireless heating for Horizon."
+description = """
+Iron Furnaces is an unofficial Rust port of Astryxion’s Iron Furnaces for Horizon. It adds thirteen furnace tiers, electric factories, generators, wireless heating, upgrades, augments, per-side automation, redstone controls, settings copying, seasonal skins and Rainbow Coal.
+
+Factories, generators and wireless transmitters use Horizon’s shared ENERGY capability. Other Horizon native mods using that capability may interoperate, but specific third-party combinations are not tested; Forge Energy compatibility is not guaranteed.
+
+Requires Minecraft 26.3 and the Horizon build at commit 9f42064c11efe7ef3e5ed2baad7ddc2a3b36eea0, with horizon-mixins 5a64af938ec86b00d53d16a408aabc0038fb3e57. Install this .hmod in horizon-mods and install the matching ironfurnaces-0.3.1.hnmod native companion from the GitHub release in horizon-native-mods; enable and build both. Use a disposable world before migrating a save.
+
+Original Iron Furnaces credits and notices are retained. Distributed under Apache-2.0; this is an unofficial port with no endorsement claimed."""
+authors = ["allenplay7"]
+owners = ["allenplay7"]
+owner_ids = [94701352]
+license = "Apache-2.0"
+source = "https://github.com/allenplay7/iron-furnaces-horizon"
+icon = "icons/ironfurnaces.png"
+categories = ["game-mechanics", "storage", "technology"]
+tags = ["furnaces", "automation", "energy", "upgrades", "factories"]
+key = "RWRGb7bRoLVqAmH2nlYsRfyIQ7x2ogssMbzbl+ktVkQb4MHcAg2ka7Qn"
+
+[[versions]]
+version = "0.3.1"
+published = "2026-11-16"
+game = "26.3"
+file = "ironfurnaces-0.3.1.hmod"
+sha256 = "5f7afe66d9846e362042e8dadea2cda6f3d6f9605af26ff5920b30688ad27edd"
+signature = """
+untrusted comment: signature from minisign secret key\r
+RURGb7bRoLVqAvhaskc01AS1RcjBiJtd04NMEH6bPJaszuHTOATkchHtR2rrHbsI0qWmPWeCg09RE0+xIdYcb5VyODUdy6EqBgw=\r
+trusted comment: timestamp:1794840538\tfile:ironfurnaces-0.3.1.hmod\thashed\r
+3qVkeI4brby4kp2mLvzYFhxd5VPWl+t11Z1Lzi+94x+dIkwqlseCT385GDw8JGp/tM1jWhVonruPGfBJn0KkDA=="""
+changelog = "Registry-compatible 0.3.1 release for Horizon 26.3. The content package is ironfurnaces-0.3.1.hmod; the matching native companion ironfurnaces-0.3.1.hnmod is published in the GitHub release. Targets Horizon commit 9f42064c11efe7ef3e5ed2baad7ddc2a3b36eea0 and horizon-mixins 5a64af938ec86b00d53d16a408aabc0038fb3e57. Includes thirteen furnace tiers, electric factories, generators, wireless heating, upgrades, augments, automation, redstone controls, settings copying, seasonal skins and Rainbow Coal."
