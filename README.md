@@ -78,8 +78,9 @@ The entry and index format is
 Checks and publishing use `cargo horizon-mod` from **the exact reviewed 40-character engine commit** in repository
 variable `HORIZON_REV`. Missing, abbreviated or floating revisions fail closed; there is no `main` fallback.
 Deploy `horizon-mod-registry` from that coordinated engine release too: an old deployed service does not understand
-the new package contract. In the first cutover PR, the old base's scripts cannot validate this change; maintainers
-must run the reviewed new scripts/checker against base and head and retain those proofs before activation.
+the new package contract. First land `scripts/catalogue.py` and its unit tests alone as inert, reviewed tooling,
+without changing workflows or the catalogue. The cutover PR can then use that trusted base script normally;
+never execute the pull request's copy or bypass required checks to bootstrap the change.
 
 The index: `https://horizon-rust.github.io/horizon-mods/index.json`.
 
