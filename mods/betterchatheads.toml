@@ -1,0 +1,42 @@
+id = "betterchatheads"
+kind = "native-mod"
+name = "Better Chat Heads"
+summary = "Player heads in chat: every option of Chat Heads plus tooltips, click to message, death messages with two heads, animations and mention highlights."
+description = """
+Our own richer version of [Chat Heads](https://github.com/dzwdz/chat_heads) by dzwdz and Fourmisain for Horizon, as a native mod. **See who you are chatting with**: every chat message gets its sender's head with the hat layer, at the start of the line or right before the name.
+
+### Everything the original does
+- **Finds the sender**: the sender's UUID when the server sends it, otherwise the name in the message itself, in **any server's chat format** (`[Admin] Steve » hi`, colour codes), by the player list's **display names**, `/tell` click events and your **name aliases** (auto-detected from EssentialsX `/realname`). "tom" never matches "tomato".
+- Sender Detection modes, Smart heuristics, heads on system messages, **3Dness**, Render Shadow, Right Padding, Offset non-player chat text.
+- **Heads in command suggestions** (`/tell `, `/tp `...). Servers can switch the heads off with the original's `chat_heads:disable` resource pack.
+
+### Better than the original (each one switchable)
+- **More messages get heads**: join/leave, advancements, whispers. **Death messages get two heads**: the victim's and the killer's.
+- **Hover a head**: the player's head, name and ping. **Click a head**: `/msg <name> ` goes into the chat box.
+- **Head style**: size, rounded corners, hat layer on or off.
+- **Animation**: heads fade, slide or pop in with their message; with Better Chat Animation on, they use its timing.
+- **Mentions**: a message that names you gets a gold frame round its head.
+
+### Better than the catalog's ChatHeads
+ChatHeads puts one head at the start of a `<Name>` line and has one switch. Better Chat Heads has the original's every option and its config screen (Cloth Config style, via Options > Mods or Mod Menu's Configure), real sender detection, everything above, and **English and Russian**.
+
+Built for Horizon Nightly 2026-11-13 (`9f42064`). Native mods are compiled into the game and are not sandboxed: build only code you trust.
+
+**Credits.** Based on Chat Heads by dzwdz, Fourmisain and contributors (MPL-2.0; the icon is theirs); the config screen follows Cloth Config by shedaniel (LGPL-3.0). This mod keeps those licences and is not affiliated with them, Mojang or Microsoft. Source, releases and bug reports: [MCRE-Mods](https://github.com/DeportedToHell/MCRE-Mods/tree/main/betterchatheads)."""
+authors = ["DeportedToHell"]
+owners = ["DeportedToHell"]
+owner_ids = [344119465]
+license = "MPL-2.0 AND LGPL-3.0-only"
+source = "https://github.com/DeportedToHell/MCRE-Mods/tree/7623dc5c3e5dc444c4776d8035fac38ead308cce/betterchatheads"
+icon = "icons/betterchatheads.png"
+categories = ["social", "utility"]
+tags = ["chat", "player-heads", "skins", "multiplayer", "social", "chat-heads"]
+screenshots = ["screenshots/betterchatheads/1.jpg", "screenshots/betterchatheads/2.jpg", "screenshots/betterchatheads/3.jpg", "screenshots/betterchatheads/4.jpg"]
+
+[[versions]]
+version = "1.0.0"
+published = "2026-11-16"
+game = "26.3"
+file = "betterchatheads-1.0.0.hnmod"
+sha256 = "cd36726715b980a8787abfbcfbf11e22b18575e951d982df39de43a88b279700"
+changelog = "First release: Chat Heads 1.3.2 (Minecraft 26.3) with every option, plus heads on more messages, tooltips, click to message, head styles, animations and mention highlights, for Horizon Nightly 2026-11-13 (`9f42064`)."
