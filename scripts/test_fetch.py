@@ -38,6 +38,18 @@ class FetchTests(unittest.TestCase):
         self.assertEqual(result.returncode, 0, result.stdout)
         self.assertEqual((self.root / "files" / self.sha).read_bytes(), self.package)
 
+    def test_all_accepted_plain_filename_shapes_are_fetched(self):
+        for name in ("pack+mc26.zip", "+pack.zip", "-pack.zip", "_pack.zip", "p" * 124 + ".zip"):
+            with self.subTest(name=name):
+                self.file = self.file.rename(self.source / name)
+                (self.bin / "cargo").write_text(
+                    f"#!/bin/sh\nprintf '%s\\n' '{self.sha} sample 1.0.0 {name}'\n")
+                destination = self.root / "files" / self.sha
+                destination.unlink(missing_ok=True)
+                result = self.fetch()
+                self.assertEqual(result.returncode, 0, result.stdout)
+                self.assertEqual(destination.read_bytes(), self.package)
+
     def test_existing_content_is_rehashed_and_corruption_replaced(self):
         destination = self.root / "files" / self.sha
         destination.parent.mkdir()

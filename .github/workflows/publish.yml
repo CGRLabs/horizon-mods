@@ -60,6 +60,7 @@ jobs:
           cargo horizon-mod registry list . | while read -r sha id version file; do
             grep -Fxq "$sha" stored.txt && continue
             gh release upload registry-files "files/$sha"
+            printf '%s\n' "$sha" >> stored.txt
           done
       - name: Download counts
         run: |

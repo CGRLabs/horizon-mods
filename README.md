@@ -68,7 +68,7 @@ why.
 | `.github/workflows/check.yml` | A pull request's checks |
 | `.github/workflows/publish.yml` | On merge: releases, then `index.json` on Pages |
 | `.github/workflows/cleanup.yml` | Weekly: staging files nobody needs any more |
-| `archive/native-v1/mods/` | Frozen original `.hnmod` entries and their dependent modpack; never installed or validated as current packages |
+| `archive/native-v1/mods/` | Frozen original native-project histories, including earlier `.hmod` releases, and their dependent modpack; never installed or validated as current packages |
 | `native/<name>/` | Frozen pre-SDK official-mod source history; not migrated mods or current build automation |
 | `scripts/catalogue.py` | Byte-preserving archival review and the explicitly incompatible historical catalogue page |
 | `scripts/` | What the workflows share |
@@ -87,7 +87,7 @@ The index: `https://horizon-rust.github.io/horizon-mods/index.json`.
 ## Frozen native-v1 history
 
 The pre-SDK catalogue is preserved byte-for-byte in `archive/native-v1/mods/`, including original owners, signing
-keys, hashes, signatures and source links. All 137 old native projects and Atomic Industry (both published modpack
+keys, hashes, signatures, source links and mixed `.hmod`/`.hnmod` version histories. All 137 old native projects and Atomic Industry (both published modpack
 versions require old native bundles) are outside the live index. The 12 content/wasm projects, 13 shaders and two
 resource packs remain live. This is an explicit clean-break incompatibility, **not completed ports**. No `.hnmod`
 validation/runtime path or transparent legacy fallback remains. Published releases and Git history are not deleted

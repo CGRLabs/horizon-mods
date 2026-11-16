@@ -10,7 +10,7 @@ cargo horizon-mod registry list "$checkout" | while read -r sha id version file;
   [[ "$sha" =~ ^[0-9a-f]{64}$ ]] || exit 1
   [[ "$id" =~ ^[a-z0-9_]{1,64}$ ]] || exit 1
   [[ "$version" =~ ^[A-Za-z0-9][A-Za-z0-9._-]{0,63}$ ]] || exit 1
-  [[ "$file" =~ ^[A-Za-z0-9][A-Za-z0-9._-]*$ ]] || exit 1
+  [[ "$file" != .* && ${#file} -le 128 && "$file" =~ ^[A-Za-z0-9._+-]+$ ]] || exit 1
   if [ -f "files/$sha" ] && printf '%s  %s\n' "$sha" "files/$sha" | sha256sum --check --status; then
     continue
   fi
