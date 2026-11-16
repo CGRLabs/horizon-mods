@@ -1,0 +1,46 @@
+id = "farmersdelightaddons"
+kind = "native-mod"
+name = "Farmer's Delight + Addons"
+summary = "Farmer's Delight plus eight switchable add-ons in one mod: Hands On Delight (cook by hand), Crate, More, Rustic, Ocean's, End's, Ube's and Sunflower Delight."
+description = """
+[Farmer's Delight](https://github.com/vectorwing/FarmersDelight) 1.3.4 by vectorwing for Horizon, with **eight add-ons inside the same mod**, each on its own switch. One native mod: its content travels inside it. Items keep Farmer's Delight's ids (`farmersdelight:`), so recipes, tags and data packs made for Farmer's Delight work with it; it replaces any other Farmer's Delight (don't install two).
+
+**Farmer's Delight**: cabbages, tomatoes on ropes, onions, rice; the cooking pot with its screen and every cooking recipe, the stove, skillet, cutting board, baskets, cabinets; knives with Backstabbing; meals, drinks, sweets, feasts and pies placed and served; Comfort and Nourishment; wild crops, mushroom colonies, chest loot, village farms and trades. English, Russian and every language of the original.
+
+**The add-ons** (all on by default):
+- **Hands On Delight** (Pocky): cook by hand — the pot, board, skillet and stove open in a scene where they stand: drag food from the drawer, stir with the ladle for stars and bigger batches, cut along the marks, build sandwiches, toss the pan by its handle, turn pieces on the grill; a recipe book at every station.
+- **Crate Delight** (Axperty): crates and bags for vanilla foods.
+- **More Delight** (Axperty): thirty-one meals and wooden and stone knives.
+- **Rustic Delight** (PhantomWing): bell peppers in nine colours, cotton and coffee, wild in the world; coffee drinks, pancakes, cheesecakes, fried foods, calamari.
+- **Ocean's Delight** (scouter456): squid, guardian and fugu dishes, a guardian soup pot.
+- **End's Delight** (FoggyHillside): dragon and shulker meats, a two-block dragon leg platter, chorus treats that teleport you, the end stove, End knives.
+- **Ube's Delight** (ChefMooon): ube, garlic, ginger, lemongrass; the kalan; the baking mat with rolling pins; banana-leaf feasts; halo-halo and milk tea.
+- **Sunflower Delight** (Karobka8, PAYKAH, Edgre1337 — unofficial port made with their permission): sunflower seeds, flower drinks and sweets, ice creams, seed shingles, petal carpets.
+
+**Coming in 1.1**: Expanded Delight (juicer, cheese casks, cinnamon trees, cranberries, salt).
+
+**Add-on manager** (Options > Mods > Farmer's Delight + Addons > Settings, or Configure in Mod Menu): every add-on with its switch, what it adds, its author and licence, and how it gets on with the others.
+
+### Better than the other Farmer's Delight in the catalog
+The other port is Farmer's Delight alone. This one has eight add-ons in the same file with a manager to choose them, Hands On Delight's cooking by hand, and every add-on's crops, world generation, loot and trades.
+
+Built for Horizon Nightly 2026-11-13 (`9f42064`). Native mods are compiled into the game and are not sandboxed: build only code you trust.
+
+**Credits.** Farmer's Delight by vectorwing (MIT); Hands-On Delight by Pocky (MIT); Crate and More Delight by Axperty (MIT); Rustic Delight by PhantomWing (CC0); Ocean's Delight by scouter456 (MIT); End's Delight by FoggyHillside (MIT); Ube's Delight by ChefMooon (MIT); Sunflower Delight by the Dried Boat Team — Karobka8, PAYKAH and Edgre1337, in loving memory (All Rights Reserved; ported with their permission, taken down if they ask). This port is MIT. Not affiliated with the original authors, Mojang or Microsoft. Source, releases and bug reports: [MCRE-Mods](https://github.com/DeportedToHell/MCRE-Mods/tree/main/farmersdelightaddons)."""
+authors = ["DeportedToHell"]
+owners = ["DeportedToHell"]
+owner_ids = [344119465]
+license = "MIT AND CC0-1.0"
+source = "https://github.com/DeportedToHell/MCRE-Mods/tree/farmersdelightaddons-1.0.1/farmersdelightaddons"
+icon = "icons/farmersdelightaddons.png"
+categories = ["food", "game-mechanics", "decoration"]
+tags = ["farmers-delight", "cooking", "food", "farming", "crops", "addons", "hands-on", "port"]
+screenshots = ["screenshots/farmersdelightaddons/1.jpg", "screenshots/farmersdelightaddons/2.jpg", "screenshots/farmersdelightaddons/3.jpg", "screenshots/farmersdelightaddons/4.jpg"]
+
+[[versions]]
+version = "1.0.1"
+published = "2026-11-16"
+game = "26.3"
+file = "farmersdelightaddons-1.0.1.hnmod"
+sha256 = "f40ef7e539a604a425d3f69d888297c74a5f0be9288ba6bd574124059e567faf"
+changelog = "Replaces 1.0.0 (#1111). The pot's ladle leans on the rim exactly as in Hands On Delight and its outline follows the stick; the pot's badge serves the meal on a click with either mouse button, only on the badge, and shows what is in the pot and how many; food on the cutting board no longer flickers."
