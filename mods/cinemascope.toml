@@ -1,0 +1,26 @@
+id = "cinemascope"
+kind = "native-mod"
+name = "Cinemascope"
+summary = "Cinemascope (cinemascope.hnmod) is a native Horizon mod for Minecraft 26.3 that exports Horizon Studio .mcpr replays to H.264 MP4 video with an optional 2.39:1"
+description = "Native Horizon mod for Minecraft 26.3 that exports Horizon Studio replays to H.264 MP4 via ffmpeg with an optional 2.39:1 cinemascope crop, a .mcpr timeline HUD,"
+authors = ["Jenrick"]
+owners = ["jenrickdscosta-code"]
+owner_ids = [241438591]
+license = "No licence"
+source = "https://github.com/jenrickdscosta-code/cinemascope/blob/main/README.md"
+icon = "icons/cinemascope.png"
+categories = ["utility"]
+tags = ["replay", "video", "recording", "camera", "utility"]
+key = "RWRzwjLKRLxVJd1aBDa5VVF/dQtkrARiMq+wQgQxNetTpZYAKbApgqAo"
+
+[[versions]]
+version = "0.2.0"
+published = "2026-11-16"
+game = "26.3"
+file = "cinemascope-0.2.0.hnmod"
+sha256 = "174a7cea99a9fd74b71827768f15d24307d703c065cfa65e3a2c194a15cccd54"
+signature = """
+untrusted comment: signature from minisign secret key
+RURzwjLKRLxVJZBM4/2Q4nrLpRaOxHlE8WO+tjVuAQs9M3eTMv264Ex9fecMgpB7lZr4caj1J2HFLe9TJkMINi/1GzwpelXQqAs=
+trusted comment: timestamp:1794825707\tfile:cinemascope.hnmod\thashed
+EWBOjB+PyvnCaov/bB/u/rCH1m7f7hgN5/5XN7ypz95h+KmRkSCeTWmuOdeESNIYpUnt+U3R9BUJUUxfTwcLBg=="""
