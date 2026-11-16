@@ -1,0 +1,57 @@
+id = "macos_input_fixes"
+kind = "native-mod"
+name = "macOS input fixes for Horizon"
+summary = "An unofficial native-mod port of MCMacOSInputFixes to Horizon"
+description = """
+An unofficial native-mod port of [MCMacOSInputFixes](https://github.com/hamarb123/MCMacOSInputFixes)
+by Hamish Arblaster to Horizon.
+
+- **Shift + scroll (MC-121772):** macOS moves a wheel event's vertical delta onto
+  the horizontal axis; the mod folds it back, so lists scroll and the hotbar keeps
+  its usual direction.
+- **One wheel click = one notch:** legacy wheel acceleration no longer turns one
+  click into several.
+- **Trackpad / Magic Mouse:** precise flicks are grouped into 1–2 notches,
+  scale-aware, so the same flick moves the same on Retina and 1× displays.
+
+Options live in `<game home>/config/macos_input_fixes.toml`, read once at startup:
+reverse scrolling/hotbar, lock while attacking, hotbar merge. No in-game settings
+page yet.
+
+Momentum/inertia gating is not included (M4), so inertia can still move the hotbar
+after the fingers lift. This is deliberately not a parity mod.
+
+Own code is MIT; the ported behaviour is BSD-3-Clause, © 2022 Hamish Arblaster.
+Not affiliated with the original author, Mojang, Microsoft or the Horizon project."""
+authors = ["xin1z"]
+owners = ["xin1z"]
+owner_ids = [94208281]
+license = "MIT"
+source = "https://github.com/xin1z/mac-input-fixes-horizon"
+icon = "icons/macos_input_fixes.png"
+categories = ["utility"]
+tags = ["macos", "mouse", "scroll", "trackpad", "magic-mouse", "input", "quality-of-life", "port"]
+key = "RWQl739hJnB8r77fDI2S+VBsny/nHi2SVbdQHrOtCO+dA+sikANAsOgG"
+
+[[versions]]
+version = "0.1.0"
+published = "2026-11-16"
+game = "26.3"
+file = "macos_input_fixes-0.1.0.hnmod"
+sha256 = "c646d3deadb1c6bd8eba77a22ef2e53efbc244d1f3e5cb2c40f0f154da746398"
+signature = """
+untrusted comment: signature from minisign secret key
+RUQl739hJnB8r1wrWkhfgtVlad0V2HV7EWlcv2atjNqKSLwVFXHOci3bbmIhoOIqQG6+Qgsvv7PAVuPKdiAgA0O2VuQwISjyFAI=
+trusted comment: timestamp:1794796120\tfile:macos_input_fixes-0.1.0.hnmod\thashed
+Mu5lin/FoNrcnQhIJG5XTrZ6MeEI3lgs/SM36sNMShB/7A53eV3IRsHLP4lNBP3ahwy55KXtZ99BOZ7RXxi3BQ=="""
+changelog = """
+**Fixes:**
+- **Shift + scroll (MC-121772).** Lists scroll again; the hotbar keeps its usual
+  direction with Shift held.
+- **One wheel click = one notch.** macOS acceleration no longer turns one click
+  into several.
+- **Trackpad / Magic Mouse flicks.** Grouped into 1–2 notches, scale-aware, so the
+  same flick moves the same on Retina and 1× displays.
+
+**Known limits:** no momentum gating yet (inertia can still move the hotbar); no
+Cmd-for-drop because Cmd+Q quits; deliberately not a parity mod."""
