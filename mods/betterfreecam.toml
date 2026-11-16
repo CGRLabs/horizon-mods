@@ -1,0 +1,45 @@
+id = "betterfreecam"
+kind = "native-mod"
+name = "Better Freecam"
+summary = "Freecam 1:1 (tripods, every setting), plus smooth flight, roll and zoom, bookmarks with smooth flights, recorded camera paths, orbit and follow modes."
+description = """
+Our own, much richer take on [Freecam](https://github.com/MinecraftFreecam/Freecam) by hashalite, Matt Sturgeon and contributors, for Horizon as a native mod. **Everything Freecam 1.5.1 does, one to one**, and a lot more on top.
+
+Freecam's own, as on Java:
+- **F4** detaches the camera: fly it anywhere while your player stays where it is. **Tripod cameras**: hold F4 and press 1–9 for nine cameras that keep their place; Reset Tripod + 1–9 sends one back.
+- **Flight modes** (Default, Creative) with horizontal and vertical speed; **collision options**: through every block, or only glass, doors and gates, or blocks you list by id or regular expression.
+- **Initial perspective** (inside, first person, third person, mirror), Show Player, Outline Player, Show Hand, Full Brightness, Show Submersion Fog.
+- Disable on Damage, Freeze Player, Allow Interaction with Interaction Mode, a server whitelist or blacklist, Control Player, notifications.
+- **Freecam's settings screen** (Cloth Config, as on Java): Options > Mods > Better Freecam, the Config GUI key, or our **Mod Menu**'s Configure. English and Russian.
+
+Better Freecam's additions:
+- **Smooth flight** (the default): the camera speeds up and glides to a stop; acceleration, inertia and sprint boost in the settings. **Speed on the mouse wheel** while flying.
+- **Fly through blocks or not** with one key (N), **smooth turning**, **cinematic roll** (`,` and `.`) and **zoom** (hold Left Alt and scroll).
+- **Camera bookmarks**: hold H and press 1–9 to save the camera, press 1–9 while flying to glide there smoothly.
+- **Camera paths for videos and screenshots**: add keyframes with K, press Y, and the camera plays a smooth flythrough through them at an even speed (or loops); the path and its numbered keyframes are drawn in the world.
+- **Orbit** (I) around the block, mob or player you look at, and **Follow** (U) a mob, a player or yourself.
+- **Hide HUD** while flying, and safety defaults: Disable on Damage is on, interaction from the camera is off and, even when allowed, works on other people's servers only if you turn that on too.
+
+### Better than the freecam mods in the catalog
+`freecam` and `freecam_yannis` are built for older Nightlies and have only a few button settings: no collision options, Show Hand, Full Brightness, fog or outline. `fair_freecam` and `freecam_plus` have speed and fly-through only, and no tripods. None has Freecam's full settings screen, server lists, Russian, smooth flight, roll and zoom, bookmarks, camera paths or orbit. Better Freecam has all of Freecam and everything above.
+
+Built for Horizon Nightly 2026-11-13 (`9f42064`). Native mods are compiled into the game and are not sandboxed: build only code you trust. Some servers don't allow freecam: check their rules.
+
+**Credits.** Freecam is by hashalite, Matt Sturgeon and contributors (MIT); its texts and its camera icon are Freecam's own. The settings screen follows Cloth Config by shedaniel (LGPL-3.0). Port and additions: DeportedToHell. Not affiliated with the Freecam authors, Mojang or Microsoft. Source, releases and bug reports: [MCRE-Mods](https://github.com/DeportedToHell/MCRE-Mods/tree/main/betterfreecam)."""
+authors = ["DeportedToHell"]
+owners = ["DeportedToHell"]
+owner_ids = [344119465]
+license = "MIT AND LGPL-3.0-only"
+source = "https://github.com/DeportedToHell/MCRE-Mods/tree/2a36d7e6c3b0a7f242c1d6f625289eacaaebbc36/betterfreecam"
+icon = "icons/betterfreecam.png"
+categories = ["utility", "decoration"]
+tags = ["freecam", "camera", "cinematic", "screenshots", "spectator", "tripod", "port"]
+screenshots = ["screenshots/betterfreecam/1.jpg", "screenshots/betterfreecam/2.jpg", "screenshots/betterfreecam/3.jpg", "screenshots/betterfreecam/4.jpg"]
+
+[[versions]]
+version = "1.0.0"
+published = "2026-11-16"
+game = "26.3"
+file = "betterfreecam-1.0.0.hnmod"
+sha256 = "be401857f5ea17dc4b661cbb0fe6525b83767addc884bbb6a7ba9818dd2eb9ad"
+changelog = "First release: Freecam 1.5.1 (Minecraft 26.3) ported to Horizon Nightly 2026-11-13 (`9f42064`) with every setting and key, plus Better Freecam's additions."
