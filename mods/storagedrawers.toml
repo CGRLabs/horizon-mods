@@ -1,0 +1,41 @@
+id = "storagedrawers"
+kind = "native-mod"
+name = "Storage Drawers"
+summary = "Storage Drawers 的 Horizon 非官方移植 / An unofficial Storage Drawers port for Horizon"
+description = """
+## 中文
+
+Storage Drawers 的非官方 Horizon 移植版，为游戏添加多种储物抽屉、压缩抽屉、升级、钥匙、抽屉管理器以及镶框桌和自定义外观。
+
+模组提供中文和英文资源，支持通过管理器和自动化接口存取物品。部分功能和兼容性仍在完善中。
+
+
+## English
+
+An unofficial Storage Drawers port for Horizon, adding drawers, compacting drawers, upgrades, keys, controllers, a framing table, and customizable appearances.
+
+The mod includes Chinese and English resources and supports storage access through controllers and automation interfaces. Some features and compatibility are still being improved.
+
+
+## Credits / 致谢
+
+原版 [Storage Drawers](https://github.com/jaquadro/StorageDrawers) 由 Justin Aquadro 创作，采用 MIT 许可证。
+
+Original Storage Drawers by Justin Aquadro, licensed under the MIT License.
+
+"""
+authors = ["zhijiandd"]
+owners = ["zhijiandd"]
+owner_ids = [136557803]
+license = "MIT"
+source = "https://github.com/zhijiandd/horizon-storage-drawers"
+icon = "icons/storagedrawers.png"
+categories = ["storage"]
+tags = ["storage", "drawers", "automation"]
+
+[[versions]]
+version = "0.2.7"
+published = "2026-11-16"
+game = "26.3"
+file = "storagedrawers-0.2.7.hnmod"
+sha256 = "622033df4f8be25b7a33c0681e84a66b81256713a0e4be4350428942801cf04f"
