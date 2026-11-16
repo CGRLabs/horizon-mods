@@ -1,0 +1,47 @@
+id = "bettereatinganimation"
+kind = "native-mod"
+name = "Better Eating Animation"
+summary = "Eating Animation's bitten food and draining drinks, 1:1, plus shrinking bites, hand to mouth, crumbs, sips, a soup spoon, sparkles, honey drips and a burp."
+description = """
+Our own, much richer take on [Eating Animation](https://github.com/Theoness1/EatingAnimation) by theone_ss (with spusik_, PinkGoosik and DoctorNight1) for Horizon, as a native mod. **Everything Eating Animation does, one to one**, and a lot more. Client only.
+
+Eating Animation's own, as on Java:
+- **Bite marks**: the food in your hand shows three bitten frames as you eat, at the original's thresholds.
+- **Drinks go down**: potions, milk and honey bottles show their level falling.
+- **Other players' food** gets bitten too.
+- **Other mods' foods**: the original's support pack is built in (Farmer's Delight, Expanded Delight, Create, Botania, Better End and more).
+
+Better Eating Animation's additions (each on its own switch):
+- **Bites on every food**, quick ones too (dried kelp shows all three frames; the ominous bottle drinks down).
+- **The food shrinks** with every bite, in first and third person.
+- **Hand to mouth**: players lift food to the mouth and chew, and tip a bottle neck first to the lips with the head back (vanilla has no eating pose). You see others do it, and yourself in F5.
+- **Crumbs in the food's own colour**, taken from each item's picture, so any mod's food works.
+- **Sips**: bottles and buckets tip up with each gulp.
+- **Special animations**: soup and stews with a spoon, golden apples sparkle, honey drips, suspicious stew swirls.
+- **Chewing nod** of the view, and a **satisfied burp** after a big meal (can be switched off).
+- **Settings**: Speed and Intensity sliders and every food in the game on its own switch, from Options > Mods or our **Mod Menu**'s Configure. English and Russian.
+- **Editable food rules** (`config/bettereatinganimation-foods.json`) and bites for any food from a resource pack.
+
+### Better than the Eating Animation port in the catalog
+The catalog's `eatinganimation` shows only the bitten frames: no settings, no Russian, no Mod Menu screen, and quick foods show at most one frame. Better Eating Animation has all of it and adds everything above.
+
+Built for Horizon Nightly 2026-11-13 (`9f42064`). Native mods are compiled into the game and are not sandboxed: build only code you trust.
+
+**Credits.** Eating Animation and its bite frames are by theone_ss, spusik_, PinkGoosik and DoctorNight1 (MIT); this port is MIT too. The icon and the spoon are the port's own. Not affiliated with the original's authors, Mojang or Microsoft. Source, releases and bug reports: [MCRE-Mods](https://github.com/DeportedToHell/MCRE-Mods/tree/main/bettereatinganimation)."""
+authors = ["DeportedToHell"]
+owners = ["DeportedToHell"]
+owner_ids = [344119465]
+license = "MIT"
+source = "https://github.com/DeportedToHell/MCRE-Mods/tree/f7a49db440936af21d51519e576cb87781d44c8b/bettereatinganimation"
+icon = "icons/bettereatinganimation.png"
+categories = ["food", "decoration"]
+tags = ["eating", "animation", "food", "drink", "particles", "third-person", "port"]
+screenshots = ["screenshots/bettereatinganimation/1.jpg", "screenshots/bettereatinganimation/2.jpg", "screenshots/bettereatinganimation/3.jpg", "screenshots/bettereatinganimation/4.jpg"]
+
+[[versions]]
+version = "1.0.0"
+published = "2026-11-16"
+game = "26.3"
+file = "bettereatinganimation-1.0.0.hnmod"
+sha256 = "55f9bb3b9d6ed1a32cef4eddbd4e16c846a879fa585dcfbbf32201152ffd3f07"
+changelog = "First release: Eating Animation (newest source, branch 1.21) ported to Horizon Nightly 2026-11-13 (`9f42064`), with Better Eating Animation's additions."
