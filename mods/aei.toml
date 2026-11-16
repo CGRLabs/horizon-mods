@@ -1,0 +1,43 @@
+id = "aei"
+kind = "native-mod"
+name = "All Enough Items"
+summary = "A JEI-style item and recipe browser for Horizon, plus a material calculator, loot and drop categories, notes, collections and more."
+description = """
+All Enough Items (AEI) brings JEI's item list and recipe viewer to Horizon, and goes further.
+
+**JEI's features**
+- The creative inventory's item list with every variant, beside any container screen, with water and lava as fluids.
+- JEI's search prefixes (`@` mod, `#` tooltip, `$` tag, `%` creative tab, `&` id), exclusions and alternatives, sorting, edit mode and list options.
+- **R** / **U** over any item or slot for its recipes and uses, in a JEI-style recipe window: category tabs, catalysts, cycling ingredients, lookup history, category order and the **+** button that moves a recipe into the crafting grid or a furnace.
+- Bookmarks, recipe bookmarks and cheat mode.
+
+**Beyond JEI**
+- **T** opens a material calculator: raw materials, crafting steps and leftovers, with a shopping list and an optional HUD.
+- Block drops, mob drops, loot (chests, archaeology, fishing, bartering), fluid and trading categories, read from the game's own data.
+- Search that ignores accents and forgives typos, filters (`is:craftable`, `is:locked`, `dur>500`...) and regular expressions.
+- **I** for item details with notes, three named bookmark lists, pinned recipes, saved search chips, a recipe preview on Shift and a breadcrumb trail.
+- Keyboard and controller navigation, narrator support, dark and high-contrast themes and a compact list.
+- Copy a recipe as Markdown or save it as PNG; a diagnostic report for modpack makers.
+
+Every key and option is in the [README](https://github.com/Murilinho145SG/All-Enough-Items#readme).
+
+**Native source mod:** install it on the launcher's Mods page, press Build and confirm the native-code warning. It runs with your account's permissions. Version 1.0.0 is pinned to Horizon Nightly 2026-11-13 (9f42064) and Horizon Mixins 5a64af9.
+
+AEI is inspired by [JEI](https://www.curseforge.com/minecraft/mc-mods/jei) (Just Enough Items, by mezz) and reproduces its layout and controls, but it is an independent implementation: it contains no JEI code or assets, and no Minecraft code or assets. MIT licensed."""
+authors = ["Murilinho145"]
+owners = ["Murilinho145SG"]
+owner_ids = [88172584]
+license = "MIT"
+source = "https://github.com/Murilinho145SG/All-Enough-Items"
+icon = "icons/aei.png"
+categories = ["utility"]
+tags = ["recipes", "item-list", "recipe-viewer", "search", "bookmarks", "jei-like", "calculator", "loot"]
+screenshots = ["screenshots/aei/1.png", "screenshots/aei/2.png", "screenshots/aei/3.png", "screenshots/aei/4.png", "screenshots/aei/5.png"]
+
+[[versions]]
+version = "1.0.0"
+published = "2026-11-16"
+game = "26.3"
+file = "aei-1.0.0.hnmod"
+sha256 = "07905c5f2c733fc8dfd48293cd7f4257e9066904d2bdd0e038b2a1b1f72e6183"
+changelog = "First release. Pinned to Horizon Nightly 2026-11-13 (9f42064) and Horizon Mixins 5a64af9."
