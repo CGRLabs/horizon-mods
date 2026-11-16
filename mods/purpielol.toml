@@ -1,0 +1,24 @@
+id = "purpielol"
+kind = "shaderpack"
+name = "Purple's Vibrant shader (Sildur's vibrant shaders)"
+summary = "Shader pack!"
+description = """
+What it does : Improve gaming quality
+How to use it : Drop it into the shaderpack folder
+What it needs : a good pc"""
+authors = ['Purple "L"etter']
+owners = ["Andressa-Colonthree"]
+owner_ids = [306443573]
+license = "MIT"
+source = "https://github.com/Andressa-Colonthree/Sildur-s-Vibrant-shader-converted-to-be-compatible-with-horizon-mc-launcher"
+icon = "icons/purpielol.png"
+categories = ["fantasy", "atmosphere", "bloom"]
+tags = ["beautiful", "madebypurple", "cradles"]
+
+[[versions]]
+version = "1.0.0"
+published = "2026-11-16"
+game = "26.3"
+file = "purpielol-1.0.0.zip"
+sha256 = "90be0aa88855fcfc948dfa17d287ef2c0632ebb7809eecdd174fc90779a4cbce"
+changelog = "nothing , first release and the last"
