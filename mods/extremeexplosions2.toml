@@ -1,0 +1,25 @@
+id = "extremeexplosions2"
+kind = "native-mod"
+name = "Extreme Explosions 2"
+summary = "Ten generations of TNT, each one bigger, more destructive and more spectacular than the last."
+description = """
+Other TNT mods make a bigger hole. Extreme Explosions 2 puts on a show. Every tier comes with its own effects: fireballs, shockwaves, mushroom clouds, lightning storms, plasma, fire twisters, and finally the earth-shattering TNT Gen X.
+Craft your way up from normal TNT to TNT Gen X. Each generation has its own colour and its number in Roman numerals on the side, so you always know what you're about to set off.
+From Gen VI upwards, the TNT doesn't just blow a round hole. It tears out a ragged, bowl-shaped crater that rips outward from the blast over about a second, in step with the shockwave. Water and lava pour into the hole, sand and gravel tumble down the sides, and any TNT caught in the blast goes up in a chain reaction.
+"""
+authors = ["AndyMFA"]
+owners = ["alien200866-sketch"]
+owner_ids = [341471648]
+license = "(C) Many Fun Adventures"
+source = "https://github.com/alien200866-sketch/extremeexplosions2"
+icon = "icons/extremeexplosions2.png"
+categories = ["equipment"]
+tags = ["weapons", "tools", "cosmetic"]
+screenshots = ["screenshots/extremeexplosions2/1.jpg", "screenshots/extremeexplosions2/2.jpg", "screenshots/extremeexplosions2/3.jpg", "screenshots/extremeexplosions2/4.jpg"]
+
+[[versions]]
+version = "1.1.0"
+published = "2026-11-16"
+game = "26.3"
+file = "extremeexplosions2-1.1.0.hnmod"
+sha256 = "a78b8e75d44bb60096e5788d4253aa8a0ded737741113f4a903ee2f98df405bb"
