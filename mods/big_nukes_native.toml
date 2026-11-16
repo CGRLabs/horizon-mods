@@ -30,6 +30,14 @@ tags = ["nuclear", "bombs", "explosions", "radiation", "missile", "bunker"]
 screenshots = ["screenshots/big_nukes_native/1.jpg", "screenshots/big_nukes_native/2.jpg", "screenshots/big_nukes_native/3.jpg", "screenshots/big_nukes_native/4.jpg", "screenshots/big_nukes_native/5.jpg", "screenshots/big_nukes_native/6.jpg", "screenshots/big_nukes_native/7.jpg"]
 
 [[versions]]
+version = "0.3.0"
+published = "2026-11-16"
+game = "26.3"
+file = "big_nukes_native-0.3.0.hnmod"
+sha256 = "9c50511904cfa4f67da74461cdebf48fa0cdefe0039ea2c133fda80ab219f987"
+changelog = "Two new bombs: the neutron bomb (radius 120, only glass breaks, but everything alive in the open dies; a bunker's walls or a sealed room save a player) and the dirty bomb (a small blast and a radioactive zone 100 blocks across that lasts twice as long). A splitting missile carries three tactical warheads that part over the target and fall on a triangle whose side the console's new Spread field sets (40 to 120 blocks). A launch now shows a toast with the seconds to impact, and players near the target are warned. New siren block: it lights and wails by a silo that launches and round a missile's target until it lands. Still pinned to Nightly 2026-11-13 (9f42064) and Horizon Mixins 5a64af9."
+
+[[versions]]
 version = "0.2.0"
 published = "2026-11-14"
 game = "26.3"
