@@ -1,0 +1,67 @@
+id = "betteranimations"
+kind = "native-mod"
+name = "Better Animations"
+summary = "Lively player animations: weapon swings and combos, bow draw, a rider's seat, oars, maps in both hands, ladders, lanterns, and bitten food. Live preview."
+description = """
+Lively player animations for Horizon, as a native mod, written from scratch. **Client only**: it works on any server, and you see the animations on every player, with or without the mod. Every animation has its own switch.
+
+**In your hands**
+- **Maps in both hands**, tilting with your look, and players who have seen that map see **its real picture** in your hands, not a blank sheet.
+- **Books held open**, and a clock, compass or torch **held up** to look at (the list is yours to edit).
+- **Swinging lanterns**: a lantern hangs from the hand and swings as you walk, turn and jump, in first person too.
+- **Hand swap** (F) passes the items in front of the chest; the arm **dips** on a hotbar switch.
+- **Reach for things**: the arm reaches to the door, chest, lever or button you use, and pushes when you place a block.
+- **Two-handed tools**, **brushing** side to side, a **fishing cast** over the shoulder.
+- **Rest in bed**, and an optional **sword on the back**.
+
+**Combat** (only the look: reach and damage stay the game's)
+- **Weapon swings**: swords slash, axes and pickaxes chop, tridents and spears thrust, maces slam, the body turning into each one.
+- **Combo chains**: quick hits chain into a slash, a backhand, then a thrust or a slam.
+- **Two-handed heavy weapons** (maces, spears, greatswords and hammers from other mods), **dual wielding** with the hands taking turns.
+- **Bow drawn to the cheek**, held at full draw, the string hand flicking open on the shot; a **crossbow** loaded by hand, aimed steady, kicking when it fires.
+- **Shield** raised with a push and following the head; **a free hand for the bow**, an **Archer** stance, a **mace** raised in a fall and brought down in a smash.
+
+**Moving**
+- **Ladders** climbed hand over hand, the body turned to the ladder; **vines and scaffolding** too.
+- **Rowing** with the hands moving exactly with the oars, from the first stroke to the last.
+- **Riding** horses, donkeys, mules and camels: hands low on the reins following the mount's head, leaning forward with the speed, bobbing with the gait, leaning into turns, rising over jumps.
+- **Crawling** on elbows and knees.
+- **Elytra flight**, **falling** with flailing arms, a **hard landing** squat, **smooth body turns**, the body following the camera, a **Naruto run** for fun.
+
+**Life**
+- **Freezing** in powder snow, **burning**, a **hand over the head in the rain**, a **shiver** in snowy biomes.
+- **Breathing**, **looking at people** nearby, a **limp** when hurt, a **slouch** when hungry.
+- **Pet animals** (sneak and look at a cat, dog, fox, parrot...; hearts show now and then) and **hugs**.
+
+**Eating and drinking**
+- **Bite marks** and **drinks going down** on every food (the bitten frames of Eating Animation), the food **shrinks**, players **lift it to the mouth**, a bottle is **tipped to the lips**, **crumbs** in the food's colour, a **spoon** for soup, **sparkles**, **honey drips**, a **chewing nod** and a **burp**. Every food on its own switch.
+
+**Settings**: our **Mod Menu**'s Configure (or Options > Mods > Better Animations): seven tabs, a **live preview** of your own player playing the animation under the pointer (drag to turn it), **presets** (Vanilla+, Full, Cinematic) and **item lists you edit in the game**. English and Russian.
+
+**Works with our mods**: First-person Model (your own animations in first person), Sit and Emotecraft (sitting and emotes come first), Traveler's Backpack and Accessories (the arms go round a backpack), Farmer's Delight + Addons (a knife stabs, a pot is stirred, its foods get bites).
+
+### Better than similar mods in the catalog
+- **Living Motion** has springy leaning and landing but no weapon swings or combos, no rowing, reins, crawling, fire, frost or falling poses, no petting, no lantern swing, no shield or bow fixes, no bite frames, no settings screen of its own and no Russian.
+- **Eating Animation** shows only the bitten frames, and quick foods reach one frame at most.
+- **Better Animations** has all of it in one mod, plus a live preview, presets and in-game item lists.
+
+Built for Horizon Nightly 2026-11-13 (`9f42064`). Native mods are compiled into the game and are not sandboxed: build only code you trust.
+
+**Credits.** The bitten frames of foods and drinks are Eating Animation's, by theone_ss, spusik_, PinkGoosik and DoctorNight1 (MIT). Everything else, the icon included, is this mod's own (MIT). Not affiliated with Mojang or Microsoft. Source, releases and bug reports: [MCRE-Mods](https://github.com/DeportedToHell/MCRE-Mods/tree/main/betteranimations)."""
+authors = ["DeportedToHell"]
+owners = ["DeportedToHell"]
+owner_ids = [344119465]
+license = "MIT"
+source = "https://github.com/DeportedToHell/MCRE-Mods/tree/betteranimations-1.0.0/betteranimations"
+icon = "icons/betteranimations.png"
+categories = ["decoration", "food"]
+tags = ["animation", "player", "combat", "third-person", "first-person", "horse", "boat", "ladder", "map", "eating"]
+screenshots = ["screenshots/betteranimations/1.jpg", "screenshots/betteranimations/2.jpg", "screenshots/betteranimations/3.jpg", "screenshots/betteranimations/4.jpg"]
+
+[[versions]]
+version = "1.0.0"
+published = "2026-11-17"
+game = "26.3"
+file = "betteranimations-1.0.0.hnmod"
+sha256 = "6bd06d27c0957d09d847eec709a9b0746163e904c496565a2292302a0bd450ed"
+changelog = "First release."
