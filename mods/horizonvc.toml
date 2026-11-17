@@ -1,0 +1,50 @@
+id = "horizonvc"
+kind = "native-mod"
+name = "HorizonVC"
+summary = "Server-side voice chat for Horizon servers, compatible with the Simple Voice Chat client mod (protocol 20): proximity voice and groups."
+description = """
+HorizonVC is a voice chat **server** for Horizon dedicated servers, written as a native Horizon mod. Players use the Simple Voice Chat client mod (2.6.x, protocol compatibility version 20); HorizonVC hands out the voice secrets, runs the UDP voice port and routes audio by distance and groups.
+
+**Clean-room implementation, not affiliated with Simple Voice Chat.** It was written from public documentation and from the behaviour of the client mod on the wire. It contains no code, text or assets of Simple Voice Chat or other voice chat projects.
+
+## What it does
+
+- Answers the client's `voicechat:*` plugin channel handshake and sends the voice secret, port, codec and settings.
+- Runs one UDP voice socket (default port 24454; the config can reuse the game port). Every datagram is sealed with AES-128-GCM using the player's own secret. The server relays voices; players never learn each other's address.
+- Proximity routing in the same dimension (default 48 blocks, whisper 24), plus groups (normal, open, isolated; optional password) where members hear each other at any distance.
+- Commands `/horizonvc` (alias `/hvc`): `help`, `test <player>` (operators), `invite <player>`, `join <group> [password]`, `leave`.
+- Optional `force_voice_chat`: a player whose client does not report a voice secret within the login timeout is kicked.
+- Permission nodes `horizonvc.listen`, `.speak`, `.groups`, `.admin` (everyone by default) that another mod can answer.
+- Config: `config/horizonvc/horizonvc-server.properties`, written on the first start.
+
+## What it does not do
+
+- No audio decoding or recording: the server only forwards Opus data it cannot read.
+- Not supported yet: volume categories, locational and entity audio channels, spectator routing, external pings, hidden groups, proxy support.
+- It contacts no host other than the players connected to your server.
+
+## What a reviewer should know
+
+- **Native mod:** the launcher compiles it into the game. It is not sandboxed and runs with the server's rights.
+- **It opens a UDP port** for voice (default 24454) on the server's bind address, so that port must be reachable by players.
+- It uses Horizon's server-side plugin-channel hooks (`native_custom_payload_from_client`, `native_send_custom_payload_to_player`, `native_player_channels`, `native_kick`), which are not yet stamped in Horizon's hook catalog; the injection names the method path directly.
+- It is pinned to Horizon `9f42064c11ef`, the newest Nightly that has these hook points. The glue type-checks there (`native.py check`, also with `--horizon latest`) and the 29 unit tests of the core crate pass.
+- **Tested in a game:** on a dedicated server built on that Nightly with this mod, one player with a voice chat client completed the secret request, the authentication on the UDP port and the voice connection. **Not tested yet:** groups, distance and whisper with two players, and a real microphone.
+
+Source and licence: MIT, https://github.com/Plugin-Horizon/horizon-vc"""
+authors = ["LionSpacer"]
+owners = ["Detimes"]
+owner_ids = [165512828]
+license = "MIT"
+source = "https://github.com/Plugin-Horizon/horizon-vc"
+icon = "icons/horizonvc.png"
+categories = ["social"]
+tags = ["voice-chat", "proximity-chat", "simple-voice-chat", "server", "groups"]
+
+[[versions]]
+version = "0.1.0"
+published = "2026-11-17"
+game = "26.3"
+file = "horizonvc-0.1.0.hnmod"
+sha256 = "c4b937532d524718b258898658c4f7d892420892321a61dd6c4486ef19393275"
+changelog = "First release."
