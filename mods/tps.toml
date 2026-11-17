@@ -1,0 +1,45 @@
+id = "tps"
+kind = "native-mod"
+name = "TPS"
+summary = "/tps for Horizon dedicated servers: TPS of the last 1, 5 and 15 minutes and the tick time of the last 100 ticks."
+description = """
+`/tps` for a Horizon dedicated server. It shows the TPS of the last 1, 5 and 15 minutes in Paper's format, plus the average, lowest and highest tick time of the last 100 ticks:
+
+```
+TPS from last 1m, 5m, 15m: 20.0, 20.0, 19.8
+Tick time (last 100 ticks) avg/min/max: 3.1/1.2/9.8 ms
+```
+
+## What it does
+
+- Adds the `/tps` command (permission node `bukkit.command.tps`; operator level 2 when no permissions mod answers; the console can always run it).
+- Colours the numbers: TPS green from 18, yellow from 16, red below; tick time green up to 40 ms, yellow up to 50, red above.
+- This package is the mixins bundle: it reads the engine's own 1/5/15-minute averages (`native_tps`) and hooks the command registration and the player and console command paths.
+
+## What it does not do
+
+- No network access, no files, no ports, no other commands, no changes to the game's behaviour.
+
+## What a reviewer should know
+
+- **Native mod:** the launcher compiles it into the game. It is not sandboxed and runs with the server's rights. The code is about 100 lines.
+- It is pinned to Horizon `9f42064c11ef`, the newest Nightly that has the native hook points. It type-checks there (`native.py check`, also with `--horizon latest`).
+- **Tested in a game:** a dedicated server built on that Nightly with this mod answered `/tps` from the console and in game.
+
+Source and licence: MIT, https://github.com/Plugin-Horizon/horizon-tps"""
+authors = ["LionSpacer"]
+owners = ["Detimes"]
+owner_ids = [165512828]
+license = "MIT"
+source = "https://github.com/Plugin-Horizon/horizon-tps"
+icon = "icons/tps.png"
+categories = ["utility"]
+tags = ["tps", "performance", "command", "server"]
+
+[[versions]]
+version = "1.000"
+published = "2026-11-17"
+game = "26.3"
+file = "tps-1.000.hnmod"
+sha256 = "77b6539fed1267a90d8dc50581d3fca8df0301050190d43c96febac13326c25e"
+changelog = "First release."
