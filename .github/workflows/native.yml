@@ -87,6 +87,27 @@ jobs:
         with:
           name: hnmod-${{ matrix.mod }}
           path: native/target/*.hnmod
+  smp:
+    # The SMP is a trait mod on the mod API (native/smp/horizon-mod.toml), not a mixin bundle: its checks and
+    # tests run against the mod API of the Horizon it pins. No SDK is published for that build yet, so the API
+    # crates come from that commit's source, where the tool would have put the SDK (`.horizon/sdk/api`).
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: native/smp
+    steps:
+      - uses: actions/checkout@v4
+      - run: rustup toolchain install $RUST --profile minimal --component rustfmt --component clippy && rustup default $RUST
+      - name: The mod API at the pinned Horizon
+        run: |
+          rev=$(sed -n 's/^horizon = "\([0-9a-f]\{40\}\)"$/\1/p' horizon-mod.toml)
+          test -n "$rev"
+          mkdir -p .horizon/sdk
+          curl -fsSL "https://codeload.github.com/horizon-rust/horizon/tar.gz/$rev" | tar -xz -C .horizon/sdk
+          mv ".horizon/sdk/horizon-$rev" .horizon/sdk/api
+      - run: cargo fmt --check
+      - run: cargo clippy --all-targets --locked -- -D warnings
+      - run: cargo test --locked
   horizon:
     needs: changes
     if: needs.changes.outputs.mods != '[]'
