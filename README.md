@@ -49,6 +49,20 @@ not: its code runs with the player's account permissions. A published file never
 **Signing** is optional and recommended: put your [minisign](https://jedisct1.github.io/minisign/) public key in your
 entry, and every later version must be signed with it, so nobody else can publish an update in your name.
 
+## Publishing without the form
+
+While the form is down, a hand-made pull request does the same:
+
+1. Attach the file to a GitHub release of your own repository, under the name the entry gives it.
+2. Open a pull request that adds or updates `mods/<id>.toml` with a new `[[versions]]` record: its `version`, `file`
+   name and the file's `sha256` (`sha256sum <file>`). Link the release's file in the pull request's description.
+3. A maintainer reviews the entry (a native mod's source also gets a security review). From a checkout of main they
+   trust, signed in to `gh` as a maintainer, they run
+   `scripts/stage.sh <pull request> <base sha> <head sha> <link>` with the head they reviewed and
+   `git merge-base origin/main <head sha>`. The script reads the pull request as data and runs none of its code; it
+   stages the file once its name and SHA-256 match a version the pull request adds. Then they re-run the check, and
+   merge that reviewed head once its required checks pass.
+
 ## Report
 
 Something wrong with a project? [Report it](../../issues/new?template=report.yml). Your work published without your
