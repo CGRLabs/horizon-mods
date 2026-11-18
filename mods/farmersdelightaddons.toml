@@ -1,0 +1,86 @@
+id = "farmersdelightaddons"
+kind = "native-mod"
+name = "Farmer's Delight + Addons"
+summary = "Farmer's Delight + 36 add-ons in one mod, 197 parts to switch: cook by hand, kegs, woks, fruit trees, Nether and End food; a guide book, JEI/REI/EMI pages."
+description = """
+[Farmer's Delight](https://github.com/vectorwing/FarmersDelight) 1.3.4 by vectorwing for Horizon, with **36 add-ons inside the same mod**, each on its own switch and split into parts you can switch too (197 in all), all in English and Russian. One native mod: its content travels inside it. Items keep Farmer's Delight's ids (`farmersdelight:`), so recipes, tags and data packs made for Farmer's Delight work with it; it replaces any other Farmer's Delight (don't install two).
+
+**Farmer's Delight**: cabbages, tomatoes on ropes, onions, rice; the cooking pot with its screen and every cooking recipe, the stove, skillet, cutting board, baskets, cabinets; knives with Backstabbing; meals, drinks, sweets, feasts and pies placed and served; Comfort and Nourishment; wild crops, mushroom colonies, chest loot, village farms and trades. Hover a knife, the board, the pot, the skillet or the stove and its tooltip plays an **animated how-to**: a small live scene of real blocks with a caption (also in the book).
+
+**The first add-ons**:
+- **Hands On Delight** (Pocky, MIT): cook by hand — the pot, board, skillet and stove open in a scene where they stand: stir with the ladle for stars and bigger batches, cut along the marks, build sandwiches, toss the pan, turn pieces on the grill; a recipe book at every station.
+- **Crate Delight** (Axperty, MIT): crates and bags for vanilla foods.
+- **More Delight** (Axperty, MIT): thirty-one meals, wooden and stone knives.
+- **Rustic Delight** (PhantomWing, CC0): bell peppers in nine colours, cotton, coffee; coffee drinks, golden coffee beans for Haste, pancakes, cheesecakes, fried foods, calamari.
+- **Ocean's Delight** (scouter456, MIT): squid, guardian and fugu dishes, a guardian soup pot.
+- **End's Delight** (FoggyHillside, MIT): dragon and shulker meats, a dragon leg platter, chorus treats that teleport you, the end stove, End knives.
+- **Ube's Delight** (ChefMooon, MIT): ube, garlic, ginger, lemongrass; the kalan; the baking mat; banana-leaf feasts; halo-halo and milk tea.
+- **Sunflower Delight** (Karobka8, PAYKAH, Edgre1337 — unofficial port made with their permission): sunflower seeds, flower drinks and sweets, ice creams, seed shingles, petal carpets.
+- **Expanded Delight** (ianm1647, MIT): a juicer, cheese casks, cinnamon trees, cranberries on swamp water, salt ore, asparagus, sweet potatoes, chili peppers, peanuts.
+
+**Ported add-ons**:
+- **Brazilian Delight** (DannBrown, MIT): beans on ropes, tall corn, coffee, guaraná, cassava, açaí, coconut palms, lemon trees; Minas cheese; feijoada, moqueca, stroganoff.
+- **Brewin' And Chewin'** (Umpaz, MerchantPug, Probleyes, MIT): a keg for beer, mead, vodka and more in tankards; Tipsy; cheese wheels, pizza, a fondue pot.
+- **Chef's Delight** (Redstone Games, MIT): kitchen houses in villages, chef's and cook's trades (given to the farmer and butcher: Horizon can't add professions).
+- **Collector's Reap** (brnbrd, MIT): lime, pomegranate, dragon fruit, the lucuma tree, portobellos; cakes, gummies, limeades, seafood (fished: no sea mobs).
+- **Corn Delight** (Zheng Syameimaru, MIT): two-block corn, popcorn, cornbread, corn dogs, tacos, nachos.
+- **Crabber's Delight** (AlabasterLeking, MIT): a crab trap, clams and pearls, bisque, gumbo, beach palms and their wood, a pearl necklace (no crab mob: crabs come from the trap and fishing).
+- **Delightful** (brnbrd, MIT): salmonberries, cantaloupes, melons sliced where they stand, marshmallows over a campfire, matcha, six knives.
+- **Dumplings Delight Reload** (X_CnJiu, MIT): six crops, eighteen dumplings, wontons, the Garlic effect.
+- **Ender's Delight** (Ax3dGaming, CC0): void pepper and other plants of the outer End, the endstone stove, a stuffed shulker feast, Ender Phasing.
+- **Fright's Delight** (ChefMooon, MIT): monster food with seven effects, soul berries, candy molds, candy baskets, punch bowls.
+- **Muffin's Thai Delight** (FireMuffin303, MIT): durian, coconut, mango, papaya, Thai basil; a mortar, fermented fish, somtam and fried rice feasts (its crab, dragonfly and buffalo mobs left out).
+- **Nether's Delight** (Umpaz, SoyTutta, MIT): a blackstone stove and furnaces, hoglin and strider food, a stuffed hoglin feast, soul compost, propelplant, machetes.
+- **Onion Onion** (DavigJ, MIT): onions that make everyone near cry, onion rings, the motley grill.
+- **Storage Delight** (Axperty, MIT): 154 drawers, bookshelves and cabinets in eleven woods.
+- **Trail&Tales Delight** (Vzling, MIT): sniffer egg feast, cherry cake, lantern fruit, flower teas, a mud stove, a pottery pot.
+
+**Our own add-ons** (written from scratch, MIT):
+- **Backyard Grill**: a charcoal grill with skewers turned by hand, a smoker barrel, sauces with effects.
+- **Clockwork Kitchen**: pot and skillet from hoppers, a mechanical knife on redstone, an auto-stirrer.
+- **Cutler's Rack**: six knives with traits, sharpening on a grindstone, a wall knife rack.
+- **Deep Pantry**: cave crops, a camp stove, a lunchbox that feeds you, a canteen, Miner's Grit.
+- **Eastern Table**: soy, cucumbers, tea; a steamer, a kettle, a vat for tofu and soy sauce; sushi built on the board.
+- **Improv Kitchen**: a wok that cooks any food without a recipe, each piece raw, done or burnt.
+- **Infernal Kitchen**: a soul grill with four heats, three Nether crops, a Roast Hoglin feast, Fiery Spice.
+- **Odd Bites**: food from dripleaf, pitcher plants, glow lichen and sculk, with their own effects.
+- **Orchard Bounty**: seven fruit trees in their own biomes, grafting, juices, preserves, pies.
+- **Pantry & Preserves**: a clay crock for pickles, a drying rack, a salt evaporator, cheese molds.
+- **Table Setting**: plates, boards and stands in twelve woods that show any food in 3D.
+- **World Kitchen**: cumin, turmeric, chickpeas, avocados, a spice mortar; Mexican, Indian and Mediterranean dishes.
+
+Every palm and the papaya tree are drawn anew in one design of our own, after photos of real trees.
+
+**Add-on manager** (Configure in Mod Menu, or Options > Mods > Farmer's Delight + Addons): Core and Add-ons tabs, search, All on / All off; each add-on with its icon, tick box and a counter of its parts, which unfold under it; resting the pointer on an add-on shows how to use it; a details panel with its author and licence, what it adds and how it gets on with each of the others; Reset, Cancel, Done. Fits any GUI scale.
+
+**Parts (sub-settings)**: each add-on is split into 2–7 parts (197 in all): stations, crops and world generation, trees, food groups, effects, trades and loot, mob drops, village houses. Off means really gone: no recipes (in the grid, at stations, in the viewers and the book), no working stations, no world generation, loot, trades or effects. A recipe is unavailable when its result or any ingredient belongs to a switched-off add-on or part. Things already in the world stay, and placed containers still open.
+
+**The Farmer's Cookbook** (book item, G key, the mod's page or the manager): a chapter per add-on that is on; each item's page tells how to get it (recipes, where it grows, drops, trades) and what it is for, with clickable recipes, food values and how-tos; search in English and Russian.
+
+**Recipe viewers**: the pot, board, stove, juicer, baking mat, keg, steamer, kettle, vat, crock, drying rack, smoker, mortars, candy molds and crab trap show as categories in JEI, REI and EMI; a recipe opened from the book goes back to the book on Esc.
+
+**Languages**: every add-on in English and Russian; add-on names stay English in Russian, Ukrainian, Belarusian and pre-reform Russian and are translated in 29 other languages.
+
+### Better than the other Farmer's Delight in the catalog
+The other port is Farmer's Delight alone. This one has 36 add-ons in one file, each on its own switch and split into 197 parts you can switch too, with a manager that shows what each adds and how they get on; Hands On cooking for every add-on's recipes; animated how-tos; a guide book; recipe-viewer pages; Russian for every add-on. Many slips of the originals are fixed: Brewin' And Chewin's keg loads its fluid recipes, pays experience and no longer loses a drink when its output is full; Crabber's crab trap no longer drops its catch into the bait slot; Fright's baskets no longer swallow treats on a full inventory and ring candy molds no longer give candies twice; Ender's void pepper no longer covers the End; Chef's desert kitchen has magma instead of open lava; Ocean's soup pot drops itself; Trail&Tales gets the recipes it lacks (it ships six).
+
+Built for Horizon Nightly 2026-11-13 (`9f42064`). Native mods are compiled into the game and are not sandboxed: build only code you trust.
+
+**Credits.** Farmer's Delight by vectorwing (MIT); Hands-On Delight by Pocky (MIT); Crate, More and Storage Delight by Axperty (MIT); Rustic Delight by PhantomWing (CC0); Ocean's Delight by scouter456 (MIT); End's Delight by FoggyHillside (MIT); Ube's Delight and Fright's Delight by ChefMooon (MIT); Expanded Delight by ianm1647 (MIT); Ender's Delight by Ax3dGaming (CC0); Nether's Delight by Umpaz and SoyTutta (MIT); Brewin' And Chewin' by Umpaz, MerchantPug and Probleyes (MIT); Delightful and Collector's Reap by brnbrd (MIT); Chef's Delight by Redstone Games (MIT); Onion Onion by DavigJ (MIT); Dumplings Delight Reload by X_CnJiu (MIT); Trail&Tales Delight by Vzling (MIT); Corn Delight by Zheng Syameimaru (MIT); Brazilian Delight and DeltaboxLib by DannBrown (MIT); Muffin's Thai Delight and Muffin's Oven API by FireMuffin303 (MIT); Crabber's Delight by AlabasterLeking (MIT); Sunflower Delight by the Dried Boat Team — Karobka8, PAYKAH and Edgre1337, in loving memory (All Rights Reserved; ported with their permission, taken down if they ask). This port and its twelve own add-ons are MIT. Not affiliated with the original authors, Mojang or Microsoft. Source, releases and bug reports: [MCRE-Mods](https://github.com/DeportedToHell/MCRE-Mods/tree/main/farmersdelightaddons)."""
+authors = ["DeportedToHell"]
+owners = ["DeportedToHell"]
+owner_ids = [344119465]
+license = "MIT"
+source = "https://github.com/DeportedToHell/MCRE-Mods/tree/farmersdelightaddons-1.2.0/farmersdelightaddons"
+icon = "icons/farmersdelightaddons.png"
+categories = ["food", "decoration"]
+tags = ["farmers-delight", "cooking", "food", "farming", "crops", "addons", "hands-on", "port"]
+screenshots = ["screenshots/farmersdelightaddons/1.jpg", "screenshots/farmersdelightaddons/2.jpg", "screenshots/farmersdelightaddons/3.jpg", "screenshots/farmersdelightaddons/4.jpg"]
+
+[[versions]]
+version = "1.2.0"
+published = "2026-11-18"
+game = "26.3"
+file = "farmersdelightaddons-1.2.0.hnmod"
+sha256 = "07c6930a3474f97b184a07dc462287bffbbfb0406a2a69610c36ffa667c7c69e"
+changelog = "27 new add-ons — ports of Brazilian Delight, Brewin' And Chewin', Chef's Delight, Collector's Reap, Corn Delight, Crabber's Delight, Delightful, Dumplings Delight Reload, Ender's Delight, Fright's Delight, Muffin's Thai Delight, Nether's Delight, Onion Onion, Storage Delight, Trail&Tales Delight, and twelve of our own (Backyard Grill, Clockwork Kitchen, Cutler's Rack, Deep Pantry, Eastern Table, Improv Kitchen, Infernal Kitchen, Odd Bites, Orchard Bounty, Pantry & Preserves, Table Setting, World Kitchen). Sub-settings: each of the 36 add-ons is split into 2–7 parts (197 in all: stations, crops and world generation, trees, food groups, effects, trades and loot, mob drops, village houses); a part switched off is really gone (recipes, stations, recipe viewers, guide, world generation, loot, trades, effects; placed containers still open), and a recipe is unavailable when its result or any ingredient belongs to a switched-off add-on or part. A new add-on manager: Core and Add-ons tabs, search, All on / All off, rows with icons and part counters, foldable parts, a scrolling details panel, a how-to tooltip from the guide, Reset / Cancel / Done; opens from Mod Menu's Configure or Options > Mods and fits any GUI scale. Add-on names stay English in Russian, Ukrainian, Belarusian and pre-reform Russian and are translated in 29 other languages. Animated how-tos (small live 3D scenes) in the tooltips of Farmer's Delight's knives, cutting board, cooking pot, skillet and stove, and in the book. The Farmer's Cookbook guide book (G) with a new cover; recipe-viewer categories for JEI, REI and EMI (from the book to a viewer and Esc brings you back to the book). Palms and the papaya tree redrawn with our own art after photos of real trees; palms now generate on beaches. Fixed: Rustic Delight's brewing recipes that never worked are removed and its golden coffee beans are now eaten for Haste (3:00); Collector's Reap's limes now appear in mineshaft chests (a loot condition the game didn't know); crafting with ingredients of switched-off add-ons; the camera after dying inside a station's scene; End's and Ender's chorus crates clashing over one recipe; Nether's Delight's blackstone furnace recipe giving a vanilla furnace. Also fixed (broken in 1.1.0 too): wild plants whose ground differs from their template block's (wild crops on sand, plants of the End) never generated, because the game checked their ground by the template's rule, and End's chorus succulents were skipped; wild rice generates for the first time; Expanded Delight's wild crops, cinnamon trees and salt ore never generated (unknown c: biome tags); mob drops that need a knife kill never dropped (old loot condition form); villager trades from Farmer's Delight and the add-ons never appeared, Expanded Delight's trades now follow its switch with the right uses and experience; the Backstabbing enchantment was never loaded and backstab did nothing; recipes that named undefined common tags had empty ingredients; Expanded Delight's cobbler and tart pies had broken models; tooltip colours were wrong."
