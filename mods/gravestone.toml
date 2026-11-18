@@ -1,6 +1,6 @@
 id = "gravestone"
 kind = "mod"
-name = "Gravestone (assets)"
+name = "Gravestone (Update 26 November)"
 summary = "Gravestone block, 3D model, obituary item, textures, and EN/RU localizations for Gravestone. Requires the Gravestone native mod."
 description = """
 The content module (`gravestone.hmod`) for **Gravestone**, providing the `gravestone:gravestone` block, 3D gravestone model, `gravestone:obituary` item, GUI assets, and English/Russian localizations.
