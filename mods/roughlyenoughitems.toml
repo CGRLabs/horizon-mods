@@ -1,7 +1,7 @@
 id = "roughlyenoughitems"
 kind = "native-mod"
 name = "Roughly Enough Items"
-summary = """REI for Horizon: REI's item list, search, recipe screen, favorites, craftable filter and "+" button, in REI's own look."""
+summary = """REI for Horizon: REI's item list, search, recipe screen, favorites and "+" in REI's own look, now with every mod's recipes, their own types included."""
 description = """
 A port of [Roughly Enough Items (REI)](https://github.com/shedaniel/RoughlyEnoughItems) by shedaniel to Horizon, as a native mod. It draws REI's own interface, with REI's textures and layout, over the game's container screens.
 
@@ -10,6 +10,8 @@ A port of [Roughly Enough Items (REI)](https://github.com/shedaniel/RoughlyEnoug
 - **Craftable filter**: only what you can craft from your inventory now.
 - **Recipes and usages**: left click or **R**, right click or **U**, on the list, the favorites, a recipe's slots or any slot of the screen.
 - **The recipe screen** as in REI: tabs, workstations, pages, Backspace to go back. Crafting (what you can craft now first), smelting, smoking, blasting, campfire, stone cutting, brewing, composting, stripping, smithing, anvil repairs and enchanted books, beacon base and payment, tilling, pathing, waxing, wax scraping, oxidizing, oxidation scraping.
+- **Every mod's recipes, by themselves** (new in 1.2.0): every recipe the game knows shows up with no work from the mod. Content mods' and data packs' crafting, smelting, smithing and the rest appear in REI's own tabs; every recipe type of their own (a weapon workbench, a grinder, a sieve) gets a tab of its own, read from its recipe files whatever their shape: inputs (tags, components, grids up to 5x5), an arrow, outputs with their chance in % and count range, fluids as their bucket with the amount, time, experience and energy — a field REI doesn't know never hides a recipe, with its station when an item bears the type's name. On a Horizon server with REI the server's recipes come to the player, a world's data packs included. **R** and **U** find them all.
+- **Mods that describe their own recipes** through Horizon's shared recipe-category hook get their tabs as they draw them: Farmer's Delight + Addons (from its next version) shows its cooking pot, cutting board, stove and skillet and juicer this way, and its guide can open REI on any item. Item tooltips name the installed mod, and `@` searches by its name or id. REI needs no other mod.
 - **"+"** moves a recipe into the crafting grid (Shift: as many as possible) with ordinary slot clicks, so it works on any server; **Ctrl+click** on an entry crafts it straight away.
 - **Favorites**: **A** to add or remove, or drag entries in and out; the **+** panel has REI's game mode, weather and time shortcuts.
 - **Tag category** with REI's tree view, the **choose-page popup** (Shift+click on "1/N") and the **display history** (A over a recipe's "+").
@@ -18,17 +20,26 @@ A port of [Roughly Enough Items (REI)](https://github.com/shedaniel/RoughlyEnoug
 
 It steps aside while Just Enough Items is on: both use the same place on screen.
 
-Built for Horizon Nightly 2026-11-08 (`fdc87ae`). Native mods are compiled into the game and are not sandboxed: build only code you trust.
+Built for Horizon Nightly 2026-11-13 (`9f42064`). Native mods are compiled into the game and are not sandboxed: build only code you trust.
 
 **Credits.** Roughly Enough Items is Copyright (c) 2018-2023 shedaniel, MIT License; the GUI textures are REI's own. This port rewrites REI in Rust under the same licence and is not affiliated with shedaniel, Mojang or Microsoft."""
 authors = ["DeportedToHell"]
 owners = ["DeportedToHell"]
 owner_ids = [344119465]
 license = "MIT"
-source = "https://github.com/DeportedToHell/MCRE-Mods/tree/6060e0fba1ee4b720f43e005a4cb12b67ade4eab/roughlyenoughitems"
+source = "https://github.com/DeportedToHell/MCRE-Mods/tree/roughlyenoughitems-1.2.0/roughlyenoughitems"
 icon = "icons/roughlyenoughitems.png"
 categories = ["utility"]
 tags = ["rei", "recipes", "item-list", "recipe-viewer", "search", "favorites", "port"]
+screenshots = ["screenshots/roughlyenoughitems/1.jpg", "screenshots/roughlyenoughitems/2.jpg", "screenshots/roughlyenoughitems/3.jpg", "screenshots/roughlyenoughitems/4.jpg"]
+
+[[versions]]
+version = "1.2.0"
+published = "2026-11-18"
+game = "26.3"
+file = "roughlyenoughitems-1.2.0.hnmod"
+sha256 = "571b65f635e592a961dbad2349c106180dbba3fc860cc0565846fdf1f011f529"
+changelog = "Every mod's recipes by themselves: content mods' and data packs' recipes of every type show in REI with no work from the mod — vanilla types in REI's own tabs, a mod's own types (a workbench, a grinder) in a tab each, read from the recipe files whatever their shape (inputs with tags and components, grids up to 5x5, outputs with chances and count ranges, fluids as buckets with their amount, time, experience, energy; an unknown field never hides a recipe), with its station when an item has the type's name; on a Horizon server with REI the server's recipes, data packs included, come to the player. Mods that describe their recipes through Horizon's shared hook (native_recipe_categories) get their own tabs, names, stations and notes; other mods can ask REI to open an item's recipes or uses (native_recipe_lookup), and a guide book that asks comes back when REI closes. Tooltips name the installed mod; @ search finds it by name or id (@farmersdelightaddons). Built for Horizon Nightly 2026-11-13 (9f42064). Replaces 1.1.3 (#1004)."
 
 [[versions]]
 version = "1.1.2"
