@@ -1,0 +1,27 @@
+id = "horizon_featherlight_api01_alpha"
+kind = "shader"
+name = "Featherlight Legacy"
+summary = "hyper light vanilla-like shaders"
+description = "alpha version, api 0.2 version have more features. and please submit any issues on GitHub."
+authors = ["R3DBOT00"]
+owners = ["R3DBOT00"]
+owner_ids = [183875731]
+license = "MIT"
+source = "https://github.com/R3DBOT00/Horizon-FeatherLight"
+icon = "icons/horizon_featherlight_api01_alpha.png"
+categories = ["vanilla-like", "low", "potato"]
+tags = ["hyper-light"]
+key = "RWQPmYP3HRPOirhYnh4wqKYa00DgHlScywIHLOtVUJAbVPl+gEe3SyDw"
+
+[[versions]]
+version = "1.1.0"
+published = "2026-11-18"
+game = "26.3"
+file = "horizon_featherlight_api01_alpha-1.1.0.hshader"
+sha256 = "b001b20e20ac0e57b8b8d30ba6892ca0377f1210d93e81a1306c3529f80d4491"
+signature = """
+untrusted comment: signature from minisign secret key
+RUQPmYP3HRPOiskJqz/OnjkW2UanClRHTm4hdd11OWlegTTdTJJXxO55bN1D4zcJGFoqi3JnXW19VmmfgSF6Vmkeqm0+y3DryAM=
+trusted comment: timestamp:1795013956\tfile:horizon_featherlight_api01_alpha-1.1.0.hshader\thashed
+uDCxEOESIXwl0GaABgQB3uKeT6f5RXE7U8XxmorLdxQ5+kNOP6FhXe/4jxwUtQLJBoItibb8L5Q1I6GzcXRDCA=="""
+changelog = "alpha, FOR API 0.1 "
