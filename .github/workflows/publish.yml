@@ -4,6 +4,7 @@
 # playhorizon.dev/mods read. Nothing is published if any entry fails its checks.
 # Every hour it runs again to refresh each project's `downloads` (GitHub's download
 # counts of its release assets) and `stars` (its source repository's GitHub stars).
+# Never compile submitted Rust or restore Actions caches with publishing credentials.
 name: publish
 on:
   push:
@@ -28,23 +29,11 @@ jobs:
     env:
       GH_TOKEN: ${{ github.token }}
       GH_REPO: ${{ github.repository }}
-      HORIZON_REV: ${{ vars.HORIZON_REV || 'main' }}
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/cache@v4
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
         with:
-          path: |
-            ~/.cargo/bin
-            ~/.cargo/horizon-rev
-          key: cargo-horizon-mod-${{ env.HORIZON_REV }}
+          persist-credentials: false
       - run: scripts/install-tool.sh
-      # Files kept from the last run: GitHub counts every download of a release
-      # asset, so fetching them all again each hour would count as players.
-      - uses: actions/cache@v4
-        with:
-          path: files
-          key: files-${{ hashFiles('mods/*.toml') }}
-          restore-keys: files-
       - run: scripts/fetch.sh .
       - name: Build the index
         run: |
@@ -59,6 +48,17 @@ jobs:
             cp "files/$sha" "$dir/$file"
             gh release create "$tag" "$dir/$file" --title "$id $version" --latest=false \
               --notes "Reviewed in the registry: mods/$id.toml. SHA-256 $sha."
+          done
+      - name: Keep content-addressed download copies
+        run: |
+          gh release view registry-files >/dev/null 2>&1 \
+            || gh release create registry-files --prerelease --latest=false --title "Registry files" \
+                 --notes "Reviewed packages named by SHA-256; downloads are verified before indexing."
+          gh release view registry-files --json assets --jq '.assets[].name' > stored.txt
+          cargo horizon-mod registry list . | while read -r sha id version file; do
+            grep -Fxq "$sha" stored.txt && continue
+            gh release upload registry-files "files/$sha"
+            printf '%s\n' "$sha" >> stored.txt
           done
       - name: Download counts
         run: |
@@ -120,9 +120,18 @@ jobs:
           <meta http-equiv="refresh" content="0; url=https://playhorizon.dev/mods">
           <p><a href="https://playhorizon.dev/mods">playhorizon.dev/mods</a> · <a href="index.json">index.json</a></p>
           HTML
-      - uses: actions/configure-pages@v5
-      - uses: actions/upload-pages-artifact@v3
+      # upload-pages-artifact follows links, so a submitted link (an icon, a screenshot) could publish the
+      # runner's own files: only regular files and folders go to Pages.
+      - name: Only regular files are published
+        run: |
+          bad=$(find mods icons site $( [ -d screenshots ] && echo screenshots ) ! -type f ! -type d)
+          if [ -n "$bad" ]; then
+            echo "::error::only regular files are published, not: $bad"
+            exit 1
+          fi
+      - uses: actions/configure-pages@983d7736d9b0ae728b81ab479565c72886d7745b # v5
+      - uses: actions/upload-pages-artifact@56afc609e74202658d3ffba0e8f6dda462b719fa # v3
         with:
           path: site
       - id: pages
-        uses: actions/deploy-pages@v4
+        uses: actions/deploy-pages@d6db90164ac5ed86f2b6aed7e0febac5b3c0c03e # v4

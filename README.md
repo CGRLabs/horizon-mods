@@ -88,8 +88,11 @@ why.
 
 The format of the entries and of `index.json` is
 [docs/api/mod-index.md](https://github.com/horizon-rust/horizon/blob/main/docs/api/mod-index.md) in Horizon's repository;
-the checks are `cargo horizon-mod check` and `cargo horizon-mod registry`, from Horizon at the commit in the
-repository variable `HORIZON_REV` (else `main`).
+the checks are `cargo horizon-mod check` and `cargo horizon-mod registry`, from Horizon at the exact 40-character
+commit in `.github/horizon-rev`. Checks read it from main, never from the pull request, so pull requests from forks get
+the same tool; moving it is a reviewed commit. A live project leaves the index only by a move listed in
+`.github/archive-moves.txt`, and an archived id comes back only in a pull request opened by one of its owners
+(otherwise a maintainer confirms the owner).
 
 The index: `https://horizon-rust.github.io/horizon-mods/index.json`.
 

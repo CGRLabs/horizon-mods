@@ -40,7 +40,7 @@ jobs:
       # base.sha: a re-run (or a run that waited in the queue) keeps the old one while the merge commit is
       # made on today's main, so every version main gained in between counted as new (#425: context_tools
       # and strangely_charming, which don't apply on the Nightly, turned a re-run red).
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
         with:
           path: head
           persist-credentials: false
@@ -48,7 +48,7 @@ jobs:
       - name: The main commit it is merged into
         id: merged
         run: echo "base=$(git -C head rev-parse HEAD^1)" >> "$GITHUB_OUTPUT"
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
         with:
           ref: ${{ steps.merged.outputs.base }}
           path: base
@@ -80,12 +80,12 @@ jobs:
       GH_TOKEN: ${{ github.token }}
       GH_REPO: ${{ github.repository }}
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
       - run: python3 -m unittest discover -s scripts -p 'test_*.py'
       - run: rustup toolchain install $RUST --profile minimal && rustup default $RUST
       - run: sudo apt-get update && sudo apt-get install -y libasound2-dev libudev-dev pkg-config
       # Yesterday's dependencies, checked, and horizon-mixins: only Horizon's own crates and the mods compile again.
-      - uses: actions/cache@v4
+      - uses: actions/cache@0057852bfaa89a56745cba8c7296529d2fc39830 # v4
         with:
           path: |
             ~/.cargo/registry/index
