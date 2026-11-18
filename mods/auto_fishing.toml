@@ -1,0 +1,21 @@
+id = "auto_fishing"
+kind = "native-mod"
+name = "HorizonMod"
+summary = "F8 to start the mod"
+description = "A fishing mod that specially built for horizon, client site. Press F8 to activate the mod."
+authors = ["Schong20"]
+owners = ["Schonggg"]
+owner_ids = [112318347]
+license = "MIT"
+source = "https://github.com/Schonggg/Horizon_Mod"
+icon = "icons/auto_fishing.png"
+categories = ["technology", "utility", "optimization"]
+tags = ["fishing"]
+
+[[versions]]
+version = "0.1.0"
+published = "2026-11-18"
+game = "26.3"
+file = "auto_fishing-0.1.0.hnmod"
+sha256 = "da841dbc96a9f535b3c83f14cdc0aa8f331aadfc9091bb4c1de2040d6ee9dc06"
+changelog = "Freshly launched"
