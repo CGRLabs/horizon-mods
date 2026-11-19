@@ -6,7 +6,6 @@
 // tick costs one atomic load while no menu is open. Added to the game as
 // `game::smp_invsee_glue`.
 
-use crate::log;
 use crate::{
     glue as smp_glue,
     host::{Game, NativeInventoryKind, NativeServerPlayer, native_menu_inventory_slot},

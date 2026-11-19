@@ -5,7 +5,6 @@
 // were said in. A tick with nothing said costs two atomic loads. Added to
 // the game as `game::smp_ping_glue`.
 
-use crate::log;
 use crate::{
     host::{Game, NativeServerPlayer},
     smp_economy::Out,

@@ -6,7 +6,6 @@
 // console commands it builds are run by glue.rs once that lock is let go.
 // Added to the game as `game::smp_casino_glue`.
 
-use crate::log;
 use crate::{
     host::{Game, NativeServerPlayer},
     smp_casino::{self, Casino, Color, Fx, Icon},

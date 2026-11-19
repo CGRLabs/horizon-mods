@@ -7,7 +7,6 @@
 // explosion_detonate.rs, fill_bucket.rs, attack_entity.rs) call it from the
 // hook points.
 
-use crate::log;
 use crate::{
     casino_glue as smp_casino_glue,
     host::{Game, MAIN, NativeServerPlayer, native_menu_inventory_slot, plain},

@@ -4,7 +4,6 @@
 
 pub mod host;
 mod util;
-pub(crate) use log;
 pub(crate) use mod_api::profiling as spans;
 pub(crate) use util::now_ms;
 mod casino_glue;
