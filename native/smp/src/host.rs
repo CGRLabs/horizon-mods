@@ -684,13 +684,7 @@ impl Game<'_> {
         let Some(chunk) = level.chunk_ref(&*self.h, chunk) else {
             return false;
         };
-        chunk.set_mod_forced(
-            self.h,
-            controller,
-            mod_api::TicketOwner::Transient(RTP_OWNER),
-            hold,
-            false,
-        )
+        chunk.set_transient_forced(self.h, controller, RTP_OWNER, hold, false)
     }
 }
 
