@@ -1,8 +1,6 @@
 # SMP (Horizon native server mod)
 
 > [!WARNING]
-> **Legacy.** This is the old `.hnmod` source. Launchers from 0.2.70 on can't load it. A port to the new mod SDK is tracked in [#1214](https://github.com/horizon-rust/horizon-mods/issues/1214).
-
 The official Horizon server's survival layer ([design](https://github.com/horizon-rust/horizon/blob/main/docs/smp.md)).
 It is **not** part of Horizon's own server: only a server that builds this mod into its engine has it. It isn't listed
 in the registry.
@@ -397,31 +395,17 @@ commands say so) rather than start from nothing.
 
 ## Made on the mod API
 
-The SMP is a trait mod (`impl mod_api::Hooks`, in `src/lib.rs`), pinned to one Horizon build in `horizon-mod.toml`
-(`[native] horizon`). It reads and changes the game only through the API's `ServerHost`, with no mixins: the hooks it
-listens to are `register_commands` and `run_mod_command` (its commands), `server_tick`, `level_tick_post` and
-`world_lifecycle`, `menu_clicked` and `menu_closed`, `break_block`, `right_click_block`, `use_item_on_block`,
-`entity_interact`, `fill_bucket`, `attack_entity`, `block_spread`, `piston_pre`, `block_ignite`, `explosion_detonate`,
-`entity_join_level`, `projectile_impact`, `hanging_break`, `server_chat`, `player_command`, `player_logged_in`,
-`player_logged_out`, `player_respawned` and `player_set_spawn`; a dispenser's `dispense_item` and `dispense_method`
-parts are on the items it puts in the world and the containers it fills.
-
-What changed with the move from the old bundle:
-
-- `/invsee` and `/endersee` work on players who are online. The API has no way to open an offline player's saved file.
-- The game has no per-player sidebar to write to: the board's title and lines are the Tab list's header.
-- A dispenser is guarded for the items it puts in the world (water, lava, fire, TNT, shulker boxes, boats, carts,
-  armor stands) and the containers it fills, not for every item it drops.
-- The log goes to the server's standard error.
+SMP is a server-side trait mod. It uses the Horizon SDK for commands, inventories, menus, the sidebar, chunk
+tickets and protection hooks. The rules use the same world-side `horizon-smp/` directory and auction stack format.
 
 | File | What it is |
 |---|---|
 | `horizon-mod.toml` | The manifest: id, version, `[native]` pins |
-| `src/lib.rs` | The hooks, and the dispenser parts |
+| `src/lib.rs` | Server hook subscriptions, including the global dispenser hook |
 | `src/rules/smp_*.rs` | The rules, plain Rust with their own tests (no game types: a trade's stacks are a type parameter), the economy, market, shop, trades, games, lottery, places, claims, board, presence, auction, reports, market prices, menus and charts, `/invsee`, switches, vanish, and the casino (`smp_casino*.rs`) |
 | `src/host.rs` | What the old bundle's `game.native_*` helpers did, over the API's `ServerHost`: players, items and inventories, menus, tab list, chunk tickets |
 | `src/glue.rs` | The state for the open world and the edges between the game and the rules; `claims_glue.rs`, `invsee_glue.rs`, `ping_glue.rs` and `casino_glue.rs` do the same for claims, `/invsee`, chat pings and the casino's effects for a stock client (menu items, sounds, titles, fireworks, boss bars) |
-| `src/command_line.rs` | The commands' usages, and a parsed command turned back into the line the rules read |
+| `src/command_line.rs` | Command-tree usages and the rules for who can run each command |
 | `src/nbt_codec.rs` | Network NBT, for the auction house's stacks in `economy.json` (the same bytes as before) |
 | `proof.py` | A dedicated server built with the mod and two real clients, on fresh temporary data |
 | `proof_casino.py` | The casino's proof (`SMP_PROOF=casino`): both clients play every game through the menus |
@@ -429,13 +413,14 @@ What changed with the move from the old bundle:
 ## Build and prove
 
 ```sh
-cd native/smp && cargo horizon-mod check       # fetches the pinned build's SDK, checks the mod against it
-cargo test                                     # the rules and the command lines
+cd native/smp
+cargo horizon-mod check
+cargo test --locked
 horizon-launcher native-build . --instance "SMP" --trust-native-code
 ```
 
-`proof.py` and `proof_casino.py` drive a game built with the mod and two clients with `horizon-ctl`; they were written
-for the old bundle's build and have not been run on this one.
+`proof.py` and `proof_casino.py` drive a game built with the mod and two clients using `horizon-ctl`. They exercise
+a dedicated server with fresh temporary worlds.
 
 ## The official server's engine
 

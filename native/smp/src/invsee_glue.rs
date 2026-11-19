@@ -78,7 +78,7 @@ fn native(kind: Kind) -> NativeInventoryKind {
 struct GameWorld<'a, 'g>(&'a mut Game<'g>);
 
 impl smp_invsee::World<Held> for GameWorld<'_, '_> {
-    fn read(&self, uuid: u128, kind: Kind) -> Result<(Vec<Option<Held>>, bool), String> {
+    fn read(&mut self, uuid: u128, kind: Kind) -> Result<(Vec<Option<Held>>, bool), String> {
         let i = self.0.native_inventory(uuid, native(kind))?;
         Ok((
             i.slots
@@ -116,7 +116,7 @@ pub(crate) fn perform(
     ran: &mut bool,
 ) {
     let word = line.split(' ').next().unwrap_or_default();
-    if !smp_invsee::COMMANDS.contains(&word) || !game.native_on(smp_glue::ID) {
+    if !smp_invsee::COMMANDS.contains(&word) {
         return;
     }
     *ran = true;
@@ -249,7 +249,7 @@ pub(crate) fn tick(game: &mut Game<'_>) {
     let s = guard.as_mut().expect("made");
     let mut tell = Vec::new();
     for (op, target, name, kind) in std::mem::take(&mut s.pending) {
-        let opened = s.invsee.open(op, target, &name, kind, &GameWorld(game));
+        let opened = s.invsee.open(op, target, &name, kind, &mut GameWorld(game));
         match opened {
             Ok(()) => {
                 let window = game.native_open_menu(
@@ -284,7 +284,7 @@ pub(crate) fn tick(game: &mut Game<'_>) {
                         .map(|l| (op, l)),
                 ),
                 Some(_) => {
-                    if s.invsee.refresh(op, &GameWorld(game)) {
+                    if s.invsee.refresh(op, &mut GameWorld(game)) {
                         game.native_set_menu_items(op, items(game, &s.invsee, op));
                     }
                 }

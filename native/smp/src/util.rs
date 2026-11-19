@@ -1,32 +1,10 @@
-//! What the bundle took from the game's own crates: a log, the clock and the profiler's spans.
-
-/// The server's log is its standard error: a line each, tagged by the SMP's own `[smp]` prefix.
-pub mod log {
-    macro_rules! error {
-        ($($t:tt)*) => { eprintln!("[ERROR] {}", format_args!($($t)*)) };
-    }
-    macro_rules! warn_ {
-        ($($t:tt)*) => { eprintln!("[WARN] {}", format_args!($($t)*)) };
-    }
-    macro_rules! info {
-        ($($t:tt)*) => { eprintln!("[INFO] {}", format_args!($($t)*)) };
-    }
-    pub(crate) use {error, info, warn_ as warn};
-}
+//! The clock used for economy, presence, and audit data.
 
 /// Milliseconds since the Unix epoch.
 pub fn now_ms() -> i64 {
     std::time::SystemTime::now()
         .duration_since(std::time::UNIX_EPOCH)
         .map_or(0, |d| d.as_millis() as i64)
-}
-
-/// The game's profiler spans: the SMP's work isn't measured by them here.
-pub mod spans {
-    pub struct Span;
-    pub fn guard(_name: &str) -> Span {
-        Span
-    }
 }
 
 /// The UTC date, `YYYY-MM-DD`, for the day's reward.

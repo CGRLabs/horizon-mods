@@ -4,7 +4,9 @@
 
 pub mod host;
 mod util;
-pub(crate) use util::{log, now_ms, spans};
+pub(crate) use log;
+pub(crate) use mod_api::profiling as spans;
+pub(crate) use util::now_ms;
 mod casino_glue;
 mod claims_glue;
 mod command_line;
@@ -32,134 +34,27 @@ fn cancel(canceled: bool) -> Flow {
     }
 }
 
-/// What a dispenser puts in the world in front of it (water, lava, fire, TNT, a shulker box, a boat, a cart).
-const DISPENSED_ITEMS: [&str; 41] = [
-    "minecraft:water_bucket",
-    "minecraft:lava_bucket",
-    "minecraft:powder_snow_bucket",
-    "minecraft:bucket",
-    "minecraft:flint_and_steel",
-    "minecraft:fire_charge",
-    "minecraft:tnt",
-    "minecraft:bone_meal",
-    "minecraft:shears",
-    "minecraft:glass_bottle",
-    "minecraft:armor_stand",
-    "minecraft:minecart",
-    "minecraft:chest_minecart",
-    "minecraft:furnace_minecart",
-    "minecraft:hopper_minecart",
-    "minecraft:tnt_minecart",
-    "minecraft:firework_rocket",
-    "minecraft:shulker_box",
-    "minecraft:white_shulker_box",
-    "minecraft:orange_shulker_box",
-    "minecraft:magenta_shulker_box",
-    "minecraft:light_blue_shulker_box",
-    "minecraft:yellow_shulker_box",
-    "minecraft:lime_shulker_box",
-    "minecraft:pink_shulker_box",
-    "minecraft:gray_shulker_box",
-    "minecraft:light_gray_shulker_box",
-    "minecraft:cyan_shulker_box",
-    "minecraft:purple_shulker_box",
-    "minecraft:blue_shulker_box",
-    "minecraft:brown_shulker_box",
-    "minecraft:green_shulker_box",
-    "minecraft:red_shulker_box",
-    "minecraft:black_shulker_box",
-    "minecraft:wind_charge",
-    "minecraft:splash_potion",
-    "minecraft:lingering_potion",
-    "minecraft:egg",
-    "minecraft:snowball",
-    "minecraft:arrow",
-    "minecraft:experience_bottle",
-];
-
-/// The containers (and the like) a dispenser fills.
-const DISPENSED_INTO: [&str; 16] = [
-    "minecraft:chest",
-    "minecraft:trapped_chest",
-    "minecraft:barrel",
-    "minecraft:hopper",
-    "minecraft:dispenser",
-    "minecraft:dropper",
-    "minecraft:furnace",
-    "minecraft:blast_furnace",
-    "minecraft:smoker",
-    "minecraft:brewing_stand",
-    "minecraft:crafter",
-    "minecraft:composter",
-    "minecraft:jukebox",
-    "minecraft:decorated_pot",
-    "minecraft:chiseled_bookshelf",
-    "minecraft:lectern",
-];
-
-/// A dispenser acts on the block in front: not into another's claim.
-struct Dispenser;
-
-/// The same for a dispenser facing one of the containers.
-struct Container;
-
-#[mod_api::horizon_part]
-impl mod_api::BlockPart for Container {
-    fn dispense_method(
-        &self,
-        _host: &mut dyn ServerHost,
-        event: &mut mod_api::DispenseMethodEvent<'_>,
-    ) -> Option<Dispensed> {
-        let mut answer = None;
-        claims_glue::dispense(
-            event.dimension,
-            event.pos,
-            event.facing.normal(),
-            event.stack,
-            &mut answer,
-        );
-        answer
-    }
-}
-
-#[mod_api::horizon_part]
-impl mod_api::ItemPart for Dispenser {
-    fn dispense_item(
-        &self,
-        _host: &mut dyn ServerHost,
-        event: &mut mod_api::DispenseItemEvent<'_>,
-    ) -> Option<Dispensed> {
-        let mut answer = None;
-        claims_glue::dispense(
-            event.dimension,
-            event.pos,
-            event.facing.normal(),
-            event.stack,
-            &mut answer,
-        );
-        answer
-    }
-}
-
 #[mod_api::horizon_mod]
 impl Hooks for Mod {
     /// `/rtp` holds the chunks it looks at under a ticket of its own.
     fn register(&self, r: &mut dyn Registrar, _cx: &RegistrationContext) {
         let _ = host::TICKETS.set(r.register_ticket_controller("smp:rtp", false));
-        // A dispenser acts on the block in front: what it holds that changes the world there, and the
-        // containers it fills, answer for it (the game asks a part per item or block, never every dispense).
-        for id in DISPENSED_ITEMS {
-            let item = r.item_key(id);
-            r.item_part(item, Dispenser);
-        }
-        for tag in ["minecraft:boats", "minecraft:chest_boats"] {
-            r.item_part_tag(tag, Dispenser);
-        }
-        for id in DISPENSED_INTO {
-            let block = r.block_key(id);
-            r.block_part(block, Container);
-        }
-        r.block_part_tag("minecraft:shulker_boxes", Container);
+    }
+
+    fn dispenser_acts(
+        &self,
+        _host: &mut dyn ServerHost,
+        event: &mut mod_api::DispenserActsEvent<'_>,
+    ) -> Option<Dispensed> {
+        let mut answer = None;
+        claims_glue::dispense(
+            event.dimension,
+            event.pos,
+            event.facing.normal(),
+            event.stack,
+            &mut answer,
+        );
+        answer
     }
 
     /// The SMP's commands in every player's command tree.
@@ -172,29 +67,28 @@ impl Hooks for Mod {
     }
 
     /// A command a player typed, the SMP's own when it is one.
-    fn run_mod_command(
+    fn registered_player_command(
         &self,
         host: &mut dyn ServerHost,
-        event: &mut mod_api::RunModCommandEvent<'_>,
+        event: &mut mod_api::RegisteredPlayerCommandEvent<'_>,
     ) -> Flow {
-        let mod_api::CommandSource::Player { player, .. } = event.source else {
+        let line = event.raw;
+        if !command_line::player_can_dispatch(line, event.permission) {
             return Flow::Continue;
-        };
+        }
         let mut game = Game::new(host);
-        game.acting = Some(player.uuid());
-        let Some(me) = game.player_info(player.uuid()) else {
+        game.acting = Some(event.player.uuid());
+        let Some(mut me) = game.player_info(event.player.uuid()) else {
             return Flow::Continue;
         };
-        let Some(line) = command_line::line(&|stack| game.item_id(stack), event.command) else {
-            return Flow::Continue;
-        };
+        me.permission = event.permission;
         let mut ran = false;
-        ping_glue::perform(&mut game, &me, &line, &mut ran);
+        ping_glue::perform(&mut game, &me, line, &mut ran);
         if !ran {
-            invsee_glue::perform(&mut game, &me, &line, &mut ran);
+            invsee_glue::perform(&mut game, &me, line, &mut ran);
         }
         if !ran {
-            glue::perform(&mut game, &me, &line, &mut ran);
+            glue::perform(&mut game, &me, line, &mut ran);
         }
         cancel(ran)
     }

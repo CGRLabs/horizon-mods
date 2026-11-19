@@ -88,26 +88,7 @@ impl<'a> Game<'a> {
         let Some(p) = self.h.player(uuid) else {
             return false;
         };
-        let board = {
-            let mut tabs = TABS.lock().unwrap_or_else(|e| e.into_inner());
-            match tabs.iter_mut().find(|t| t.0 == uuid) {
-                Some(t) => {
-                    t.2 = footer.clone();
-                    t.1.clone()
-                }
-                None => {
-                    tabs.push((uuid, blank(), footer.clone()));
-                    blank()
-                }
-            }
-        };
-        // The player's board over the server's header.
-        let header = if board == blank() {
-            header.clone()
-        } else {
-            board.append(Text::literal("\n")).append(header.clone())
-        };
-        p.tab_list(self.h, &header, footer).unwrap_or(false)
+        p.tab_list(self.h, header, footer).unwrap_or(false)
     }
 
     pub fn native_broadcast(&mut self, line: Text) {
@@ -220,10 +201,10 @@ fn read_player(h: &dyn ServerHost, p: PlayerRef) -> Option<NativeServerPlayer> {
         dimension: p.dimension(h).map(|d| d.to_string()).unwrap_or_default(),
         position: entity.position(h).unwrap_or_default(),
         game_mode: p.game_mode(h).map_or(0, |m| m as i32),
-        health: 20.0,
+        health: h.living(entity)?.health(h)?,
         yaw,
         pitch,
-        entity_id: 0,
+        entity_id: entity.id() as i32,
     })
 }
 
@@ -249,56 +230,65 @@ pub fn native_menu_inventory_slot(size: usize, slot: i32) -> Option<usize> {
     }
 }
 
-/// Adds `stack` to `slots[range]` as `Inventory.add` places it (onto equal stacks, then into empty slots), up to
-/// `max` a slot; what did not fit stays in `stack`. True when it all went in.
-pub fn add_to(
+/// Fill matching stacks, then empty slots, in the caller's inventory order.
+/// Returns how many of the original stack were inserted.
+fn insert(
     slots: &mut [Option<ItemStack>],
-    range: std::ops::Range<usize>,
-    stack: &mut ItemStack,
+    stack: &ItemStack,
     max: u32,
-) -> bool {
+    matching: impl IntoIterator<Item = usize>,
+    empty: impl IntoIterator<Item = usize>,
+) -> u32 {
+    let mut left = stack.count();
     let max = max.max(1);
-    for i in range.clone() {
-        if stack.count() == 0 {
-            break;
-        }
-        if let Some(s) = slots[i].as_mut()
-            && s.is_stackable_with(stack)
-            && s.count() < max
+    for i in matching {
+        if let Some(slot) = slots[i].as_mut()
+            && slot.is_stackable_with(stack)
+            && slot.count() < max
         {
-            let n = (max - s.count()).min(stack.count());
-            let _ = s.grow(n);
-            moved(stack, n);
+            let n = left.min(max - slot.count());
+            slot.set_count(slot.count() + n).expect("positive count");
+            left -= n;
+        }
+        if left == 0 {
+            return stack.count();
         }
     }
-    for i in range {
-        if stack.count() == 0 {
+    for i in empty {
+        if slots[i].is_none() {
+            let n = left.min(max);
+            let mut part = stack.clone();
+            part.set_count(n).expect("positive count");
+            slots[i] = Some(part);
+            left -= n;
+        }
+        if left == 0 {
             break;
         }
-        if slots[i].is_none() {
-            let n = max.min(stack.count());
-            let mut put = stack.clone();
-            let _ = put.set_count(n);
-            slots[i] = Some(put);
-            moved(stack, n);
+    }
+    stack.count() - left
+}
+
+fn selected_first(selected: usize) -> impl Iterator<Item = usize> {
+    [selected, OFFHAND]
+        .into_iter()
+        .chain((0..MAIN).filter(move |&i| i != selected))
+}
+
+fn write_slots(
+    host: &mut dyn ServerHost,
+    player: PlayerRef,
+    before: &[Option<ItemStack>],
+    after: Vec<Option<ItemStack>>,
+) -> Result<(), String> {
+    for (i, (old, new)) in before.iter().zip(after).enumerate() {
+        if *old != new {
+            player
+                .set_inventory_slot(host, i as u32, new)
+                .map_err(|e| format!("{e:?}"))?;
         }
     }
-    stack.count() == 0
-}
-
-/// `stack` less `n`: a stack at zero stays at count 1 and `is_empty` says it is spent.
-fn moved(stack: &mut ItemStack, n: u32) {
-    let left = stack.count() - n;
-    if left > 0 {
-        let _ = stack.set_count(left);
-    } else {
-        *stack = stack.clone();
-        SPENT.with(|s| s.set(true));
-    }
-}
-
-thread_local! {
-    static SPENT: std::cell::Cell<bool> = const { std::cell::Cell::new(false) };
+    Ok(())
 }
 
 impl<'a> Game<'a> {
@@ -344,12 +334,9 @@ impl<'a> Game<'a> {
     }
 
     fn acting_stacks(&self) -> Vec<Option<ItemStack>> {
-        let mut v = self
-            .acting
+        self.acting
             .and_then(|u| self.native_player_stacks(u))
-            .unwrap_or_default();
-        v.retain(|_| true);
-        v
+            .unwrap_or_default()
     }
 
     /// Every plain item the acting player carries (36 slots and the off hand), by id.
@@ -393,10 +380,8 @@ impl<'a> Game<'a> {
         let Some(p) = self.pref(me) else { return 0 };
         let selected = p.selected_slot(&*self.h).unwrap_or(0);
         let mut stacks = self.acting_stacks();
-        let mut order = vec![selected];
-        order.extend(self.carried_slots().into_iter().filter(|&i| i != selected));
         let mut left = count;
-        for i in order {
+        for i in selected_first(selected) {
             if left == 0 {
                 break;
             }
@@ -428,13 +413,12 @@ impl<'a> Game<'a> {
         let stacks = self.acting_stacks();
         self.carried_slots()
             .into_iter()
-            .filter(|&i| i < MAIN)
             .map(|i| match stacks.get(i) {
                 Some(Some(s)) if plain(s) && self.item_id(s) == item => {
                     max.saturating_sub(s.count())
                 }
-                Some(None) | None => max,
-                Some(Some(_)) => 0,
+                Some(None) if i < MAIN => max,
+                _ => 0,
             })
             .sum()
     }
@@ -442,67 +426,71 @@ impl<'a> Game<'a> {
     /// Gives up to `count` plain `item` where they fit; what it gave (nothing is dropped).
     pub fn native_give_items(&mut self, item: &str, count: u32) -> u32 {
         let Some(me) = self.acting else { return 0 };
-        let give = count.min(self.native_room_for(item));
-        let Some(max) = self.max_stack_size(item) else {
+        let Some(stack) = self.stack_of(item, count) else {
             return 0;
         };
-        let mut left = give;
-        while left > 0 {
-            let n = left.min(max.max(1));
-            let Some(stack) = self.stack_of(item, n) else {
-                break;
-            };
-            let Some(p) = self.pref(me) else { break };
-            if p.give_stack(self.h, stack).is_err() {
-                break;
-            }
-            left -= n;
-        }
-        give - left
+        let remaining = self.give_stack_in_order(me, stack, true);
+        count - remaining.map_or(0, |s| s.count())
     }
 
-    /// Gives `stack` whole to the player `uuid`, as `Inventory.add` places it (the 36 main slots, never the
-    /// armour): what did not fit comes back (nothing is dropped), all of it for a player who isn't here.
+    /// Gives the stack without dropping overflow. A matching offhand stack can fill.
     pub fn native_give_stack(&mut self, uuid: u128, stack: ItemStack) -> Option<ItemStack> {
-        let Some(p) = self.pref(uuid) else {
+        self.give_stack_in_order(uuid, stack, false)
+    }
+
+    fn give_stack_in_order(
+        &mut self,
+        uuid: u128,
+        mut stack: ItemStack,
+        prefer_selected_empty: bool,
+    ) -> Option<ItemStack> {
+        use mod_api::HostTransaction;
+
+        if self
+            .h
+            .players()
+            .acting_player()
+            .is_some_and(|acting| acting.uuid() != uuid)
+        {
+            return Some(stack);
+        }
+        let Some(player) = self.pref(uuid) else {
             return Some(stack);
         };
-        let max = self.h.max_stack_size(stack.item()).unwrap_or(64).max(1);
-        let Some(mut slots) = self.native_player_stacks(uuid) else {
+        let Some(selected) = player.selected_slot(&*self.h) else {
             return Some(stack);
         };
-        let mut rest = stack.clone();
-        SPENT.with(|s| s.set(false));
-        let all = add_to(&mut slots, 0..MAIN, &mut rest, max);
-        let fits = if all {
-            stack.count()
+        let Some(before) = self.native_player_stacks(uuid) else {
+            return Some(stack);
+        };
+        let mut after = before.clone();
+        let max = self.h.max_stack_size(stack.item()).unwrap_or(64);
+        let empty = if prefer_selected_empty {
+            selected_first(selected)
+                .filter(|&i| i < MAIN)
+                .collect::<Vec<_>>()
         } else {
-            stack.count() - rest.count()
+            (0..MAIN).collect()
         };
-        if all || SPENT.with(|s| s.get()) {
-            SPENT.with(|s| s.set(false));
+        let added = insert(&mut after, &stack, max, selected_first(selected), empty);
+        if added > 0
+            && self
+                .h
+                .transaction(|host, _| write_slots(host, player, &before, after))
+                .is_err()
+        {
+            return Some(stack);
         }
-        let mut give = fits;
-        while give > 0 {
-            let n = give.min(max);
-            let mut part = stack.clone();
-            if part.set_count(n).is_err() || p.give_stack(self.h, part).is_err() {
-                break;
-            }
-            give -= n;
-        }
-        let given = fits - give;
-        let left = stack.count() - given;
-        if left == 0 {
+        let remaining = stack.count() - added;
+        if remaining == 0 {
             None
         } else {
-            let mut r = stack;
-            let _ = r.set_count(left);
-            Some(r)
+            stack.set_count(remaining).expect("positive count");
+            Some(stack)
         }
     }
 
-    /// The two offers swap in one step: both are checked first, so nothing moves unless all of it can.
+    /// Check and plan both offers, then write both inventories in one transaction.
     pub fn native_exchange_items(
         &mut self,
         a: u128,
@@ -510,131 +498,83 @@ impl<'a> Game<'a> {
         b: u128,
         b_offer: &[(usize, ItemStack)],
     ) -> Result<(), String> {
-        let mut sa = self
-            .native_player_stacks(a)
-            .ok_or("a player is not on the server")?;
-        let mut sb = self
-            .native_player_stacks(b)
-            .ok_or("a player is not on the server")?;
-        for (slots, offer) in [(&mut sa, a_offer), (&mut sb, b_offer)] {
-            for (i, want) in offer {
-                if slots.get(*i).and_then(Option::as_ref) != Some(want) {
-                    return Err("a stack changed".into());
-                }
-                slots[*i] = None;
-            }
-        }
-        for (slots, gets) in [(&mut sa, b_offer), (&mut sb, a_offer)] {
-            for (_, stack) in gets {
-                let max = self.h.max_stack_size(stack.item()).unwrap_or(64);
-                let mut rest = stack.clone();
-                SPENT.with(|s| s.set(false));
-                add_to(slots, 0..MAIN, &mut rest, max);
-                if !SPENT.with(|s| s.replace(false)) {
-                    return Err("there is no room".into());
-                }
-            }
-        }
-        for (uuid, offer) in [(a, a_offer), (b, b_offer)] {
-            for (i, _) in offer {
-                self.set_slot(uuid, *i, None)?;
-            }
-        }
-        for (uuid, gets) in [(a, b_offer), (b, a_offer)] {
-            for (_, stack) in gets {
-                if let Some(rest) = self.native_give_stack(uuid, stack.clone()) {
-                    // The room was checked: what is left is dropped at their feet by the game's own give.
-                    if let Some(p) = self.pref(uuid) {
-                        let _ = p.give_stack(self.h, rest);
-                    }
-                }
-            }
-        }
-        Ok(())
-    }
+        use mod_api::HostTransaction;
 
-    /// A player's inventory (`Player`: 41 slots, 36 to 39 the armour, 40 the off hand; `Ender`: 27) and whether
-    /// they are on the server. Only players who are on can be read.
-    pub fn native_inventory(
-        &self,
-        uuid: u128,
-        kind: NativeInventoryKind,
-    ) -> Result<NativeInventory, String> {
-        let p = self.pref(uuid).ok_or("the player is not on the server")?;
-        let (len, held) = match kind {
-            NativeInventoryKind::Main => (OFFHAND + 1, p.inventory_slots(&*self.h)),
-            NativeInventoryKind::Ender => (27, p.ender_chest(&*self.h)),
-        };
-        let held = held.ok_or("the player's items can't be read")?;
-        let mut slots = vec![None; len];
-        for (slot, stack) in held {
-            if let Some(cell) = slots.get_mut(slot as usize) {
-                *cell = Some(stack);
-            }
+        if a == b {
+            return Err("a player can't trade with themselves".into());
         }
-        Ok(NativeInventory {
-            slots,
-            online: true,
+        let live = |uuid| {
+            let player = self.pref(uuid)?;
+            (self.h.living(player.entity())?.health(&*self.h)? > 0.0
+                && self.h.players().acting_player() != Some(player))
+            .then_some((player, self.native_player_stacks(uuid)?))
+        };
+        let (Some((a_player, a_before)), Some((b_player, b_before))) = (live(a), live(b)) else {
+            return Err("both players must be here".into());
+        };
+        let plan = |before: &[Option<ItemStack>],
+                    offered: &[(usize, ItemStack)],
+                    received: &[(usize, ItemStack)],
+                    who: &str| {
+            let mut after = before.to_vec();
+            for (slot, expected) in offered {
+                let cell = after.get_mut(*slot).filter(|_| *slot < MAIN);
+                match cell {
+                    Some(cell) if cell.as_ref() == Some(expected) => *cell = None,
+                    _ => return Err(format!("{who} no longer holds their offer")),
+                }
+            }
+            for (_, stack) in received {
+                let max = self.h.max_stack_size(stack.item()).unwrap_or(64);
+                if insert(&mut after, stack, max, 0..MAIN, 0..MAIN) != stack.count() {
+                    return Err(format!("{who} has no room"));
+                }
+            }
+            Ok(after)
+        };
+        let a_after = plan(&a_before, a_offer, b_offer, "the first player")?;
+        let b_after = plan(&b_before, b_offer, a_offer, "the second player")?;
+        self.h.transaction(|host, _| {
+            write_slots(host, a_player, &a_before, a_after)?;
+            write_slots(host, b_player, &b_before, b_after)
         })
     }
 
-    /// Moves the stack in `from` (which must still be `expected`) into `to`'s inventory.
+    pub fn native_inventory(
+        &mut self,
+        uuid: u128,
+        kind: NativeInventoryKind,
+    ) -> Result<mod_api::PlayerInventorySnapshot, String> {
+        self.h
+            .server_player_inventory(uuid, kind.into())
+            .map_err(|e| e.to_string())
+    }
+
     pub fn native_move_stack(
         &mut self,
         from: (u128, NativeInventoryKind, usize),
         expected: &ItemStack,
         to: (u128, NativeInventoryKind),
     ) -> Result<(), String> {
-        if (from.0, from.1) == to {
-            return Err("the same inventory".into());
-        }
-        let source = self.native_inventory(from.0, from.1)?;
-        if source.slots.get(from.2).and_then(Option::as_ref) != Some(expected) {
-            return Err("that stack changed".into());
-        }
-        let mut target = self.native_inventory(to.0, to.1)?.slots;
-        let max = self.h.max_stack_size(expected.item()).unwrap_or(64);
-        let range = match to.1 {
-            NativeInventoryKind::Main => 0..MAIN,
-            NativeInventoryKind::Ender => 0..27,
-        };
-        let before = target.clone();
-        let mut rest = expected.clone();
-        SPENT.with(|s| s.set(false));
-        add_to(&mut target, range, &mut rest, max);
-        if !SPENT.with(|s| s.replace(false)) {
-            return Err("no room".into());
-        }
-        let (Some(p_to), Some(p_from)) = (self.pref(to.0), self.pref(from.0)) else {
-            return Err("the player is not on the server".into());
-        };
-        for (i, (new, old)) in target.iter().zip(&before).enumerate() {
-            if new != old {
-                match to.1 {
-                    NativeInventoryKind::Main => {
-                        p_to.set_inventory_slot(self.h, i as u32, new.clone())
-                    }
-                    NativeInventoryKind::Ender => {
-                        p_to.set_ender_chest_slot(self.h, i as u32, new.clone())
-                    }
-                }
-                .map_err(|e| format!("{e:?}"))?;
-            }
-        }
-        match from.1 {
-            NativeInventoryKind::Main => p_from.set_inventory_slot(self.h, from.2 as u32, None),
-            NativeInventoryKind::Ender => p_from.set_ender_chest_slot(self.h, from.2 as u32, None),
-        }
-        .map_err(|e| format!("{e:?}"))?;
-        Ok(())
+        let slot = u32::try_from(from.2).map_err(|_| "that stack changed")?;
+        let request = mod_api::PlayerInventoryMove::new(
+            (from.0, from.1.into(), slot),
+            expected.clone(),
+            (to.0, to.1.into()),
+        );
+        self.h
+            .server_move_inventory_stack(&request)
+            .map_err(|e| e.to_string())
     }
 }
 
-/// A player's inventory as `native_inventory` reads it.
-#[derive(Clone, Debug, PartialEq)]
-pub struct NativeInventory {
-    pub slots: Vec<Option<ItemStack>>,
-    pub online: bool,
+impl From<NativeInventoryKind> for mod_api::PlayerInventoryKind {
+    fn from(kind: NativeInventoryKind) -> Self {
+        match kind {
+            NativeInventoryKind::Main => Self::Player,
+            NativeInventoryKind::Ender => Self::Ender,
+        }
+    }
 }
 
 // ---- menu items ----
@@ -707,54 +647,24 @@ pub struct NativeSidebar {
     pub lines: Vec<(Text, Option<Text>)>,
 }
 
-static TABS: std::sync::Mutex<Vec<(u128, Text, Text)>> = std::sync::Mutex::new(Vec::new());
-
-fn blank() -> Text {
-    Text::literal("")
-}
-
 /// The ticket controller `/rtp`'s chunks are held under, registered at startup.
 pub static TICKETS: std::sync::OnceLock<mod_api::TicketController> = std::sync::OnceLock::new();
 
 impl Game<'_> {
-    /// Whether the SMP runs in this world (it does wherever it is installed).
-    pub fn native_on(&self, _mod_id: &str) -> bool {
-        true
-    }
-
-    /// The Tab list as a player's board: the game has no per-player sidebar to write to, so the board's title and
-    /// lines are the Tab list's header, over the server's footer.
     pub fn native_sidebar(&mut self, uuid: u128, sidebar: Option<&NativeSidebar>) -> bool {
-        let header = match sidebar {
-            None => blank(),
-            Some(b) => {
-                let mut t = b.title.clone();
-                for (label, value) in &b.lines {
-                    t = t.append(Text::literal("\n")).append(label.clone());
-                    if let Some(v) = value {
-                        t = t.append(Text::literal(": ")).append(v.clone());
-                    }
-                }
-                t
-            }
-        };
-        let footer = {
-            let mut tabs = TABS.lock().unwrap_or_else(|e| e.into_inner());
-            match tabs.iter_mut().find(|t| t.0 == uuid) {
-                Some(t) => {
-                    t.1 = header.clone();
-                    t.2.clone()
-                }
-                None => {
-                    tabs.push((uuid, header.clone(), blank()));
-                    blank()
-                }
-            }
-        };
         let Some(p) = self.h.player(uuid) else {
             return false;
         };
-        p.tab_list(self.h, &header, &footer).unwrap_or(false)
+        let sidebar = sidebar.map(|board| {
+            let lines = board
+                .lines
+                .iter()
+                .cloned()
+                .map(|(left, right)| mod_api::SidebarLine::new(left, right))
+                .collect();
+            mod_api::Sidebar::new(board.title.clone(), lines)
+        });
+        p.send_sidebar(self.h, sidebar).unwrap_or(false)
     }
 
     /// Holds (or lets go) a chunk loaded for `owner` while `/rtp` looks at it.
@@ -777,7 +687,7 @@ impl Game<'_> {
         chunk.set_mod_forced(
             self.h,
             controller,
-            mod_api::TicketOwner::Entity(RTP_OWNER),
+            mod_api::TicketOwner::Transient(RTP_OWNER),
             hold,
             false,
         )
