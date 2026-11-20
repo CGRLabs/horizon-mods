@@ -6,10 +6,10 @@ the authoritative blocks. Protection is off until enabled in the server configur
 
 ## Build and install
 
-This source targets Horizon engine and SDK commit `d3112570d0fbb6fc7715f53b414f4ee2f8d1ed59` from
+This source targets Horizon engine and SDK commit `dd1509b82d4804a234fbc0da3263a5454948e9c4` from
 [Horizon PR #19063](https://github.com/horizon-rust/horizon/pull/19063), Minecraft Java 26.3 and Rust 1.99.1.
 Keep the engine checkout separate from this repository. Prepare game resources from your own 26.3 install or server
-jar using that checkout's [hosting guide](https://github.com/horizon-rust/horizon/blob/d3112570d0fbb6fc7715f53b414f4ee2f8d1ed59/docs/hosting.md#prepare-the-game-files).
+jar using that checkout's [hosting guide](https://github.com/horizon-rust/horizon/blob/dd1509b82d4804a234fbc0da3263a5454948e9c4/docs/hosting.md#prepare-the-game-files).
 
 The Cargo project expects the SDK API sources under `.horizon/sdk/api/` in this directory. With a signed SDK for this
 build, use `cargo horizon-mod check` to fetch the pin and `cargo horizon-mod build` to create the source package.
@@ -19,8 +19,8 @@ release. To reproduce the Linux build from its exact source:
 ```sh
 MOD=$(pwd) # run from horizon-mods/native/anti-xray
 ENGINE=/absolute/path/to/separate/horizon-checkout
-REV=d3112570d0fbb6fc7715f53b414f4ee2f8d1ed59
-git -C "$ENGINE" fetch origin refs/pull/19063/head
+REV=dd1509b82d4804a234fbc0da3263a5454948e9c4
+git -C "$ENGINE" fetch origin main
 git -C "$ENGINE" switch --detach "$REV"
 rustup toolchain install 1.99.1
 rustup target add --toolchain 1.99.1 wasm32-unknown-unknown
@@ -107,7 +107,7 @@ reveals until tracking or view changes free entries. Ordinary geometric exposure
 
 The behavior references are Paper's public [Anti-Xray guide](https://docs.papermc.io/paper/anti-xray/) and
 [world configuration](https://docs.papermc.io/paper/reference/world-configuration/#anti-xray). The implementation uses
-Horizon's public [terrain SDK contract](https://github.com/horizon-rust/horizon/blob/d3112570d0fbb6fc7715f53b414f4ee2f8d1ed59/docs/mod-api/terrain-view.md).
+Horizon's public [terrain SDK contract](https://github.com/horizon-rust/horizon/blob/dd1509b82d4804a234fbc0da3263a5454948e9c4/docs/mod-api/terrain-view.md).
 
 ## Verify
 
@@ -126,18 +126,19 @@ python3 tests/far.py "${COMMON[@]}"
 python3 tests/benchmark.py "${COMMON[@]}" --modes 0,1,2,3 --rounds 3 --seconds 12 --bots 4
 ```
 
-Use `--require-chest-tag` on the dedicated test to enforce state-before-tag delivery. The current pin sends the
-authoritative chest state on ordinary reveal but omits the separate chest update tag. Initial visible column records
-still include the safe chest metadata. The script records the missing tag and still checks the rest of the scene.
+Use `--require-chest-tag` on the dedicated test to enforce state-before-tag delivery: every chest state sent after a
+reveal must arrive with its chest update tag. The pinned engine does this, and the script records any missing tag
+when the flag is left off.
 
-The benchmark writes a JSON report and its starting snapshot under `--out`. Use `--snapshot PATH --traffic-only`
+The benchmark writes a JSON report and its starting snapshot under `--out`; the reusable world is its `snapshot/world`
+folder. Use `--snapshot PATH --traffic-only`
 to compare identical columns in modes 2 and 3, or `--snapshot PATH --cold-only --modes 0,1` to repeat exploration.
-To compare disabled overhead against the same engine without any mod, run the pinned engine's
-`python3 tools/prebuilt_game.py smoke "$BUILD/sdk"`. Then run the benchmark against the resulting plain
-runtime:
+To compare disabled overhead against the same engine without any mod, copy the export, replace
+`native-mods.json` in the copy with `{"libraries": []}` and delete its `libanti_xray.so` and `horizon-native-mods`.
+Then run the benchmark against that plain runtime:
 
 ```sh
-python3 tests/benchmark.py "${COMMON[@]}" --plain-binary "$BUILD/prebuilt-smoke-api/horizon-client" \
+python3 tests/benchmark.py "${COMMON[@]}" --plain-binary "$PLAIN/horizon-engine" \
   --modes=-1,0 --cold-only --rounds 2 --seconds 12 --bots 4
 ```
 

@@ -275,7 +275,7 @@ def main():
     report = {
         'machine': platform.uname()._asdict(), 'bots': args.bots, 'view_distance': args.view_distance,
         'seconds_per_phase': args.seconds, 'explore_speed': args.speed, 'snapshot': str(snapshot),
-        'engine_commit': 'd3112570d0fbb6fc7715f53b414f4ee2f8d1ed59', 'trials': [],
+        'engine_commit': 'dd1509b82d4804a234fbc0da3263a5454948e9c4', 'trials': [],
     }
     for round_number in range(args.rounds):
         offset = round_number % len(modes)

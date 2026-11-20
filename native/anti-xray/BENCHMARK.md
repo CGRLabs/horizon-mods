@@ -1,7 +1,7 @@
 # Dedicated-server verification
 
 The native mod and optimized dedicated runtime were built against Horizon
-`d3112570d0fbb6fc7715f53b414f4ee2f8d1ed59` with Rust 1.99.1 on Linux x86-64. The host was an
+`dd1509b82d4804a234fbc0da3263a5454948e9c4` with Rust 1.99.1 on Linux x86-64. The host was an
 AMD Ryzen 5 5600X with 6 cores, 12 logical CPUs and 31 GiB of RAM. Server and wire clients ran on
 the same workstation over loopback. The runtime used prepared Minecraft Java 26.3 data. The server and each
 run's homes and world folder were disposable.
@@ -33,12 +33,6 @@ The mining script matches the accepted block state change, the acknowledged acti
 ore state on the wire. When the accepted change and the reveal are in one section update, they were queued
 together. Where they occupy separate frames, the script records client receipt latency.
 
-## Initial two-bot milestone
-
-Nine-second windows, one disabled and one mode 1 trial on the same saved snapshot. Cold exploration delivered
-33.3 chunks/s disabled and 54.9 chunks/s protected. Median sampled cold p95 rose from 2.45 to 3.45 ms.
-These first counts include repeated columns and establish no acceptance threshold on their own.
-
 ## Interleaved comparison
 
 Each cell is the median across three trials, with its minimum and maximum in brackets. Throughput is
@@ -46,57 +40,63 @@ delivered packet rate. CPU is seconds across all server threads in the 12-second
 
 | Mode | Phase | p95 ms | p99 ms | Chunks/s | Bytes/chunk | CPU seconds | Peak MiB |
 | --- | --- | ---: | ---: | ---: | ---: | ---: | ---: |
-| 0 | join | 3.70 [3.30–8.70] | 11.10 [10.75–27.45] | 71.0 [71.0–71.0] | 4,439 [4,439–4,439] | 5.27 [4.96–5.39] | 527 [520–529] |
-| 0 | cold | 6.60 [3.80–10.50] | 13.00 [10.15–14.70] | 67.5 [67.5–67.5] | 5,279 [5,274–5,280] | 14.39 [14.07–15.32] | 633 [629–633] |
-| 0 | warm | 6.10 [5.25–10.10] | 8.40 [8.35–14.35] | 65.0 [65.0–65.0] | 4,476 [4,475–4,476] | 1.09 [1.08–1.29] | 638 [634–639] |
-| 0 | mining | 1.70 [1.60–2.05] | 3.55 [2.15–4.60] | 16.2 [16.2–16.2] | 4,044 [4,044–4,044] | 0.47 [0.46–0.53] | 590 [587–599] |
-| 1 | join | 3.45 [3.25–5.70] | 14.95 [11.25–17.40] | 71.0 [71.0–71.7] | 4,241 [4,241–4,242] | 5.46 [4.99–5.65] | 518 [518–523] |
-| 1 | cold | 5.55 [4.60–8.80] | 11.15 [9.85–18.80] | 105.5 [104.8–108.2] | 4,949 [4,871–5,102] | 14.94 [14.82–15.66] | 627 [625–629] |
-| 1 | warm | 7.95 [6.05–8.40] | 10.00 [8.45–12.30] | 65.0 [65.0–65.0] | 4,266 [4,266–4,266] | 1.18 [1.16–1.24] | 634 [632–637] |
-| 1 | mining | 1.50 [1.45–1.65] | 2.20 [2.15–3.15] | 16.2 [16.2–16.2] | 3,870 [3,870–3,870] | 0.48 [0.48–0.48] | 581 [580–586] |
-| 2 | join | 3.15 [2.75–3.25] | 11.65 [11.20–11.65] | 71.0 [71.0–71.0] | 12,142 [12,142–12,150] | 5.55 [5.32–5.55] | 534 [534–537] |
-| 2 | cold | 6.75 [4.90–7.05] | 12.45 [12.40–20.55] | 104.8 [103.8–107.7] | 12,948 [12,884–13,162] | 16.50 [16.32–16.73] | 659 [656–661] |
-| 2 | warm | 7.50 [7.15–7.95] | 9.80 [9.55–12.40] | 65.0 [65.0–65.0] | 12,243 [12,238–12,249] | 1.39 [1.39–1.41] | 667 [664–669] |
-| 2 | mining | 1.55 [1.45–1.60] | 2.60 [2.05–3.85] | 16.2 [16.2–17.5] | 11,534 [11,530–11,546] | 0.50 [0.49–0.51] | 621 [621–628] |
-| 3 | join | 3.15 [2.85–3.40] | 11.20 [10.90–11.90] | 71.0 [71.0–71.0] | 4,431 [4,422–4,432] | 5.29 [5.17–5.30] | 530 [529–533] |
-| 3 | cold | 5.50 [4.90–5.85] | 9.45 [8.90–10.25] | 105.8 [104.5–107.8] | 5,060 [4,914–5,060] | 15.93 [15.87–16.36] | 648 [643–652] |
-| 3 | warm | 7.10 [5.75–7.25] | 9.95 [7.85–10.85] | 65.0 [65.0–65.0] | 4,487 [4,478–4,489] | 1.34 [1.32–1.36] | 655 [652–660] |
-| 3 | mining | 1.75 [1.45–1.80] | 2.35 [2.20–2.90] | 16.2 [16.2–16.2] | 3,848 [3,822–3,855] | 0.51 [0.50–0.52] | 610 [610–611] |
+| 0 | join | 4.95 [3.45–6.50] | 27.90 [9.85–60.60] | 71.0 [71.0–71.0] | 4,441 [4,440–4,441] | 6.27 [4.49–6.34] | 525 [523–532] |
+| 0 | cold | 7.05 [3.80–8.80] | 13.30 [6.70–20.55] | 67.5 [67.5–67.5] | 5,276 [5,274–5,288] | 14.49 [13.62–15.54] | 632 [630–635] |
+| 0 | warm | 7.50 [5.35–7.80] | 18.25 [7.30–26.55] | 65.0 [65.0–65.0] | 4,477 [4,477–4,477] | 1.43 [1.02–2.12] | 637 [636–642] |
+| 0 | mining | 2.90 [1.35–3.35] | 5.30 [1.90–6.75] | 16.2 [16.2–17.5] | 4,044 [4,044–4,064] | 0.59 [0.38–0.64] | 592 [588–606] |
+| 1 | join | 3.20 [2.85–7.00] | 32.70 [9.80–53.40] | 79.3 [71.0–79.7] | 4,243 [4,243–4,253] | 6.32 [4.64–6.48] | 520 [517–526] |
+| 1 | cold | 7.70 [4.60–7.75] | 14.10 [9.10–20.35] | 107.2 [105.8–107.8] | 5,089 [5,083–5,173] | 15.36 [13.30–16.19] | 627 [626–636] |
+| 1 | warm | 10.00 [4.10–10.05] | 14.85 [7.75–21.35] | 65.0 [65.0–67.7] | 4,268 [4,268–4,327] | 1.52 [1.20–2.44] | 640 [636–642] |
+| 1 | mining | 2.20 [1.25–3.65] | 3.70 [1.80–6.50] | 16.2 [16.2–16.2] | 3,870 [3,870–3,870] | 0.62 [0.40–0.65] | 592 [592–592] |
+| 2 | join | 3.45 [2.70–3.70] | 47.00 [11.90–49.90] | 79.0 [71.0–79.3] | 12,168 [12,149–12,168] | 6.43 [5.26–6.68] | 535 [534–539] |
+| 2 | cold | 7.85 [4.65–8.30] | 13.20 [9.50–20.45] | 111.1 [107.1–111.1] | 12,849 [12,847–12,894] | 16.91 [15.77–18.11] | 656 [653–660] |
+| 2 | warm | 8.10 [5.75–10.75] | 17.55 [9.30–24.75] | 65.2 [65.0–68.7] | 12,249 [12,242–12,306] | 2.30 [1.38–3.51] | 670 [668–670] |
+| 2 | mining | 4.75 [1.30–5.70] | 9.20 [1.95–23.30] | 16.2 [16.2–17.5] | 11,543 [11,534–11,561] | 0.67 [0.45–0.69] | 629 [624–630] |
+| 3 | join | 4.70 [2.25–4.95] | 34.45 [9.95–62.05] | 77.5 [71.0–81.0] | 4,425 [4,407–4,425] | 6.44 [4.84–6.91] | 532 [528–541] |
+| 3 | cold | 7.50 [4.15–9.35] | 15.35 [8.70–18.70] | 107.6 [82.6–111.6] | 5,020 [4,953–5,124] | 15.35 [13.54–17.67] | 647 [622–651] |
+| 3 | warm | 7.80 [5.45–11.55] | 13.35 [10.40–21.70] | 67.7 [65.0–75.1] | 4,550 [4,481–4,603] | 2.87 [1.34–4.89] | 658 [656–660] |
+| 3 | mining | 5.75 [2.00–6.75] | 8.00 [6.10–14.50] | 16.2 [16.2–17.5] | 3,856 [3,843–3,893] | 0.67 [0.63–0.73] | 610 [607–617] |
 
-Mode 1's median p95 stayed within the 5% target during join, cold exploration and mining. Warm p95 rose
-from 6.10 to 7.95 ms, about 30%, and missed the target. Cold delivery volume increased, which includes
-the refresh packets the engine sends when adjacent terrain becomes resident. The distinct-column check
+Part of these runs shared the workstation with another job's release builds (load average about 11 on 12
+logical CPUs), so latency percentiles are noisier than a quiet host would give, and mode 0 itself varies by a factor
+of two between trials. Against mode 0, mode 1's median p95 was lower at join (4.95 to 3.20 ms) and in mining
+(2.90 to 2.20 ms) but higher in cold exploration (7.05 to 7.70 ms, about 9%) and warm (7.50 to 10.00 ms, about 33%).
+The cold and warm results miss the 5% target, and the spread in both rows overlaps. Cold delivery volume increased,
+which includes the refresh packets the engine sends when adjacent terrain becomes resident. The distinct-column check
 below isolates first-time terrain delivery.
 
-The scripts accepted 120 breaks in each trial. In every protected mode all 360 ordinary mining reveals
-arrived in the same section update as the accepted air change, meeting the next-tick queue target.
-Request-to-receipt time includes client, input scheduling and server time. The maximum was 90.8 ms for
-mode 1, 90.6 ms for mode 2 and 90.4 ms for mode 3.
+The scripts attempted 120 to 124 breaks in each trial, depending on how many fit in the window. Every accepted break
+in every protected mode was acknowledged. Each ordinary reveal the script saw arrived in the same section update as the
+accepted air change, meeting the next-tick queue target. Mode 1 recorded all 364 reveals. Modes 2 and 3 recorded 308 and
+236 of 364, because the engine now sends a neighboring block only when the viewer's picture of it changes. The
+benchmark's decoy list contains diamond ore, so an ore whose decoy is also diamond ore is already shown correctly and
+sends nothing. Mode 3 chooses one decoy per chunk layer, and the missing reveals fall in the same whole columns for all
+four clients. Request-to-receipt time includes client, input scheduling and server time. The maximum was 90.6 ms for
+mode 1, 96.5 ms for mode 2 and 91.0 ms for mode 3.
 
-For the matched traffic run on 49 identical saved columns, mode 2 sent 610,819 framed bytes and mode 3 sent
-226,816. Mode 3 used **62.9% fewer bytes** in that sample. In the interleaved cold run its median compressed
-bytes per delivered chunk fell from 12,948 to 5,060.
+For the matched traffic run on 49 identical saved columns, mode 2 sent 611,374 framed bytes and mode 3 sent
+225,840. Mode 3 used **63.1% fewer bytes** in that sample. In the interleaved cold run its median compressed
+bytes per delivered chunk fell from 12,849 to 5,020.
 
 ## First-time exploration delivery
 
-Two additional disabled and mode 1 trials used the same saved snapshot, with order reversed in the second pair.
-Every trial delivered 810 first-time columns in 12 seconds, or **67.5 per second**. Mode 1 met the 10% first-time
-throughput target. It sent 442–445 additional refreshes per trial, compared with zero in the disabled trials.
-Total framed chunk traffic rose from a median 4.28 MB to 6.18 MB, **44.3% more** for the same first-time delivery.
-Per-chunk averages alone hide the refresh cost.
+Four disabled and mode 1 trials used the same saved snapshot in two orders, mode 0 first and mode 1 first.
+Every trial delivered 810 first-time columns in 12 seconds, or **67.5 per second**, except one mode 1 trial
+at 67.4. Mode 1 met the 10% first-time throughput target. It sent 424–496 additional refreshes per trial, compared
+with zero in the disabled trials. Total framed chunk traffic rose from a median 4.28 MB to 6.62 MB, **54.7% more**
+for the same first-time delivery. Per-chunk averages alone hide the refresh cost.
 
-The second warm tick-query sample is wholly inside the warm phase. Taking only that sample, the median p95
-was 2.60 ms disabled and 2.30 ms in mode 1. The phase-wide estimate in the table includes the transition out
-of cold exploration and exceeded the target. The initial mode 0 trials used the same export with protection disabled.
+Phase-wide percentiles include the transition out of the preceding phase. Across the four trials cold p95
+ranged from 5.45 to 6.30 ms disabled and from 5.15 to 7.10 ms in mode 1, so the ranges overlap.
 
 ## Disabled overhead against the plain engine
 
-Two more interleaved pairs used a snapshot prepared by the same optimized engine without the mod loaded.
-The plain and disabled exports each delivered 71.0 chunks/s at join and 67.5 first-time chunks/s in cold
-exploration in every trial. Cold CPU medians were 14.46 s plain and 14.71 s disabled, a 1.7% increase.
-Cold p95 ranged from 4.80 to 5.90 ms plain and 4.35 to 8.30 ms disabled. The ranges overlap, and one disabled
-trial exceeded the plain range. The sample does not establish tick-time neutrality. Cold peak RSS medians
-were 608 MiB plain and 634 MiB disabled.
+Two more interleaved pairs ran the same export with its native mod list emptied (plain) beside the disabled mod.
+The plain export delivered 71.0 chunks/s at join and 67.5 first-time chunks/s in cold exploration in both trials.
+The disabled export also delivered 71.0 at join, and 67.5 and 66.3 first-time chunks/s in its two cold trials.
+Cold CPU medians were 15.19 s plain and 15.13 s disabled. Cold p95 ranged from 7.20 to 7.90 ms plain and
+5.85 to 10.10 ms disabled, so the ranges overlap and the sample does not establish tick-time neutrality. Cold peak
+RSS medians were 591 MiB plain and 627 MiB disabled.
 
 ## Packet and gameplay results
 
@@ -113,7 +113,7 @@ in a fresh Xvfb session. The remaining checks used stock protocol clients to obs
   The saved Anvil chunk kept the authoritative lit ore, the east-facing chest and three diamonds in its inventory.
   Destroying the chest dropped the diamonds. A survival dig with a diamond pickaxe dropped redstone.
 - The saved far-ring column (12, 0) delivered fake deepslate and no chest record to the protected client and the
-  real chest and record to the operator. Both stayed at spawn. The pinned engine's decoded packet tests also
+  real chest and record to the operator. Both stayed at spawn. The engine's own decoded packet tests in Horizon #19063 also
   passed for resident neighbor arrival invalidating a saved projection and for a wrapped cross-dimension view.
 - Mode 2 varied within all 59 sampled layers. Mode 3 was uniform in each of the 59 layers. Both used the configured
   decoys, suppressed the replacement chest's metadata, respected the rounded Y=0 limit, and repeated the
@@ -123,7 +123,5 @@ in a fresh Xvfb session. The remaining checks used stock protocol clients to obs
 The sustained mining run reached the **1,024-entry** extra reveal cap after break 57. All 72 ordinary adjacent ore
 reveals still reached both viewers, including after capacity. Before capacity, the still-covered chest's true state
 was sent only to the miner. After capacity, another still-covered chest received no extra state. Breaking its
-immediate seal then sent its true state to both viewers. With this engine revision, **none of the chest reveals
-carried a separate chest update tag**. The engine agent's separate fix
-`e553c2c81940457ffcdaf1727bc50b87006df0d7` passed state-before-tag assertions for ordinary and retained
-radius reveals. The dedicated results and benchmarks above use the original requested pin.
+immediate seal then sent its true state to both viewers. At this engine revision every chest state that reached a
+viewer carried its chest update tag in the same delivery, and `dedicated.py --require-chest-tag` passed.
