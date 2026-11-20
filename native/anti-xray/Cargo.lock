@@ -62,7 +62,6 @@ name = "horizon-anti-xray"
 version = "0.1.0"
 dependencies = [
  "horizon-mod-api",
- "log",
  "serde",
  "toml",
 ]

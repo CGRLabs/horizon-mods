@@ -35,6 +35,20 @@ cargo clippy --locked --all-targets -- -D warnings
 python3 tests/export_local.py --engine "$ENGINE" --prebuilt "$BUILD/sdk" --output "$BUILD/export"
 ```
 
+For a source package check without an SDK release, build the package tool from the pinned engine and stage the
+Cargo project inside its ignored `target/` directory. The package tool recognizes the local engine source and
+skips fetching a signed SDK. It excludes the `.horizon/` link from the package:
+
+```sh
+(cd "$ENGINE" && cargo build --locked --release -p cargo-horizon-mod)
+STAGE=$(mktemp -d "$ENGINE/target/anti-xray-package.XXXXXX")
+cp -R Cargo.toml Cargo.lock horizon-mod.toml LICENSE src "$STAGE"
+mkdir -p "$STAGE/.horizon/sdk"
+ln -s "$ENGINE" "$STAGE/.horizon/sdk/api"
+TOOL="$ENGINE/target/release/cargo-horizon-mod"
+(cd "$STAGE" && "$TOOL" build && "$TOOL" check target/horizon-mod/anti_xray.hmod --kind native-mod)
+```
+
 The local export uses the exact SDK's native entry template and compiler metadata, and verifies the hashes and
 compiler identity in the SDK before linking. It does not need a signed development release. Keep the export folder
 together. With a signed SDK and matching launcher version, the regular export command is
@@ -52,7 +66,8 @@ horizon-server --dir "$SERVER" run
 ```
 
 For a scratch server with an accepted EULA and `server.properties`, you can also launch the engine directly from the
-scratch server directory with `"$BUILD/export/horizon-engine" --resources "$RESOURCES" --dedicated --nogui`.
+scratch server directory with
+`"$BUILD/export/horizon-engine" --game-dir "$PWD" --resources "$RESOURCES" --dedicated --nogui`.
 
 ## Configure
 
@@ -114,3 +129,24 @@ python3 tests/benchmark.py "${COMMON[@]}" --modes 0,1,2,3 --rounds 3 --seconds 1
 Use `--require-chest-tag` on the dedicated test to enforce state-before-tag delivery. The current pin sends the
 authoritative chest state on ordinary reveal but omits the separate chest update tag. Initial visible column records
 still include the safe chest metadata. The script records the missing tag and still checks the rest of the scene.
+
+The benchmark writes a JSON report and its starting snapshot under `--out`. Use `--snapshot PATH --traffic-only`
+to compare identical columns in modes 2 and 3, or `--snapshot PATH --cold-only --modes 0,1` to repeat exploration.
+To compare disabled overhead against the same engine without any mod, run the pinned engine's
+`python3 tools/prebuilt_game.py smoke "$BUILD/sdk"`. Then run the benchmark against the resulting plain
+runtime:
+
+```sh
+python3 tests/benchmark.py "${COMMON[@]}" --plain-binary "$BUILD/prebuilt-smoke-api/horizon-client" \
+  --modes=-1,0 --cold-only --rounds 2 --seconds 12 --bots 4
+```
+
+See [the verification and benchmark report](BENCHMARK.md) for the measurements.
+
+To try the unmodified Java client on Linux, prepare its original game files with the engine's `tools/lab.py`.
+Run the smoke check on its own display with Java 25 and Xvfb:
+
+```sh
+python3 "$ENGINE/tools/ci/with_xvfb.py" python3 tests/vanilla_smoke.py "${COMMON[@]}" \
+  --vanilla-root "$VANILLA_CHECKOUT" --assets "$MINECRAFT_ASSETS"
+```

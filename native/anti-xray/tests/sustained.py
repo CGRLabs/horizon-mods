@@ -53,7 +53,7 @@ def run(args, folder):
                 assert chunk_cell(packet, position) == (fake, None), client.name
 
         extra = ordinary = 0
-        first_short_break = None
+        cap_reached_after = None
         chest_results = {}
         for seq, (x, y, z) in enumerate(points, 1):
             position = (x, y, z)
@@ -89,9 +89,9 @@ def run(args, folder):
                     if tags:
                         assert updates and updates[0] < tags[0]
                     chest_results[str(target)] = {'state': bool(updates), 'tag': bool(tags)}
-            if count < 18 and seq not in (1, len(points)) and first_short_break is None:
-                first_short_break = seq
             extra += count
+            if extra == 1024 and cap_reached_after is None:
+                cap_reached_after = seq
 
         # At capacity a chest can still become ordinarily exposed by breaking its immediate seal.
         x, y, z = late
@@ -108,11 +108,11 @@ def run(args, folder):
             assert index < tag_index
             tag_after_capacity = True
         assert ordinary == len(points)
-        assert extra == 1024, (extra, first_short_break, chest_results)
+        assert extra == 1024, (extra, cap_reached_after, chest_results)
         assert chest_results[str(early)]['state'] and not chest_results[str(late)]['state']
         return {
             'accepted_breaks': len(points) + 1, 'ordinary_ore_reveals_verified': ordinary,
-            'retained_radius_positions': extra, 'first_short_break': first_short_break,
+            'retained_radius_positions': extra, 'cap_reached_after_break': cap_reached_after,
             'radius_chest_results': chest_results,
             'late_ordinary_chest': {'state': True, 'tag': tag_after_capacity},
         }

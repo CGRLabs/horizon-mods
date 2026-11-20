@@ -94,12 +94,42 @@ max_block_height = 128
         }
 
 
+def rejects_entity_decoy(args, folder):
+    from wire import Client
+
+    settings = '''
+[dimensions."minecraft:overworld"]
+enabled = true
+mode = 2
+hidden_blocks = ["chest"]
+'''
+    server, port = server_for(args, folder, settings, flat=True)
+    try:
+        server.wait_for(r'minecraft:overworld\.hidden_blocks.*minecraft:chest.*cannot be a decoy', 15)
+        try:
+            client = Client(port, 'InvalidConfig')
+            try:
+                client.wait(lambda p: p.kind == 73, timeout=10)
+            finally:
+                client.close()
+        except (EOFError, OSError, RuntimeError) as error:
+            if isinstance(error, TimeoutError):
+                raise
+            return
+        raise AssertionError('invalid configuration allowed a login')
+    finally:
+        server.stop()
+
+
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--mode', type=int, choices=(2, 3), required=True)
     args = arguments(parser)
     folder = Path(tempfile.mkdtemp(dir=args.out, prefix=f'pattern-{args.mode}-'))
     result = run(args, folder, args.mode)
+    if args.mode == 2:
+        rejects_entity_decoy(args, Path(tempfile.mkdtemp(dir=args.out, prefix='invalid-')))
+        result['invalid_decoy_rejected_at_startup'] = True
     (folder / 'results.json').write_text(json.dumps(result, indent=2) + '\n')
     print(json.dumps(result, indent=2))
 

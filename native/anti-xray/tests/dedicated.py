@@ -48,7 +48,7 @@ def server_for(args, folder, extra, *, flat=False, far_distance=None):
     for variable in ('HORIZON_HOME', 'HORIZON_LAUNCHER_HOME', 'XDG_DATA_HOME', 'XDG_CONFIG_HOME',
                      'HORIZON_LAUNCHER_TRASH', 'HORIZON_LAUNCHER_CLIPBOARD', 'HORIZON_LAUNCHER_DESKTOP'):
         env[variable] = tempfile.mkdtemp(dir=folder, prefix=variable.lower() + '-')
-    server = Server([args.binary, '--resources', args.resources, '--dedicated', '--nogui'], folder, folder / 'console.log', env)
+    server = Server([args.binary, '--game-dir', folder, '--resources', args.resources, '--dedicated', '--nogui'], folder, folder / 'console.log', env)
     try:
         server.wait_for(DONE, 300)
     except BaseException:
@@ -238,9 +238,29 @@ def run(args, folder):
         server.console('setblock 16 -55 0 minecraft:air destroy')
         server.console('execute if entity @e[type=minecraft:item,nbt={Item:{id:"minecraft:diamond",count:3}}] run say anti-xray authoritative drop')
         server.wait_for('anti-xray authoritative drop', 20)
+
+        # Mine the real redstone ore in survival, using a vanilla dig and the proper tool.
+        mark = first.mark()
+        for command in (
+            'setblock 15 -55 0 minecraft:air',
+            'setblock 15 -56 -1 minecraft:stone',
+            'item replace entity ProtectedA hotbar.0 with minecraft:diamond_pickaxe',
+            'gamemode survival ProtectedA',
+            'tp ProtectedA 15.5 -55 -0.5',
+        ):
+            server.console(command)
+        first.wait(lambda p: p.kind == 73, mark)
+        mark = first.mark()
+        first.dig(ORE, 3)
+        first.wait(lambda p: p.kind == ACK and Reader(p.data).varint() >= 3, mark, timeout=5)
+        first.dig(ORE, 4, action=3)  # STOP_DESTROY_BLOCK lets the server finish the dig.
+        air = state('air')
+        first.wait(lambda p: updated_state(p, ORE) == air, mark, timeout=8)
+        server.console('execute if entity @e[type=minecraft:item,nbt={Item:{id:"minecraft:redstone"}}] run say anti-xray redstone drop')
+        server.wait_for('anti-xray redstone drop', 20)
         summary['checks'] = ['opaque full cubes', 'glass', 'single slab', 'water', 'lava',
                              'out-of-range interaction', 'accepted mining',
-                             'reseal', 'live deop and op', 'fill edit', 'authoritative saved ore, chest contents and drop']
+                             'reseal', 'live deop and op', 'fill edit', 'authoritative saved ore and chest contents', 'chest drop', 'survival ore drop']
         summary['lava_obscures'] = args.lava_obscures
         return summary
 

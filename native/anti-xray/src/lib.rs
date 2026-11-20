@@ -89,7 +89,7 @@ impl Views {
         for selection in selections.iter().filter(|selection| selection.bypass) {
             let view = (!bypass).then_some(selection.id);
             if let Err(error) = host.player_set_terrain_view(uuid, selection.dimension, view) {
-                log::error!(
+                eprintln!(
                     "Anti-Xray {}: cannot change terrain view: {error:?}",
                     selection.dimension
                 );
@@ -115,7 +115,9 @@ impl Hooks for AntiXray {
         let views = if event.dedicated {
             Views::configure(host)
                 .map_err(|error| {
-                    log::error!("Anti-Xray config/anti_xray.toml: {error}; logins refused");
+                    eprintln!(
+                        "Anti-Xray rejected config/anti_xray.toml ({error}). Logins refused."
+                    );
                 })
                 .ok()
         } else {
@@ -133,7 +135,7 @@ impl Hooks for AntiXray {
             if let Err(error) =
                 host.player_set_terrain_view(event.player, selection.dimension, Some(selection.id))
             {
-                log::error!(
+                eprintln!(
                     "Anti-Xray {}: cannot select terrain view: {error:?}",
                     selection.dimension
                 );

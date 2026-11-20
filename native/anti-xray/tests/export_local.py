@@ -52,7 +52,7 @@ def main():
         (stage / 'entry.rs').write_text(template)
         with (stage / 'lib.rs').open('a') as root:
             root.write('\nmod entry;\nextern crate horizon_mod_host;\n')
-        externs = [arg for crate in ('mod_api', 'horizon_mod_host', 'serde', 'toml', 'log')
+        externs = [arg for crate in ('mod_api', 'horizon_mod_host', 'serde', 'toml')
                    for arg in sdk.extern_args(deps, crate)]
         subprocess.run(['rustc', '--edition', '2024', '--crate-type', 'dylib', '--crate-name', mod,
                         '-C', 'prefer-dynamic', '-C', 'opt-level=3', '-C', 'link-arg=-Wl,-rpath,$ORIGIN',

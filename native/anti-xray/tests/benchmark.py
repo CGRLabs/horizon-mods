@@ -2,6 +2,7 @@
 """Compare delivered terrain and server time with the same export and saved world."""
 
 import argparse
+from argparse import Namespace
 from collections import defaultdict
 from concurrent.futures import ThreadPoolExecutor
 from contextlib import ExitStack
@@ -78,14 +79,19 @@ def window(server, trackers, name, duration, workload):
             next_sample += 5
         time.sleep(max(0, min(0.05, end - time.monotonic())))
     _, final_cpu = proc_usage(server.process.pid)
-    delivered = [row for tracker in trackers for row in tracker.chunks if began <= row[0] < end]
-    prior = [{column for at, column, _ in tracker.chunks if at < began} for tracker in trackers]
-    resent = sum(sum(began <= at < end and column in seen for at, column, _ in tracker.chunks)
-                 for tracker, seen in zip(trackers, prior))
+    by_client = [tracker.chunks[:] for tracker in trackers]
+    windows = [[row for row in rows if began <= row[0] < end] for rows in by_client]
+    delivered = [row for rows in windows for row in rows]
+    prior = [{column for at, column, _ in rows if at < began} for rows in by_client]
+    unique_by_client = [{row[1] for row in rows} for rows in windows]
+    unique = sum(map(len, unique_by_client))
+    new = sum(len(columns - seen) for columns, seen in zip(unique_by_client, prior))
     return {
         'phase': name, 'seconds': duration, 'delivered_chunks': len(delivered),
         'delivered_chunks_per_second': len(delivered) / duration,
-        'previously_seen_chunks': resent,
+        'distinct_chunks_per_second': unique / duration,
+        'first_time_chunks_per_second': new / duration,
+        'repeated_deliveries_within_window': len(delivered) - unique,
         'compressed_framed_bytes_per_chunk': statistics.fmean(row[2] for row in delivered) if delivered else None,
         'server_cpu_seconds': final_cpu - initial_cpu,
         'sampled_peak_server_rss_bytes': peak,
@@ -101,15 +107,7 @@ def one_trial(args, output, snapshot, mode, round_number):
     folder = output / f'round-{round_number}-mode-{mode}'
     folder.mkdir()
     shutil.copytree(snapshot, folder / 'world')
-    settings = f'''
-[dimensions."minecraft:overworld"]
-enabled = {str(mode != 0).lower()}
-mode = {max(mode, 1)}
-max_block_height = 112
-hidden_blocks = ["diamond_ore", "deepslate_diamond_ore", "redstone_ore", "gold_ore", "iron_ore"]
-replacement_blocks = ["stone", "deepslate", "andesite", "diorite", "granite", "tuff"]
-'''
-    server, port = server_for(args, folder, settings)
+    server, port = server_for(args, folder, config_for(mode))
     with ExitStack() as stack:
         stack.callback(server.stop)
         trackers = [Deliveries() for _ in range(args.bots)]
@@ -152,6 +150,8 @@ replacement_blocks = ["stone", "deepslate", "andesite", "diorite", "granite", "t
                 client.move(x + dx * distance, 200, z + dz * distance)
 
         rows.append(window(server, trackers, 'cold', args.seconds, travel))
+        if args.cold_only:
+            return {'round': round_number, 'mode': mode, 'phases': rows}
         rows.append(window(server, trackers, 'warm', args.seconds,
                            lambda seconds: travel(args.seconds - seconds)))
 
@@ -205,6 +205,41 @@ replacement_blocks = ["stone", "deepslate", "andesite", "diorite", "granite", "t
     return {'round': round_number, 'mode': mode, 'phases': rows}
 
 
+
+def compare_traffic(args, output, snapshot):
+    from wire import CHUNK, Client, column
+
+    wanted = {(x, z) for x in range(-3, 4) for z in range(-3, 4)}
+    rows = []
+    for mode in (2, 3):
+        folder = output / f'matched-mode-{mode}'
+        folder.mkdir()
+        shutil.copytree(snapshot, folder / 'world')
+        server, port = server_for(args, folder, config_for(mode))
+        with ExitStack() as stack:
+            stack.callback(server.stop)
+            client = Client(port, 'Traffic')
+            stack.callback(client.close)
+            chunks = {}
+            for key in sorted(wanted):
+                _, packet = client.wait(lambda p: p.kind == CHUNK and column(p) == key)
+                chunks[f'{key[0]},{key[1]}'] = packet.wire_bytes
+            rows.append({'mode': mode, 'bytes_by_column': chunks, 'total': sum(chunks.values()),
+                         'mean': statistics.fmean(chunks.values())})
+    return rows
+
+
+def config_for(mode):
+    return f'''
+[dimensions."minecraft:overworld"]
+enabled = {str(mode > 0).lower()}
+mode = {max(mode, 1)}
+max_block_height = 112
+hidden_blocks = ["diamond_ore", "deepslate_diamond_ore", "redstone_ore", "gold_ore", "iron_ore"]
+replacement_blocks = ["stone", "deepslate", "andesite", "diorite", "granite", "tuff"]
+'''.lstrip()
+
+
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--modes', default='0,1,2,3')
@@ -213,15 +248,30 @@ def main():
     parser.add_argument('--seconds', default=24, type=float, help='fixed duration of each measurement window')
     parser.add_argument('--speed', default=18, type=float, help='blocks per second during exploration')
     parser.add_argument('--snapshot', type=Path, help='reuse an existing saved world directory')
+    parser.add_argument('--plain-binary', type=Path,
+                        help='the same engine export without the mod, selected as mode -1')
+    parser.add_argument('--cold-only', action='store_true',
+                        help='repeat only the join and cold exploration windows')
+    parser.add_argument('--traffic-only', action='store_true',
+                        help='compare first compressed sends of the same 49 saved columns in modes 2 and 3')
     args = arguments(parser)
     if not 1 <= args.bots <= 12 or args.rounds < 1 or args.seconds < 6 or args.speed <= 0:
         parser.error('use 1–12 bots, positive rounds and speed, and windows of at least six seconds')
     modes = [int(s) for s in args.modes.split(',')]
-    if not modes or any(mode not in range(4) for mode in modes) or len(set(modes)) != len(modes):
-        parser.error('modes must be unique values in 0–3')
+    allowed_modes = {-1, 0, 1, 2, 3} if args.plain_binary else {0, 1, 2, 3}
+    if not modes or not set(modes) <= allowed_modes or len(set(modes)) != len(modes):
+        parser.error('modes must be unique values in 0–3, or -1 with --plain-binary')
     output = args.out / f'bench-{time.time_ns()}'
     output.mkdir()
-    snapshot = args.snapshot.resolve() if args.snapshot else prepare_snapshot(args, output)
+    plain = Namespace(**{**vars(args), 'binary': args.plain_binary.resolve()}) if args.plain_binary else args
+    snapshot = args.snapshot.resolve() if args.snapshot else prepare_snapshot(plain, output)
+    if args.traffic_only:
+        if args.view_distance < 5:
+            parser.error('matched traffic requires a view distance of at least 5')
+        rows = compare_traffic(args, output, snapshot)
+        (output / 'traffic.json').write_text(json.dumps(rows, indent=2) + '\n')
+        print(json.dumps([{k: v for k, v in row.items() if k != 'bytes_by_column'} for row in rows]))
+        return
     report = {
         'machine': platform.uname()._asdict(), 'bots': args.bots, 'view_distance': args.view_distance,
         'seconds_per_phase': args.seconds, 'explore_speed': args.speed, 'snapshot': str(snapshot),
@@ -230,7 +280,8 @@ def main():
     for round_number in range(args.rounds):
         offset = round_number % len(modes)
         for mode in modes[offset:] + modes[:offset]:
-            row = one_trial(args, output, snapshot, mode, round_number)
+            case = plain if mode == -1 else args
+            row = one_trial(case, output, snapshot, mode, round_number)
             report['trials'].append(row)
             (output / 'report.json').write_text(json.dumps(report, indent=2) + '\n')
             print(f"round {round_number + 1} mode {mode}: "
@@ -243,8 +294,9 @@ def main():
     report['summary'] = []
     for (mode, phase), rows in sorted(groups.items()):
         metrics = {}
-        for field in ('p95_ms', 'p99_ms', 'delivered_chunks_per_second',
-                      'compressed_framed_bytes_per_chunk', 'server_cpu_seconds', 'sampled_peak_server_rss_bytes'):
+        for field in ('p95_ms', 'p99_ms', 'delivered_chunks_per_second', 'distinct_chunks_per_second',
+                      'first_time_chunks_per_second', 'compressed_framed_bytes_per_chunk',
+                      'server_cpu_seconds', 'sampled_peak_server_rss_bytes'):
             values = [row[field] for row in rows if row[field] is not None]
             if values:
                 metrics[field] = {'median': statistics.median(values), 'min': min(values), 'max': max(values)}
