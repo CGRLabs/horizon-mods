@@ -28,10 +28,9 @@ version = "0.8.0"
 published = "2026-11-21"
 game = "26.3"
 file = "guard_villagers-0.8.0.hmod"
-sha256 = "64d2565dd4e6449cf2c43c284e6ef09c23cc18276cb0e514023d1ab166b5cfa0"
-signature = """
-untrusted comment: signature from minisign secret key
-RUSjKGIJUKKXHj0QqJGrlPoSPMpoquOCMIT8//EUfSmhwSVvFvr6AFTKazSqkM79+f/I2A2EnT4IoVoCnjvU/Vd8V4bNetW0iQg=
-trusted comment: timestamp:1795223226	file:guard_villagers-0.8.0.hmod	hashed
-kt60WYJi2wmSq/klNlfPn+XalMtZqEv4j7kNbgMF8iH3TgJJqbppsMjp7Q04Ofnebm1KG2dz0HzYK6VilRkLBQ=="""
-changelog = "First WebAssembly `.hmod` release after the `.hnmod` format was retired. Full village grouping, guard hiring, iron gear, combat goals, baby promotion and surplus rebalancing ported to the mod API. 8/8 unit tests, source check and signed package check pass."
+sha256 = "733c371035aa40b148abdaace7c5979b9e3f2314c4aab67e4b3e3545cc1922f7"
+signature = """untrusted comment: signature from minisign secret key
+RUSjKGIJUKKXHhnq/4WoqSujIUpMn1v+8BzSvZoBt/57LV2ZWyfL+47TCLWnuyJasW8HGPVZKJYQiAMxgIKy8RaNMLUkOpJc/g4=
+trusted comment: timestamp:1795252721	file:guard_villagers-0.8.0.hmod	hashed
+O5e2fbjP6RWr8DE7Slyxbw/OHgNzHVpOC0Ii2EVxry5M3C+tvv3TAecqfakyuZNeHauOdkMIq72qvIxBwwcnAg=="""
+changelog = "First WebAssembly `.hmod` release after the `.hnmod` format was retired. Full village grouping, guard hiring, iron gear, combat goals, baby promotion and surplus rebalancing ported to the mod API. Combat goals are now installed once per live entity rather than on every server tick, so a loaded village no longer grows its goal selectors without bound, and village reassignment clears every coordinate tag so a guard can no longer read back a mixed village key. 15 unit tests, source check and signed package check pass."
