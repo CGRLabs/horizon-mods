@@ -21,7 +21,6 @@ Source and build guide: https://github.com/CGRLabs/gyro/tree/v1.9.0-hmod/hmod
 """
 authors = ["CGRLabs"]
 owners = ["CGRLabs"]
-owner_ids = [213680048]
 license = "MIT"
 source = "https://github.com/CGRLabs/gyro/tree/v1.9.0-hmod/hmod"
 icon = "icons/gyro.png"
@@ -34,10 +33,9 @@ version = "1.9.0"
 published = "2026-11-21"
 game = "26.3"
 file = "gyro-1.9.0.hmod"
-sha256 = "2a4259f5a5703bd88e33f48e3234f9aa2f64e7c2dfbc58a0d1d173a0493f50bc"
-signature = """
-untrusted comment: signature from minisign secret key
-RUSjKGIJUKKXHl+eGRBv66FzqsHhQ+tn9kOjENxlZQ80Znx68tVhM+W2AQxIoQzqfSjnMM6g5AHgrGBECqUXK3W4iLmXOvhieAw=
-trusted comment: timestamp:1795223230	file:gyro-1.9.0.hmod	hashed
-NPJesqXxVEzjyJ0CSjCfHpzd6Hsjmz/bxYwFIpW2O9wLo6FAAWh5X+bDtY9KZEYrVw0yBT6jMmpIbiaeAOZzAg=="""
-changelog = "Reactivates the archived id as a native `.hmod`. Replaces fake keybind rows with real settings, adds an Invert Y toggle, corrects the mixin paths for the current `.game-area` layout, and pins the exact SDK and mixins revisions. 6/6 unit tests, source check and signed package check pass."
+sha256 = "633c1fabf5beac50e4631dc27f66ebded23fab9bb860a139fcb437832942a490"
+signature = """untrusted comment: signature from minisign secret key
+RUSjKGIJUKKXHv878GXK3nD8FlTcSYdoLJv60PLyqpqf1AmMGrQFJWEMn1P/zrSgJHGoMfSDhL6strVapTJhQfAuLKnHhQhxPwU=
+trusted comment: timestamp:1795254593	file:gyro-1.9.0.hmod	hashed
+XXLbcC7m8XqL6Ny65KCbQw+lh7p2QUSsx0QgArWfN4OX+pihuqRdH2kbgbhzWjD4HbDoT8D8jyv6BJR//PyKCQ=="""
+changelog = "Reactivates the archived id as a native `.hmod`. Replaces fake keybind rows with real settings, adds an Invert Y toggle, corrects the mixin paths for the current `.game-area` layout, and pins the exact SDK and mixins revisions. The invert-Y mixin now negates all three `yo` reads of `turn_player` (studio freecam, look rotation, held-lead history) instead of declaring one and failing the access count. The package ships the MIT licence notice. 6/6 unit tests, source check and signed package check pass."
