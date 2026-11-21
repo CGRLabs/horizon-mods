@@ -1,0 +1,37 @@
+id = "guard_villagers"
+kind = "mod"
+name = "Guard Villagers"
+summary = "Villages raise iron-armored guards who defend the town and rally when one of their own is hit."
+description = """
+Your villages can fight back. Guard Villagers adds armed guards on top of the villagers a town already has: two for every three residents. Farmers, librarians and toolsmiths keep their trades while patrols form around them.
+
+Guards wear iron armour and carry a sword, a sword and shield, or a crossbow. They hunt hostile mobs, and striking one brings the rest of that village running. Villages share spare guards when one has lost residents, and babies born near a garrison can become guards when it is short-handed.
+
+This release is a sandboxed WebAssembly mod: install it on the launcher's Mods page with nothing to build. It runs on both the client and the server; host and guests need it installed for the same village rules to apply. Built on the pinned Horizon `0b14f8a` SDK.
+
+*WebAssembly mods are sandboxed and cannot touch your files or the network.*
+
+Source and build guide: https://github.com/CGRLabs/guard-villagers/tree/v0.8.0-hmod/hmod
+"""
+authors = ["CGRLabs"]
+owners = ["CGRLabs"]
+owner_ids = [213680048]
+license = "MIT"
+source = "https://github.com/CGRLabs/guard-villagers/tree/v0.8.0-hmod/hmod"
+icon = "icons/guard_villagers.png"
+categories = ["game-mechanics", "utility"]
+tags = ["villagers", "village", "guards", "combat", "defence", "survival", "vanilla-friendly"]
+key = "RWSjKGIJUKKXHvvhxzNN2VPPrXSEr47JXVgGpCwrOOHoneuQjTWWvk1g"
+
+[[versions]]
+version = "0.8.0"
+published = "2026-11-21"
+game = "26.3"
+file = "guard_villagers-0.8.0.hmod"
+sha256 = "64d2565dd4e6449cf2c43c284e6ef09c23cc18276cb0e514023d1ab166b5cfa0"
+signature = """
+untrusted comment: signature from minisign secret key
+RUSjKGIJUKKXHj0QqJGrlPoSPMpoquOCMIT8//EUfSmhwSVvFvr6AFTKazSqkM79+f/I2A2EnT4IoVoCnjvU/Vd8V4bNetW0iQg=
+trusted comment: timestamp:1795223226	file:guard_villagers-0.8.0.hmod	hashed
+kt60WYJi2wmSq/klNlfPn+XalMtZqEv4j7kNbgMF8iH3TgJJqbppsMjp7Q04Ofnebm1KG2dz0HzYK6VilRkLBQ=="""
+changelog = "First WebAssembly `.hmod` release after the `.hnmod` format was retired. Full village grouping, guard hiring, iron gear, combat goals, baby promotion and surplus rebalancing ported to the mod API. 8/8 unit tests, source check and signed package check pass."
